@@ -1,7 +1,9 @@
 package com.mygdx.game.entity;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.enemies.Enemy;
 import com.mygdx.game.entity.player.Player;
 
@@ -11,18 +13,34 @@ import com.mygdx.game.entity.player.Player;
  */
 public class EntityManager {
 
-    private World world;
-
+    private final World world;
     private Player player;
-    private Enemy enemy;
 
     public EntityManager(World world){
+        this.world= world;
         initPlayer();
     }
 
+    /**
+     * Init the player so it can be accessed by the classes
+     * that references this class/ class-instance
+     */
     private void initPlayer(){
-        player= new Player(world, new Vector2(100, 200);
+        player= new Player(world, new Vector2(100, 200));
+    }
 
+    public Player getPlayer(){
+        return player;
+    }
+
+
+    /**
+     * Calls to draw every entity such as Players and Enemies
+     * @param spriteBatch used to draw sprites faster and efficiently
+     */
+    public void drawEntities(SpriteBatch spriteBatch){
+        player.draw(spriteBatch);
+        //TODO add enemy draw
     }
 
 }

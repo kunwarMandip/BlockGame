@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.*;
  */
 public class Entity {
 
-    public  Body body;
+    public Body body;
     public World world;
     public Vector2 bodyDimension;
 
@@ -35,7 +35,9 @@ public class Entity {
         bodyDef.type= BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(100,100);
         bodyDef.fixedRotation = true;
+        body = world.createBody(bodyDef);
 
+        //Create shape for the body
         PolygonShape rectangleShape = new PolygonShape();
         rectangleShape.setAsBox(bodyDimension.x/2, bodyDimension.y/2);
 
@@ -46,8 +48,8 @@ public class Entity {
         fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0.0f;
 
-        body = world.createBody(bodyDef);
         body.createFixture(fixtureDef);
+        rectangleShape.dispose();
     }
 
     public void draw(SpriteBatch spriteBatch) {}

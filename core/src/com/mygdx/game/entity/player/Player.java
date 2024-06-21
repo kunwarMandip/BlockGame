@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.entity.Entity;
 
 /**
- * Object that the user controls aka: the user itself.
+ * Object Body that the user controls aka: the user itself.
  */
 public class Player extends Entity {
 

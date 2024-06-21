@@ -11,15 +11,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.Assets;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.map.MapLoader;
-
-import com.mygdx.game.entity.player.Player;
 
 /**
  * This class is the main class which holds
@@ -27,13 +23,17 @@ import com.mygdx.game.entity.player.Player;
  */
 public class MainDisplay implements Screen {
 
-    //These are normal viewport ratio for mobile devices
-    public static final float VIRTUAL_WIDTH = 800;
-    public static final float VIRTUAL_HEIGHT = 480;
+    // 18:9 ratio to ensure it fits on every device
+    float VIRTUAL_WIDTH = 1080;
+    float VIRTUAL_HEIGHT =1920;
 
     private OrthographicCamera gameCamera;
-
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+
+    /**
+     * Allows to retain aspect ratio on different sized screens
+     */
+    private Viewport viewport;
 
     /**
      * Used to render box2D objects for developers
@@ -42,10 +42,6 @@ public class MainDisplay implements Screen {
      */
     private Box2DDebugRenderer box2DDebugRenderer;
 
-    /**
-     * Allows to retain aspect ratio on different sized screens
-     */
-    private Viewport viewport;
 
     private World world;
 
@@ -53,15 +49,18 @@ public class MainDisplay implements Screen {
     private MapLoader mapLoader;
 
     private SpriteBatch spriteBatch;
-
     private EntityManager entityManager;
 
-    private Player player;
-
+    /**
+     * Set the aspect ratio for the screen
+     * create the world and load the tiledMap
+     * Set the entityManager to create and updateEntities
+     */
     public MainDisplay(){
 
         setAspectRatio();
         createWorld();
+        entityManager = new EntityManager(world);
     }
 
 
@@ -71,14 +70,15 @@ public class MainDisplay implements Screen {
      */
     private void setAspectRatio(){
         gameCamera= new OrthographicCamera();
-        viewport= new ExtendViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, gameCamera);
+        viewport= new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, gameCamera);
         viewport.apply();
-        gameCamera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2, 0);
+        gameCamera.position.set(VIRTUAL_WIDTH/2f, VIRTUAL_HEIGHT/2f, 0);
+        gameCamera.update();
     }
 
     /**
-     *Creates a world, sets the renderer and tiledMap
-     * tells the renderer to render teh tileMap
+     *Creates a world, sets the renderer and tiledMap.
+     * Tells the renderer to render the tileMap
      */
     private void createWorld(){
 
@@ -91,7 +91,7 @@ public class MainDisplay implements Screen {
         box2DDebugRenderer.setDrawBodies(true);
 
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
-        tiledMap = new TmxMapLoader().load("myMap.tmx");
+        tiledMap = new TmxMapLoader().load("map4.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap);
 
         mapLoader = new MapLoader();
