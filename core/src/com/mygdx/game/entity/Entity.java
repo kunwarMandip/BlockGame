@@ -33,7 +33,7 @@ public class Entity {
         //Defining BoyDef with zero Restitution and No friction
         BodyDef bodyDef  = new BodyDef();
         bodyDef.type= BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(100,100);
+        bodyDef.position.set(200,200);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 

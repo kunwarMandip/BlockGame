@@ -2,7 +2,6 @@ package com.mygdx.game.main.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.map.MapLoader;
@@ -72,7 +70,7 @@ public class MainDisplay implements Screen {
         gameCamera= new OrthographicCamera();
         viewport= new ExtendViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, gameCamera);
         viewport.apply();
-        gameCamera.position.set(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2, 0);
+        gameCamera.position.set(VIRTUAL_WIDTH/2f, VIRTUAL_HEIGHT/2f, 0);
         gameCamera.update();
     }
 
@@ -139,7 +137,7 @@ public class MainDisplay implements Screen {
     public void resize(int width, int height) {
         // true enables centering of the camera
         viewport.update(width, height, true);
-        gameCamera.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
+        gameCamera.position.set(VIRTUAL_WIDTH / 2f, VIRTUAL_HEIGHT / 2f, 0);
         gameCamera.update();
     }
 

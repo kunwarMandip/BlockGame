@@ -26,7 +26,7 @@ public class EntityManager {
      * that references this class/ class-instance
      */
     private void initPlayer(){
-        player= new Player(world, new Vector2(500, 500));
+        player= new Player(world, new Vector2(100, 100));
     }
 
     public Player getPlayer(){
