@@ -2,6 +2,7 @@ package com.mygdx.game.main.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,8 +25,8 @@ import com.mygdx.game.map.MapLoader;
 public class MainDisplay implements Screen {
 
     // 18:9 ratio to ensure it fits on every device
-    float VIRTUAL_WIDTH = 1080;
-    float VIRTUAL_HEIGHT =1920;
+    float VIRTUAL_WIDTH = 480;
+    float VIRTUAL_HEIGHT = 800;
 
     private OrthographicCamera gameCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -41,7 +42,6 @@ public class MainDisplay implements Screen {
      * Should not be used when game is finished
      */
     private Box2DDebugRenderer box2DDebugRenderer;
-
 
     private World world;
 
@@ -70,9 +70,9 @@ public class MainDisplay implements Screen {
      */
     private void setAspectRatio(){
         gameCamera= new OrthographicCamera();
-        viewport= new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, gameCamera);
+        viewport= new ExtendViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, gameCamera);
         viewport.apply();
-        gameCamera.position.set(VIRTUAL_WIDTH/2f, VIRTUAL_HEIGHT/2f, 0);
+        gameCamera.position.set(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2, 0);
         gameCamera.update();
     }
 
@@ -91,7 +91,7 @@ public class MainDisplay implements Screen {
         box2DDebugRenderer.setDrawBodies(true);
 
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
-        tiledMap = new TmxMapLoader().load("map4.tmx");
+        tiledMap = new TmxMapLoader().load("map5.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap);
 
         mapLoader = new MapLoader();
@@ -129,10 +129,9 @@ public class MainDisplay implements Screen {
         orthogonalTiledMapRenderer.render();
         box2DDebugRenderer.render(world, gameCamera.combined);
 
-
-
-        //Render the spriteBatch
+//        Render the spriteBatch
 //        spriteBatch.begin();
+////        entityManager.drawEntities(spriteBatch);
 //        spriteBatch.end();
     }
 
@@ -140,6 +139,8 @@ public class MainDisplay implements Screen {
     public void resize(int width, int height) {
         // true enables centering of the camera
         viewport.update(width, height, true);
+        gameCamera.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
+        gameCamera.update();
     }
 
     @Override
