@@ -30,4 +30,20 @@ several places in one second.
 
 
 # BlockGame
- 
+
+sdk.dir=C:/Users/mandi/AppData/Local/Android/Sdk
+
+
+Aspect ratio
+18:9 (mobile devices)- double width compared to height
+800 to 400
+
+fortune favour lady nikuko: 1:13:02
+
+16:9 aspect ratio: using 1920 X 1080p as base
+
+1920/16=120
+1080/8
+
+960
+

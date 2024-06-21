@@ -1,21 +1,27 @@
 package com.mygdx.game.entity.player;
 
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.main.screen.MainDisplay;
 
 /**
  * Responsible for handling the controls of the Player body.
  */
 public class PlayerController implements InputProcessor {
 
-    private Player player;
     private final Body playerBody;
-    public PlayerController(Player player){
-        this.player= player;
-        playerBody=player.body;
+    private OrthographicCamera gameCamera;
+
+    private float initialX;
+    private float initialY;
+    private boolean isDragging;
+
+
+    public PlayerController(Body playerBody, OrthographicCamera gameCamera){
+        this.playerBody=playerBody;
+        this.gameCamera=gameCamera;
     }
 
 
@@ -37,13 +43,17 @@ public class PlayerController implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         System.out.println("Screen Touched Down");
+        Vector3 worldCoordinates = gameCamera.unproject(new Vector3(screenX, screenY, 0));
+        initialX = worldCoordinates.x;
+        initialY = worldCoordinates.y;
+        isDragging = true;
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         System.out.println("Screen Touched Up");
-        playerBody.setTransform(5, 10, playerBody.getAngle());
+        isDragging = false;
         return true;
     }
 
@@ -55,14 +65,25 @@ public class PlayerController implements InputProcessor {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
 
-        System.out.println("Screen Dragged");
-//        Vector2 touchPos = new Vector2(screenX, screenY);
-//        viewport.unproject(touchPos);  // Convert screen coordinates to world coordinates
-//
-//        // Move the player body
-//        playerBody.setTransform(touchPos.x, playerBody.getPosition().y, playerBody.getAngle());
+        if (isDragging) {
+            System.out.println("Screen Dragging");
+            // Convert screen coordinates to world coordinates
+            Vector3 worldCoordinates = gameCamera.unproject(new Vector3(screenX, screenY, 0));
 
-        return true;  // Return true to indicate the event was handled
+            float deltaX = worldCoordinates.x - initialX;
+            float deltaY = worldCoordinates.y - initialY;
+
+            // Calculate the proportional movement
+            float movementX = deltaX / (MainDisplay.VIRTUAL_WIDTH / 3); // Scale the movement
+
+            // Move the Box2D body
+            playerBody.setTransform(playerBody.getPosition().x + movementX, playerBody.getPosition().y, playerBody.getAngle());
+
+            // Update initial position to the current position
+            initialX = worldCoordinates.x;
+            initialY = worldCoordinates.y;
+        }
+        return true;
     }
 
     @Override

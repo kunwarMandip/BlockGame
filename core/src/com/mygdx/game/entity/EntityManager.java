@@ -1,5 +1,6 @@
 package com.mygdx.game.entity;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,9 +16,11 @@ public class EntityManager {
 
     private final World world;
     private Player player;
+    private OrthographicCamera gameCamera;
 
-    public EntityManager(World world){
+    public EntityManager(World world, OrthographicCamera gameCamera){
         this.world= world;
+        this.gameCamera=gameCamera;
         initPlayer();
     }
 
@@ -26,7 +29,7 @@ public class EntityManager {
      * that references this class/ class-instance
      */
     private void initPlayer(){
-        player= new Player(world, new Vector2(100, 100));
+        player= new Player(world, new Vector2(100, 100), gameCamera);
     }
 
     public Player getPlayer(){

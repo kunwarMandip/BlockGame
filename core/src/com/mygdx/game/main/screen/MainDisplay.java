@@ -23,14 +23,17 @@ import com.mygdx.game.map.MapLoader;
 public class MainDisplay implements Screen {
 
     // 18:9 ratio to ensure it fits on every device
-    float VIRTUAL_WIDTH = 480;
-    float VIRTUAL_HEIGHT = 800;
+    //Since game is PORTRAIT mode only, the height is longer than width
+    public static final float VIRTUAL_WIDTH = 720;
+    public static final float VIRTUAL_HEIGHT = 1280;
 
-    private OrthographicCamera gameCamera;
+    //Need this to be public to manage how much the playerMoves
+    public OrthographicCamera gameCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
     /**
      * Allows to retain aspect ratio on different sized screens
+     * Fit viewport for the game screen so it doesnt
      */
     private Viewport viewport;
 
@@ -55,10 +58,10 @@ public class MainDisplay implements Screen {
      * Set the entityManager to create and updateEntities
      */
     public MainDisplay(){
-
+        spriteBatch= new SpriteBatch();
         setAspectRatio();
         createWorld();
-        entityManager = new EntityManager(world);
+        entityManager = new EntityManager(world, gameCamera);
     }
 
 
@@ -128,9 +131,9 @@ public class MainDisplay implements Screen {
         box2DDebugRenderer.render(world, gameCamera.combined);
 
 //        Render the spriteBatch
-//        spriteBatch.begin();
-////        entityManager.drawEntities(spriteBatch);
-//        spriteBatch.end();
+        spriteBatch.begin();
+        entityManager.drawEntities(spriteBatch);
+        spriteBatch.end();
     }
 
     @Override
