@@ -17,7 +17,7 @@ import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.map.MapLoader;
 
 /**
- * This class is the main class which holds
+ * This class is the main class which holdss
  * everything aka the view the user will see.
  */
 public class MainDisplay implements Screen {
