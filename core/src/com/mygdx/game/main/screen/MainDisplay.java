@@ -89,7 +89,7 @@ public class MainDisplay implements Screen {
         box2DDebugRenderer.setDrawBodies(true);
 
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
-        tiledMap = new TmxMapLoader().load("map6.tmx");
+        tiledMap = new TmxMapLoader().load("map7.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
         mapLoader = new MapLoader();
@@ -130,6 +130,7 @@ public class MainDisplay implements Screen {
         box2DDebugRenderer.render(world, gameCamera.combined);
 
 //      Render the spriteBatch
+        spriteBatch.setProjectionMatrix(gameCamera.combined);
         spriteBatch.begin();
         entityManager.drawEntities(spriteBatch);
         spriteBatch.end();
