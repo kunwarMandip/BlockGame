@@ -40,10 +40,8 @@ Aspect ratio
 
 fortune favour lady nikuko: 1:13:02
 
-16:9 aspect ratio: using 1920 X 1080p as base
 
-1920/16=120
-1080/8
 
-960
+
+For TiledMap, the ratio should be 9:16
 
