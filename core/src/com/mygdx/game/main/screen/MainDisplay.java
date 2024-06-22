@@ -11,22 +11,18 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.map.MapLoader;
+
+import static com.mygdx.game.FallingBlocks.*;
 
 /**
  * This class is the main class which holds
  * everything aka the view the user will see.
  */
 public class MainDisplay implements Screen {
-
-    // 9:18 ratio to ensure it fits on every device
-    //Since game is PORTRAIT mode only, the height is longer than width
-    public static final float VIRTUAL_WIDTH = 720;
-    public static final float VIRTUAL_HEIGHT = 1440;
 
     //Need this to be public to manage how much the playerMoves
     public OrthographicCamera gameCamera;
@@ -73,9 +69,9 @@ public class MainDisplay implements Screen {
      */
     private void setAspectRatio(){
         gameCamera= new OrthographicCamera();
-        viewport= new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, gameCamera);
+        viewport= new FitViewport(VIRTUAL_WIDTH/ PPM, VIRTUAL_HEIGHT/PPM, gameCamera);
         viewport.apply();
-        gameCamera.position.set(VIRTUAL_WIDTH/2f, VIRTUAL_HEIGHT/2f, 0);
+        gameCamera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
         gameCamera.update();
     }
 
@@ -94,7 +90,7 @@ public class MainDisplay implements Screen {
 
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
         tiledMap = new TmxMapLoader().load("map6.tmx");
-        orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap);
+        orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
         mapLoader = new MapLoader();
         mapLoader.mapWorld(world, tiledMap);
@@ -141,10 +137,7 @@ public class MainDisplay implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        Gdx.app.log("Resize", "Width: " + width + ", Height: " + height);
-        viewport.update(width, height, true);
-        gameCamera.position.set(VIRTUAL_WIDTH / 2, VIRTUAL_HEIGHT / 2, 0);
-        gameCamera.update();
+        viewport.update(width, height);
     }
 
     @Override

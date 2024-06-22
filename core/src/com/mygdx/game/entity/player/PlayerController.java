@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.game.FallingBlocks;
 import com.mygdx.game.main.screen.MainDisplay;
 
 /**
@@ -74,7 +75,7 @@ public class PlayerController implements InputProcessor {
             float deltaY = worldCoordinates.y - initialY;
 
             // Calculate the proportional movement
-            float movementX = deltaX / (MainDisplay.VIRTUAL_WIDTH / 3); // Scale the movement
+            float movementX = deltaX / (FallingBlocks.VIRTUAL_WIDTH / 3); // Scale the movement
 
             // Move the Box2D body
             playerBody.setTransform(playerBody.getPosition().x + movementX, playerBody.getPosition().y, playerBody.getAngle());

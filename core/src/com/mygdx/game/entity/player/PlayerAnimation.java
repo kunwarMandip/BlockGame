@@ -11,8 +11,9 @@ import com.badlogic.gdx.math.Vector2;
 public class PlayerAnimation {
 
     private final Texture playerTexture;
-    private float width=100;
-    private float height=100;
+
+    private final float width=100;
+    private final float height=100;
 
     public PlayerAnimation(){
         this.playerTexture= new Texture("box.png");
@@ -24,7 +25,8 @@ public class PlayerAnimation {
      * @param spriteBatch faster way to draw than sprites only
      */
     public void draw(Vector2 playerPosition, SpriteBatch spriteBatch){
-        spriteBatch.draw(playerTexture, playerPosition.x - width / 2, playerPosition.y - height / 2, width, height);
+        System.out.println("Position" +playerPosition);
+        spriteBatch.draw(playerTexture, playerPosition.x, playerPosition.y, width, height);
     }
 
 }

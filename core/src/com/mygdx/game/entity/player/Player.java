@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.entity.Entity;
 
+import javax.sound.midi.SysexMessage;
+
 /**
  * Object Body that the user controls aka: the user itself.
  */
@@ -22,15 +24,12 @@ public class Player extends Entity {
         super(world, bodyDimension);
         PlayerController playerController = new PlayerController(this.body, gameCamera);
         Gdx.input.setInputProcessor(playerController);
-
         playerAnimation= new PlayerAnimation();
     }
 
 
 
     public void update(){
-
-
         //TODO
     }
 
@@ -38,7 +37,8 @@ public class Player extends Entity {
     public void draw(SpriteBatch spriteBatch){
         //TODO
         update();
-        playerAnimation.draw(body.getPosition(), spriteBatch);
+        playerAnimation.draw(new Vector2(body.getPosition().x, body.getPosition().y), spriteBatch);
+//        playerAnimation.draw();
     }
 
 
