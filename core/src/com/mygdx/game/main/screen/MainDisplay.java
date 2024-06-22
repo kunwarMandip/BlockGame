@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.FallingBlocks;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.map.MapLoader;
 
@@ -50,12 +51,14 @@ public class MainDisplay implements Screen {
     private SpriteBatch spriteBatch;
     private EntityManager entityManager;
 
+    private FallingBlocks fallingBlocks;
     /**
      * Set the aspect ratio for the screen
      * create the world and load the tiledMap.
      * Set the entityManager to create and updateEntities
      */
-    public MainDisplay(){
+    public MainDisplay(FallingBlocks fallingBlocks){
+        this.fallingBlocks=fallingBlocks;
         spriteBatch= new SpriteBatch();
         setAspectRatio();
         createWorld();

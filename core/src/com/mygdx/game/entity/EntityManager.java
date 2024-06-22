@@ -29,6 +29,10 @@ public class EntityManager {
      * that references this class/ class-instance
      */
     private void initPlayer(){
+        /**
+         * X is the height of the object
+         * y is the width of the object (or the other way around)
+         */
         player= new Player(world, new Vector2(100, 100), gameCamera);
     }
 

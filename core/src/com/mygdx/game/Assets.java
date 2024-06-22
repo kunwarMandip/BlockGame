@@ -10,7 +10,7 @@ public class Assets {
 
     public static final AssetManager manager = new AssetManager();
 
-    public static final AssetDescriptor<TiledMap> map1 = new AssetDescriptor<TiledMap>("tiledMap/startingMap.tmx", TiledMap.class);
+    public static final AssetDescriptor<TiledMap> map1 = new AssetDescriptor<TiledMap>("map6", TiledMap.class);
 
 
     public static void load() {

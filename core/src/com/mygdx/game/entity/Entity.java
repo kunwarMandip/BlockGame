@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.FallingBlocks;
 
 
+import static com.mygdx.game.FallingBlocks.PPM;
 /**
  * Defines a body to be created in the WORLD passed.
  * This is used as a parent class to every entity in this game
@@ -35,13 +36,13 @@ public class Entity {
         //Defining BoyDef with zero Restitution and No friction
         BodyDef bodyDef  = new BodyDef();
         bodyDef.type= BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(FallingBlocks.VIRTUAL_WIDTH / 2, FallingBlocks.VIRTUAL_HEIGHT / 2);
+        bodyDef.position.set(32/ FallingBlocks.PPM, 32/FallingBlocks.PPM);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
         //Create shape for the body
         PolygonShape rectangleShape = new PolygonShape();
-        rectangleShape.setAsBox(bodyDimension.x/2, bodyDimension.y/2);
+        rectangleShape.setAsBox(bodyDimension.x/FallingBlocks.PPM, bodyDimension.y/FallingBlocks.PPM);
 
         // Creates fixture definition and applies to body
         FixtureDef fixtureDef = new FixtureDef();
