@@ -28,6 +28,9 @@ public class MainDisplay implements Screen {
     public static final float VIRTUAL_WIDTH = 720;
     public static final float VIRTUAL_HEIGHT = 1440;
 
+    //see description in Readme.md
+    public static final float PPM=100;
+
     //Need this to be public to manage how much the playerMoves
     public OrthographicCamera gameCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
