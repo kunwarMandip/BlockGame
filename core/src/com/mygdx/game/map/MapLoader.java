@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.FallingBlocks;
 
 
 /**
@@ -36,6 +37,8 @@ public class MapLoader {
     }
 
     public void mapWorld(World world, TiledMap map){
+
+
         BodyDef bodyDef =new BodyDef();
         PolygonShape shape= new PolygonShape();
         FixtureDef fixtureDef= new FixtureDef();
@@ -47,11 +50,11 @@ public class MapLoader {
 
             //static Map bodies
             bodyDef.type=BodyDef.BodyType.KinematicBody;
-            bodyDef.position.set(rect.getX()+ rect.getWidth()/2, rect.getY()+rect.getHeight()/2);
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / FallingBlocks.PPM, (rect.getY() + rect.getHeight() / 2) / FallingBlocks.PPM);
 
             body=world.createBody(bodyDef);
 
-            shape.setAsBox(rect.getWidth()/2, rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth() / 2 / FallingBlocks.PPM, rect.getHeight() / 2 / FallingBlocks.PPM);
             fixtureDef.shape= shape;
             body.createFixture(fixtureDef);
 

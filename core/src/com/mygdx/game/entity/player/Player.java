@@ -22,7 +22,7 @@ public class Player extends Entity {
      */
     public Player(World world, Vector2 bodyDimension, OrthographicCamera gameCamera) {
         super(world, bodyDimension);
-        PlayerController playerController = new PlayerController(this.body, gameCamera);
+        PlayerController playerController = new PlayerController(body, gameCamera);
         Gdx.input.setInputProcessor(playerController);
         playerAnimation= new PlayerAnimation();
     }
