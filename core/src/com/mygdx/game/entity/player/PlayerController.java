@@ -1,5 +1,6 @@
 package com.mygdx.game.entity.player;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -11,19 +12,24 @@ import com.mygdx.game.FallingBlocks;
  */
 public class PlayerController implements InputProcessor {
 
+    /**
+     * For Applying Force, choose between these two:
+     * APPLY LINEAR IMPULSE, SET LINEAR VELOCITY
+     *
+     * Apply linear impulse looks better
+     */
+
     private final Body playerBody;
     private OrthographicCamera gameCamera;
 
+
+    private int glideDistance;
+
+
+    private float startingPosition;
     private boolean isDragging;
-    private float glideDistance;
 
-    /**
-     * Used to hold initial Position when the user touches screen
-     * can be used to check if the user dragged left or right
-     */
-    private Vector2 initalPosition = new Vector2();
-
-
+    private Vector2 force= new Vector2(10f, 0);
     public PlayerController(Body playerBody, OrthographicCamera gameCamera){
         this.playerBody=playerBody;
         this.gameCamera=gameCamera;
@@ -36,11 +42,9 @@ public class PlayerController implements InputProcessor {
      */
     private void calculateDistanceToMove(){
 
-        float screenWidth= FallingBlocks.VIRTUAL_WIDTH/FallingBlocks.PPM;
-        float screenHeight= FallingBlocks.VIRTUAL_HEIGHT/FallingBlocks.PPM;
-
-        glideDistance = screenWidth/4;
-        System.out.println("Screen Size: " + screenWidth + screenHeight);
+        //5 lanes
+        glideDistance= Gdx.graphics.getWidth()/5;
+        System.out.println("Screen Size: "+ glideDistance);
 
     }
 
@@ -59,27 +63,17 @@ public class PlayerController implements InputProcessor {
         return false;
     }
 
-    /**
-     * Gets the initial position of the playerBody when user touches screen
-     * Allows us to check if the user than dragged left or right
-     * @param screenX The x coordinate, origin is in the upper left corner
-     * @param screenY The y coordinate, origin is in the upper left corner
-     * @param pointer the pointer for the event.
-     * @param button the button
-     * @return true if handled, false if it wasn't
-     */
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
+        startingPosition=screenX;
+        isDragging=true;
         System.out.println("Initial touch position: (" + screenX + ", " + screenY + ")");
-
-
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        System.out.println("Screen Touched Up");
         isDragging = false;
         return true;
     }
@@ -92,7 +86,20 @@ public class PlayerController implements InputProcessor {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
 
+        if(isDragging){
+            //user dragged screen left
+            if(startingPosition > screenX){
+                System.out.println("Screen dragging left");
+                playerBody.setLinearVelocity(-10f, 0);
+//                playerBody.applyLinearImpulse(new Vector2(-10f, 0), playerBody.getWorldCenter(), true);
+                return true;
+            }
 
+            //user dragged screen right
+            playerBody.setLinearVelocity(10f, 0);
+//            playerBody.applyLinearImpulse(new Vector2(10f, 0), playerBody.getWorldCenter(), true);
+            System.out.println("Screen dragging right");
+        }
         return true;
     }
 
