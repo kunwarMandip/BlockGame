@@ -26,10 +26,12 @@ PERKS
 several places in one second.
 
 WHATS NEEDED TO SPAWN ENEMY
-LOCATION -> at least for x since enemy has to be moving
-COLOR -> enemies have to be different colors
-FALLING BLOCKS -> Some blocks may move faster
-BODY SIZE -> Some enemies may be larger
+    WORLD -> To let the blocks spawn
+    LOCATION -> at least for x since enemy has to be moving
+    COLOR -> enemies have to be different colors
+    FALLING speed -> Some blocks may move faster
+    BODY SIZE -> Some enemies may be larger
+Color doesn't need to be in entity constructor btw
 
 
 

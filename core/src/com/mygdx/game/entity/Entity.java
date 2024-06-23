@@ -22,7 +22,6 @@ public class Entity {
     private Vector2 bodyDimension;
     private Vector2 spawnLocation;
     private Vector2 fallingSpeed;
-    private Vector2 color;
 
 
     /**
@@ -33,32 +32,31 @@ public class Entity {
     public Entity(World world, Vector2 bodyDimension){
         this.world=world;
         this.bodyDimension=bodyDimension;
-        defineEntity();
+        defineBody();
     }
 
 
     /**
-     * Keep in mind all values are normalised in this constructor
-     * to my memory at least
+     * Keep in mind all values are normalised in this constructor to my memory at least!!!
      * @param world the world to place bodies in
      * @param bodyDimension height and width of the body to be created
      * @param spawnLocation location of where the body will start from since at least x location will need to vary
      * @param fallingSpeed some blocks may fall faster to keep the player on their toes
-     * @param color the color of the block dropping:
-     *              if y != 0, color of block may change to that.
-     *              if y==0, block will not change color and the color of that will be fallingSpeed.x
      */
-    public Entity(World world, Vector2 bodyDimension, Vector2 spawnLocation, Vector2 fallingSpeed, Vector2 color){
+    public Entity(World world, Vector2 bodyDimension, Vector2 spawnLocation, Vector2 fallingSpeed){
         this.world=world;
         this.bodyDimension= new Vector2(bodyDimension.x/100, bodyDimension.y/100);
         this.spawnLocation= new Vector2(spawnLocation.x /100, spawnLocation.y/100);
         this.fallingSpeed=fallingSpeed;
-        this.color=color;
-        define();
+        defineBody();
     }
 
 
-    private void define(){
+
+    /**
+     * Defines the Body to be shown in the screen
+     */
+    private void defineBody(){
         BodyDef bodyDef  = new BodyDef();
         bodyDef.type= BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(spawnLocation);
@@ -76,39 +74,15 @@ public class Entity {
         fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0.0f;
 
+        if(fallingSpeed !=null){
+            body.setLinearVelocity(fallingSpeed);
+        }
+
         body.createFixture(fixtureDef);
         rectangleShape.dispose();
     }
 
 
-    /**
-     * Defines the Body to be shown in the screen
-     */
-    private void defineEntity(){
-
-        //Defining BoyDef with zero Restitution and No friction
-        BodyDef bodyDef  = new BodyDef();
-        bodyDef.type= BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(500/ FallingBlocks.PPM, 500/FallingBlocks.PPM);
-        bodyDef.fixedRotation = true;
-        body = world.createBody(bodyDef);
-
-        //Create shape for the body
-        PolygonShape rectangleShape = new PolygonShape();
-        rectangleShape.setAsBox(bodyDimension.x/FallingBlocks.PPM, bodyDimension.y/FallingBlocks.PPM);
-
-        // Creates fixture definition and applies to body
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = rectangleShape;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.0f;
-        fixtureDef.restitution = 0.0f;
-
-        body.createFixture(fixtureDef);
-        rectangleShape.dispose();
-
-
-    }
 
     public void draw(SpriteBatch spriteBatch) {}
 
