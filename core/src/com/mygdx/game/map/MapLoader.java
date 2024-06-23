@@ -1,6 +1,5 @@
 package com.mygdx.game.map;
 
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
@@ -15,7 +14,7 @@ import com.mygdx.game.FallingBlocks;
  */
 public class MapLoader {
 
-     public Array<Body> mapBodies;
+     private Array<Body> mapBodies;
 
     /**
      * Should only be init once and in the mainDisplay class
@@ -38,14 +37,12 @@ public class MapLoader {
 
     public void mapWorld(World world, TiledMap map){
 
-
         BodyDef bodyDef =new BodyDef();
         PolygonShape shape= new PolygonShape();
         FixtureDef fixtureDef= new FixtureDef();
         Body body;
 
         for (RectangleMapObject object: map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
-
             Rectangle rect = object.getRectangle();
 
             //static Map bodies

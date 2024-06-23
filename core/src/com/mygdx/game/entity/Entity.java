@@ -13,9 +13,15 @@ import static com.mygdx.game.FallingBlocks.PPM;
  */
 public class Entity {
 
-    public Body body;
+    private Body body;
     public World world;
+
+    /**
+     * To get this value, divide each x and y by PPM (100)
+     */
     public Vector2 bodyDimension;
+
+
 
     /**
      * Sets the paradigm for every entity to be shown
@@ -53,10 +59,16 @@ public class Entity {
 
         body.createFixture(fixtureDef);
         rectangleShape.dispose();
+
+
     }
 
     public void draw(SpriteBatch spriteBatch) {}
 
     public void update() {}
+
+    protected Body getBody(){
+        return body;
+    }
 
 }

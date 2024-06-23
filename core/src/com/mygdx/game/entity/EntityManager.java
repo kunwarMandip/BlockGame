@@ -36,10 +36,6 @@ public class EntityManager {
         player= new Player(world, new Vector2(100, 100), gameCamera);
     }
 
-    public Player getPlayer(){
-        return player;
-    }
-
 
     /**
      * Calls to draw every entity such as Players and Enemies

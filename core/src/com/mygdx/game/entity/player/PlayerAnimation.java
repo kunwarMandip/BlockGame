@@ -13,8 +13,11 @@ public class PlayerAnimation {
 
     private final Texture playerTexture;
 
-    private final float width=100/ FallingBlocks.PPM;
-    private final float height=100/FallingBlocks.PPM;
+    /**
+     * Width and height of the sprites to be displayed
+     */
+    private final float width=200/ FallingBlocks.PPM;
+    private final float height=200/FallingBlocks.PPM;
 
     public PlayerAnimation(){
         this.playerTexture= new Texture("box.png");
@@ -26,8 +29,8 @@ public class PlayerAnimation {
      * @param spriteBatch faster way to draw than sprites only
      */
     public void draw(Vector2 playerPosition, SpriteBatch spriteBatch){
-        System.out.println("Position" +playerPosition);
         spriteBatch.draw(playerTexture, playerPosition.x, playerPosition.y, width, height);
     }
+
 
 }

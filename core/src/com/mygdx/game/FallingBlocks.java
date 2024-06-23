@@ -15,7 +15,6 @@ public class FallingBlocks extends Game {
 
 	@Override
 	public void create() {
-
 		setScreen(new MainDisplay(this));
 	}
 
