@@ -32,7 +32,7 @@ public class EntityManager {
     private void init(){
         //X == height of body, Y== width of body
         player= new Player(world, new Vector2(100, 100), gameCamera);
-        enemyManager= new EnemyManager();
+
     }
 
 
