@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.entity.enemies.Enemy;
+import com.mygdx.game.entity.enemies.EnemyManager;
 import com.mygdx.game.entity.player.Player;
 
 /**
@@ -15,25 +14,25 @@ import com.mygdx.game.entity.player.Player;
 public class EntityManager {
 
     private final World world;
-    private Player player;
     private OrthographicCamera gameCamera;
+
+    private Player player;
+    private EnemyManager enemyManager;
 
     public EntityManager(World world, OrthographicCamera gameCamera){
         this.world= world;
         this.gameCamera=gameCamera;
-        initPlayer();
+        init();
+
     }
 
     /**
-     * Init the player so it can be accessed by the classes
-     * that references this class/ class-instance
+     * Init objects/classes
      */
-    private void initPlayer(){
-        /**
-         * X is the height of the object
-         * y is the width of the object (or the other way around)
-         */
+    private void init(){
+        //X == height of body, Y== width of body
         player= new Player(world, new Vector2(100, 100), gameCamera);
+        enemyManager= new EnemyManager();
     }
 
 
@@ -43,6 +42,7 @@ public class EntityManager {
      */
     public void drawEntities(SpriteBatch spriteBatch){
         player.draw(spriteBatch);
+        enemyManager.draw(spriteBatch);
         //TODO add enemy draw
     }
 
