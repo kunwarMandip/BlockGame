@@ -25,6 +25,13 @@ PERKS
 ->  Maybe some MATCHING BLOCKS drop power off where the player blocks can move 
 several places in one second.
 
+WHATS NEEDED TO SPAWN ENEMY
+LOCATION -> at least for x since enemy has to be moving
+COLOR -> enemies have to be different colors
+FALLING BLOCKS -> Some blocks may move faster
+BODY SIZE -> Some enemies may be larger
+
+
 
 ASPECT RATIO
 18:9 (mobile devices)- double width compared to height
