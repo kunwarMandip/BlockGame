@@ -16,7 +16,7 @@ public class Player extends Entity {
     /**
      * Sets the player "object" on the given world
      * @param world the world to place the objects in.
-     * @param bodyDimension height and width of the object to be created.
+     * @param bodyDimension height and width of the object to be created
      */
     public Player(World world, Vector2 bodyDimension, OrthographicCamera gameCamera) {
         super(world, bodyDimension);

@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FallingBlocks;
 
 /**
@@ -22,9 +24,7 @@ public class PlayerController implements InputProcessor {
     private final Body playerBody;
     private OrthographicCamera gameCamera;
 
-
     private int glideDistance;
-
 
     private float startingPosition;
     private boolean isDragging;
@@ -69,6 +69,12 @@ public class PlayerController implements InputProcessor {
         startingPosition=screenX;
         isDragging=true;
         System.out.println("Initial touch position: (" + screenX + ", " + screenY + ")");
+
+        //Just checking screen coordinates
+        Vector3 screenCords = new Vector3(screenX, screenY, 0);
+        gameCamera.unproject(screenCords);
+        System.out.println("World Coordinates: (" + screenCords.x + ", " + screenCords.y + ")");
+
         return true;
     }
 
