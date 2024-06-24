@@ -47,7 +47,13 @@ If higher ppm: 200 ppm, when scaled, the objects look even better but takes more
 Conversely, if lower ppm: 50ppm, lets pixels so lets performance time but will not scale as well
 
 
-fortune favour lady nikuko: 1:13:02
+For enemies to spawn
+Width of screen in world is 7.2 max -> starting from 0
+height of where they spawn from is 14.4 
+
+14.4
+7.2 
+yh im stupid
 
 
-
+fortune favour lady nikuko: 1:13:0

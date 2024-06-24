@@ -16,14 +16,8 @@ public class Entity {
     private Body body;
     public World world;
 
-    /**
-     * To get this value, divide each x and y by PPM (100)
-     */
-    private Vector2 bodyDimension;
-    private Vector2 spawnLocation;
-    private Vector2 fallingSpeed;
+    private final Vector2 bodyDimension;
 
-    private float maxSpeed= 20f;
     /**
      * Sets the paradigm for every entity to be shown
      * @param world the world to place the objects in
@@ -38,28 +32,28 @@ public class Entity {
 
     /**
      * Keep in mind all values are normalised in this constructor to my memory at least!!!
+     * Since using PPM, numbers are divided by 100
      * @param world the world to place bodies in
      * @param bodyDimension height and width of the body to be created
-     * @param spawnLocation location of where the body will start from since at least x location will need to vary
-     * @param fallingSpeed some blocks may fall faster to keep the player on their toes
+     * @param spawnLocationX width of the screen. DO NOT NORMALIZE BY DIVIDING BY 100
+     *
      */
-    public Entity(World world, Vector2 bodyDimension, Vector2 spawnLocation, Vector2 fallingSpeed){
+    public Entity(World world, Vector2 bodyDimension, float spawnLocationX){
         this.world=world;
         this.bodyDimension= new Vector2(bodyDimension.x/100, bodyDimension.y/100);
-        this.spawnLocation= new Vector2(spawnLocation.x /100, spawnLocation.y/100);
-        this.fallingSpeed=fallingSpeed;
-        defineBody();
+        spawnLocationX = spawnLocationX / 100;
+        float spawnLocationY= 10;
+        defineEnemyEntity(spawnLocationX, spawnLocationY);
     }
 
 
-
     /**
-     * Defines the Body to be shown in the screen
+     * Defines body for Enemy Class
      */
-    private void defineBody(){
+    private void defineEnemyEntity(float spawnLocationX, float spawnLocationY){
         BodyDef bodyDef  = new BodyDef();
-        bodyDef.type= BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(spawnLocation);
+        bodyDef.type= BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(5, 10);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
@@ -74,17 +68,14 @@ public class Entity {
         fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0.0f;
 
-        if(fallingSpeed !=null){
-            body.setLinearVelocity(fallingSpeed);
-        }
-
         body.createFixture(fixtureDef);
         rectangleShape.dispose();
     }
 
 
     /**
-     * Defines the Body to be shown in the screen
+     * Defines Body for Player class.
+     * TODO remove this and make the two private method the same
      */
     private void defineEntity(){
 
@@ -110,9 +101,6 @@ public class Entity {
         rectangleShape.dispose();
     }
 
-    public void draw(SpriteBatch spriteBatch) {}
-
-    public void update() {}
 
     protected Body getBody(){
         return body;

@@ -11,24 +11,22 @@ import com.badlogic.gdx.utils.Array;
  */
 public class EnemyManager {
 
-    private World world;
 
-    /**
-     * When new enemy is created, they are to be added to this list ASAP!!!
-     * Allows for easier management of enemies
-     */
+    //When new enemy is created, they are to be added to this list ASAP!!!
+    //Allows for easier management of enemies
     private Array<Enemy> enemies;
 
 
     public EnemyManager(World world){
-        this.world= world;
         enemies= new Array<>();
-        initEnemy();
+        initEnemy(world);
     }
 
-    private void initEnemy(){
-        enemies.add(new Enemy(world, new Vector2(100, 100), new Vector2(1, 2)));
+    private void initEnemy(World world){
+        enemies.add( new Enemy(world, new Vector2(100, 100), 5F));
+
     }
+
 
     /**
      * Draws all enemies currently spawned in the screen to the ground
@@ -37,20 +35,9 @@ public class EnemyManager {
     public void draw(SpriteBatch spriteBatch){
         if(enemies.isEmpty()){return;}
 
-        update();
         for(Enemy enemy: enemies){
             enemy.draw(spriteBatch);
         }
     }
 
-
-    /**
-     * Updates all entities before drawing them to show them moving
-     * To be called only locally
-     */
-    private void update(){
-        for(Enemy enemy: enemies){
-            enemy.update();
-        }
-    }
 }
