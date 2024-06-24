@@ -1,13 +1,25 @@
 package com.mygdx.game.entity.enemies;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.FallingBlocks;
 import com.mygdx.game.entity.Entity;
 
 public class Enemy extends Entity {
 
     private Vector2 color;
+    private Texture texture;
+
+    private final float width=200/ FallingBlocks.PPM;
+    private final float height=200/FallingBlocks.PPM;
+
+    /**
+     * Before enemies drop, there has to be a wait time to show the user
+     * that the enemies are dropping
+     */
+    private float waitTime;
 
 
     /**
@@ -21,9 +33,12 @@ public class Enemy extends Entity {
     public Enemy(World world, Vector2 bodyDimension, Vector2 color) {
         super(world, bodyDimension);
         this.color= color;
+        texture=new Texture("box.png");
     }
 
     public void draw(SpriteBatch spriteBatch){
 
+        Vector2 bodyPosition=getBody().getPosition();
+        spriteBatch.draw(texture, bodyPosition.x, bodyPosition.y, width, height);
     }
 }

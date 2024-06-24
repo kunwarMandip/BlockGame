@@ -23,7 +23,7 @@ public class Entity {
     private Vector2 spawnLocation;
     private Vector2 fallingSpeed;
 
-
+    private float maxSpeed= 20f;
     /**
      * Sets the paradigm for every entity to be shown
      * @param world the world to place the objects in
@@ -32,7 +32,7 @@ public class Entity {
     public Entity(World world, Vector2 bodyDimension){
         this.world=world;
         this.bodyDimension=bodyDimension;
-        defineBody();
+        defineEntity();
     }
 
 
@@ -83,6 +83,32 @@ public class Entity {
     }
 
 
+    /**
+     * Defines the Body to be shown in the screen
+     */
+    private void defineEntity(){
+
+        //Defining BoyDef with zero Restitution and No friction
+        BodyDef bodyDef  = new BodyDef();
+        bodyDef.type= BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(500/ FallingBlocks.PPM, 500/FallingBlocks.PPM);
+        bodyDef.fixedRotation = true;
+        body = world.createBody(bodyDef);
+
+        //Create shape for the body
+        PolygonShape rectangleShape = new PolygonShape();
+        rectangleShape.setAsBox(bodyDimension.x/FallingBlocks.PPM, bodyDimension.y/FallingBlocks.PPM);
+
+        // Creates fixture definition and applies to body
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = rectangleShape;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+
+        body.createFixture(fixtureDef);
+        rectangleShape.dispose();
+    }
 
     public void draw(SpriteBatch spriteBatch) {}
 

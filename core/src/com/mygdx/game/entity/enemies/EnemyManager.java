@@ -1,9 +1,14 @@
 package com.mygdx.game.entity.enemies;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Responsible for drawing and updating all enemies objects
+ * in the world
+ */
 public class EnemyManager {
 
     private World world;
@@ -14,17 +19,15 @@ public class EnemyManager {
      */
     private Array<Enemy> enemies;
 
+
     public EnemyManager(World world){
         this.world= world;
-
+        enemies= new Array<>();
+        initEnemy();
     }
 
-    public Array<Enemy> getEnemies(){
-        return enemies;
-    }
-
-    public void addEnemy(Enemy enemy){
-        enemies.add(enemy);
+    private void initEnemy(){
+        enemies.add(new Enemy(world, new Vector2(100, 100), new Vector2(1, 2)));
     }
 
     /**
@@ -32,6 +35,8 @@ public class EnemyManager {
      * @param spriteBatch faster way to draw sprites
      */
     public void draw(SpriteBatch spriteBatch){
+        if(enemies.isEmpty()){return;}
+
         update();
         for(Enemy enemy: enemies){
             enemy.draw(spriteBatch);

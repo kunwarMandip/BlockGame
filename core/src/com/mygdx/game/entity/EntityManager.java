@@ -13,28 +13,32 @@ import com.mygdx.game.entity.player.Player;
  */
 public class EntityManager {
 
-    private final World world;
-    private OrthographicCamera gameCamera;
-
     private Player player;
     private EnemyManager enemyManager;
+    private OrthographicCamera gameCamera;
 
+    private float topBoundry;
+    private float widthSize;
     public EntityManager(World world, OrthographicCamera gameCamera){
-        this.world= world;
         this.gameCamera=gameCamera;
-        init();
+        init(world);
+
+        topBoundry = gameCamera.position.y + gameCamera.viewportHeight / 2;
+        widthSize= gameCamera.position.x + gameCamera.viewportWidth /2;
+
+
+        System.out.println("Top Boundary " + topBoundry);
+        System.out.println("Width Size " + widthSize);
 
     }
 
     /**
-     * Init objects/classes
+     * Init player and enemyManager class
      */
-    private void init(){
-        //X == height of body, Y== width of body
+    private void init(World world){
         player= new Player(world, new Vector2(100, 100), gameCamera);
-
+        enemyManager= new EnemyManager(world);
     }
-
 
     /**
      * Calls to draw every entity such as Players and Enemies
