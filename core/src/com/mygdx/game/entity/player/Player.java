@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.EntityType;
 
 /**
  * Object Body that the user controls aka: the user itself.
@@ -19,10 +20,12 @@ public class Player extends Entity {
      * @param bodyDimension height and width of the object to be created
      */
     public Player(World world, Vector2 bodyDimension, OrthographicCamera gameCamera) {
-        super(world, bodyDimension);
+        super(world, bodyDimension, EntityType.PLAYER);
         PlayerController playerController = new PlayerController(getBody(), gameCamera);
         Gdx.input.setInputProcessor(playerController);
         playerAnimation= new PlayerAnimation();
+
+
     }
 
 
@@ -31,7 +34,7 @@ public class Player extends Entity {
         //TODO
     }
 
-    @Override
+
     public void draw(SpriteBatch spriteBatch){
         //TODO
         update();

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.FallingBlocks;
+import com.mygdx.game.entity.enemies.Enemy;
 
 
 import static com.mygdx.game.FallingBlocks.PPM;
@@ -23,10 +24,10 @@ public class Entity {
      * @param world the world to place the objects in
      * @param bodyDimension height and width of the object to be created
      */
-    public Entity(World world, Vector2 bodyDimension){
+    public Entity(World world, Vector2 bodyDimension, EntityType entityType){
         this.world=world;
         this.bodyDimension=bodyDimension;
-        defineEntity();
+        defineEntity(entityType);
     }
 
 
@@ -38,19 +39,19 @@ public class Entity {
      * @param spawnLocationX width of the screen. DO NOT NORMALIZE BY DIVIDING BY 100
      *
      */
-    public Entity(World world, Vector2 bodyDimension, float spawnLocationX){
+    public Entity(World world, Vector2 bodyDimension, float spawnLocationX, EntityType entityType){
         this.world=world;
         this.bodyDimension= new Vector2(bodyDimension.x/100, bodyDimension.y/100);
         spawnLocationX = spawnLocationX / 100;
         float spawnLocationY= 10;
-        defineEnemyEntity(spawnLocationX, spawnLocationY);
+        defineEnemyEntity(spawnLocationX, spawnLocationY, entityType);
     }
 
 
     /**
      * Defines body for Enemy Class
      */
-    private void defineEnemyEntity(float spawnLocationX, float spawnLocationY){
+    private void defineEnemyEntity(float spawnLocationX, float spawnLocationY, EntityType entityType){
         BodyDef bodyDef  = new BodyDef();
         bodyDef.type= BodyDef.BodyType.StaticBody;
         bodyDef.position.set(5, 10);
@@ -68,7 +69,7 @@ public class Entity {
         fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0.0f;
 
-        body.createFixture(fixtureDef);
+        body.createFixture(fixtureDef).setUserData(entityType);
         rectangleShape.dispose();
     }
 
@@ -77,7 +78,7 @@ public class Entity {
      * Defines Body for Player class.
      * TODO remove this and make the two private method the same
      */
-    private void defineEntity(){
+    private void defineEntity(EntityType entityType){
 
         //Defining BoyDef with zero Restitution and No friction
         BodyDef bodyDef  = new BodyDef();
@@ -97,7 +98,7 @@ public class Entity {
         fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0.0f;
 
-        body.createFixture(fixtureDef);
+        body.createFixture(fixtureDef).setUserData(entityType);
         rectangleShape.dispose();
     }
 

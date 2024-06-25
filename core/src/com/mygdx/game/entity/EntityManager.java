@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.contactlistener.GameContactListener;
 import com.mygdx.game.entity.enemies.EnemyManager;
 import com.mygdx.game.entity.player.Player;
 
@@ -15,17 +16,18 @@ public class EntityManager {
 
     private Player player;
     private EnemyManager enemyManager;
+    private GameContactListener gameContactListener;
     private OrthographicCamera gameCamera;
 
     private float topBoundry;
     private float widthSize;
     public EntityManager(World world, OrthographicCamera gameCamera){
+
         this.gameCamera=gameCamera;
         init(world);
 
         topBoundry = gameCamera.position.y + gameCamera.viewportHeight / 2;
         widthSize= gameCamera.position.x + gameCamera.viewportWidth /2;
-
 
         System.out.println("Top Boundary " + topBoundry);
         System.out.println("Width Size " + widthSize);
@@ -38,6 +40,8 @@ public class EntityManager {
     private void init(World world){
         player= new Player(world, new Vector2(100, 100), gameCamera);
         enemyManager= new EnemyManager(world);
+        gameContactListener = new GameContactListener();
+        world.setContactListener(gameContactListener);
     }
 
     /**

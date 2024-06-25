@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.FallingBlocks;
 import com.mygdx.game.entity.Entity;
+import com.mygdx.game.entity.EntityType;
 
 public class Enemy extends Entity {
 
@@ -21,6 +22,7 @@ public class Enemy extends Entity {
      * that the enemies are dropping
      */
     private int waitTime = 0;
+    private boolean finishedWaiting=false;
 
     /**
      *
@@ -31,21 +33,27 @@ public class Enemy extends Entity {
      *              if y==0, block will not change color and the color of that will be fallingSpeed.x
      */
     public Enemy(World world, Vector2 bodyDimension, float spawnLocationX) {
-        super(world, bodyDimension, spawnLocationX);
+        super(world, bodyDimension, spawnLocationX, EntityType.ENEMY);
         texture=new Texture("box.png");
     }
 
 
 
     /**
-     * Override this method on YOUR enemies class
-     * to do actions with them
+     *
      */
     public void update(){
-        waitTime ++;
-        if(waitTime >100){
-            setBodyDynamic();
+
+        if(!finishedWaiting){
+            if(waitTime >100){
+                getBody().setType(BodyDef.BodyType.DynamicBody);
+                finishedWaiting=true;
+            }
+            waitTime ++;
         }
+
+//        System.out.println("Score: " + FallingBlocks.score++);
+        FallingBlocks.score++;
     }
 
     public void draw(SpriteBatch spriteBatch){
@@ -54,12 +62,6 @@ public class Enemy extends Entity {
         spriteBatch.draw(texture, bodyPosition.x, bodyPosition.y, width, height);
     }
 
-    /**
-     * Changed Body to dynamic to allow it to drop
-     */
-    public void setBodyDynamic(){
-        getBody().setType(BodyDef.BodyType.DynamicBody);
-    }
 
 
 
