@@ -17,31 +17,31 @@ public class EntityManager {
     private Player player;
     private EnemyManager enemyManager;
     private GameContactListener gameContactListener;
-    private OrthographicCamera gameCamera;
 
-    private float topBoundry;
-    private float widthSize;
+    /**
+     * Sets the player, enemies, and the contact listener
+     * @param world box2D world to deploy body in
+     * @param gameCamera camera that shows the viewport
+     */
     public EntityManager(World world, OrthographicCamera gameCamera){
+        player= new Player(world, gameCamera);
+        enemyManager= new EnemyManager(world);
+        gameContactListener = new GameContactListener(world, enemyManager.getEnemiesToRemove());
+        world.setContactListener(gameContactListener);
 
-        this.gameCamera=gameCamera;
-        init(world);
+        float topBoundary = gameCamera.position.y + gameCamera.viewportHeight / 2;
+        float widthSize= gameCamera.position.x + gameCamera.viewportWidth /2;
 
-        topBoundry = gameCamera.position.y + gameCamera.viewportHeight / 2;
-        widthSize= gameCamera.position.x + gameCamera.viewportWidth /2;
-
-        System.out.println("Top Boundary " + topBoundry);
+        System.out.println("Top Boundary " + topBoundary);
         System.out.println("Width Size " + widthSize);
-
     }
 
     /**
-     * Init player and enemyManager class
+     * Update Entities
      */
-    private void init(World world){
-        player= new Player(world, new Vector2(100, 100), gameCamera);
-        enemyManager= new EnemyManager(world);
-        gameContactListener = new GameContactListener();
-        world.setContactListener(gameContactListener);
+    public void update(){
+        enemyManager.update();
+        enemyManager.removeEnemies();
     }
 
     /**
@@ -51,7 +51,6 @@ public class EntityManager {
     public void drawEntities(SpriteBatch spriteBatch){
         player.draw(spriteBatch);
         enemyManager.draw(spriteBatch);
-        //TODO add enemy draw
     }
 
 }

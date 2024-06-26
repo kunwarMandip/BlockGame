@@ -1,69 +1,75 @@
 package com.mygdx.game.entity.enemies;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.FallingBlocks;
-import com.mygdx.game.entity.Entity;
-import com.mygdx.game.entity.EntityType;
 
-public class Enemy extends Entity {
+public class Enemy {
 
-    private Vector2 color;
-    private Texture texture;
+    private final World world;
+    private Body body;
+    private final EnemyAnimation enemyAnimation;
 
-    private final float width=200/ FallingBlocks.PPM;
-    private final float height=200/FallingBlocks.PPM;
-
-    /**
-     * Before enemies drop, there has to be a wait time to show the user
-     * that the enemies are dropping
-     */
     private int waitTime = 0;
-    private boolean finishedWaiting=false;
+    private boolean finishedWaiting = false;
 
-    /**
-     *
-     * @param world the world to place the objects in
-     * @param bodyDimension height and width of the object to be created
-     * @param color the color of the block dropping:
-     *              if y != 0, color of block may change to that.
-     *              if y==0, block will not change color and the color of that will be fallingSpeed.x
-     */
+
     public Enemy(World world, Vector2 bodyDimension, float spawnLocationX) {
-        super(world, bodyDimension, spawnLocationX, EntityType.ENEMY);
-        texture=new Texture("box.png");
+        this.world= world;
+        defineEnemyBody(bodyDimension);
+        enemyAnimation= new EnemyAnimation();
     }
 
 
-
     /**
-     *
+     * Update gameBodies and texture
      */
-    public void update(){
-
-        if(!finishedWaiting){
-            if(waitTime >100){
-                getBody().setType(BodyDef.BodyType.DynamicBody);
-                finishedWaiting=true;
+    public void update() {
+        if (!finishedWaiting) {
+            if (waitTime > 100) {
+                body.setType(BodyDef.BodyType.DynamicBody);
+                finishedWaiting = true;
             }
-            waitTime ++;
+            waitTime++;
         }
-
-//        System.out.println("Score: " + FallingBlocks.score++);
+        // System.out.println("Score: " + FallingBlocks.score++);
         FallingBlocks.score++;
     }
 
-    public void draw(SpriteBatch spriteBatch){
-        update();
-        Vector2 bodyPosition=getBody().getPosition();
-        spriteBatch.draw(texture, bodyPosition.x, bodyPosition.y, width, height);
+
+    public void draw(SpriteBatch spriteBatch) {
+        Vector2 bodyPosition=body.getPosition();
+        enemyAnimation.draw(new Vector2(bodyPosition.x, bodyPosition.y), spriteBatch);
     }
 
 
+    public void dispose() {
+        world.destroyBody(body);
+        enemyAnimation.dispose();
+    }
 
 
+    private void defineEnemyBody(Vector2 bodyDimension) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.position.set(5, 10);
+        bodyDef.fixedRotation = true;
+        body = world.createBody(bodyDef);
 
+        //Create shape for the body
+        PolygonShape rectangleShape = new PolygonShape();
+        rectangleShape.setAsBox(bodyDimension.x/100, bodyDimension.y/100);
+
+        // Creates fixture definition and applies to body
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = rectangleShape;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+
+        body.createFixture(fixtureDef).setUserData(this);
+        rectangleShape.dispose();
+
+    }
 }

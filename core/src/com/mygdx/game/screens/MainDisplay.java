@@ -1,4 +1,4 @@
-package com.mygdx.game.main.screen;
+package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -112,9 +112,8 @@ public class MainDisplay implements Screen {
     public void update(float delta){
 
         // 1/60f: 60 frames per second
-        // Rest i found on youtube like it
         world.step(1/60f, 6, 2);
-
+        entityManager.update();
     }
 
     @Override
@@ -132,7 +131,7 @@ public class MainDisplay implements Screen {
         orthogonalTiledMapRenderer.render();
         box2DDebugRenderer.render(world, gameCamera.combined);
 
-//      Render the spriteBatch
+        //Render the spriteBatch
         spriteBatch.setProjectionMatrix(gameCamera.combined);
         spriteBatch.begin();
         entityManager.drawEntities(spriteBatch);

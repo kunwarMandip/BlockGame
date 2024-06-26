@@ -12,18 +12,53 @@ import com.badlogic.gdx.utils.Array;
 public class EnemyManager {
 
 
-    //When new enemy is created, they are to be added to this list ASAP!!!
-    //Allows for easier management of enemies
-    private Array<Enemy> enemies;
-
+    //For easy management of all enemies in the world
+    private final Array<Enemy> enemies;
+    private final Array<Enemy> enemiesToRemove;
 
     public EnemyManager(World world){
         enemies= new Array<>();
-        initEnemy(world);
+        enemiesToRemove= new Array<>();
+        enemies.add( new Enemy(world, new Vector2(100, 100), 5F));
     }
 
-    private void initEnemy(World world){
-        enemies.add( new Enemy(world, new Vector2(100, 100), 5F));
+
+    public Array<Enemy> getEnemiesToRemove(){
+        return enemiesToRemove;
+    }
+
+
+
+    /**
+     * Update all enemies
+     */
+    public void update(){
+        if(enemies.isEmpty()){
+//            System.out.println("Enemy Manager: No Enemies to update");
+            return;
+        }
+
+        for (Enemy enemy: enemies){
+            enemy.update();
+        }
+
+    }
+
+    /**
+     * Remove all enemies from the enemiesToRemove Array
+     */
+    public void removeEnemies(){
+
+        if(enemiesToRemove.isEmpty()){
+            return;
+        }
+
+        System.out.println("Enemy Manager: Removing enemies");
+        for (Enemy enemy : enemiesToRemove) {
+            enemy.dispose();
+            enemies.removeValue(enemy, true);
+        }
+        enemiesToRemove.clear();
 
     }
 
@@ -39,5 +74,4 @@ public class EnemyManager {
             enemy.draw(spriteBatch);
         }
     }
-
 }
