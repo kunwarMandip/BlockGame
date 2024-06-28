@@ -14,7 +14,7 @@ public class Player {
 
     private final World world;
     private Body body;
-
+    PlayerController playerController;
     private final PlayerAnimation playerAnimation;
 
     /**
@@ -24,11 +24,10 @@ public class Player {
     public Player(World world,  OrthographicCamera gameCamera) {
         this.world=world;
         definePlayerBody(new Vector2(100, 100));
-        PlayerController playerController = new PlayerController(body, gameCamera);
+        playerController = new PlayerController(body, gameCamera);
         Gdx.input.setInputProcessor(playerController);
         playerAnimation= new PlayerAnimation();
     }
-
 
 
     public void update(){
@@ -41,12 +40,16 @@ public class Player {
     }
 
 
+    /**
+     * Creates box2D body for player
+     * @param bodyDimension size of the box2D body
+     */
     private void definePlayerBody(Vector2 bodyDimension){
 
         //Defining BoyDef with zero Restitution and No friction
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set(5, 10);
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(3, 2);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
@@ -65,7 +68,7 @@ public class Player {
         rectangleShape.dispose();
     }
 
-
-
-
+    public Body getBody(){
+        return body;
+    }
 }

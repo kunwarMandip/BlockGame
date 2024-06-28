@@ -5,73 +5,73 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.Iterator;
+
 /**
- * Responsible for drawing and updating all enemies objects
- * in the world
+ * Responsible for managing enemies
  */
 public class EnemyManager {
 
-
     //For easy management of all enemies in the world
-    private final Array<Enemy> enemies;
+    private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
+    private int enemiesToSpawn;
+    private final EnemyDifficulty enemyDifficulty;
+    private EnemyGenerator enemyGenerator;
 
     public EnemyManager(World world){
-        enemies= new Array<>();
-        enemiesToRemove= new Array<>();
-        enemies.add( new Enemy(world, new Vector2(100, 100), 5F));
+        currentEnemies = new Array<>();
+        enemiesToRemove = new Array<>();
+        enemiesToSpawn =0;
+        enemyDifficulty = new EnemyDifficulty(this);
+        enemyGenerator= new EnemyGenerator(world);
+        currentEnemies.add( new Enemy(world, new Vector2(100, 100), 5F));
     }
-
 
     public Array<Enemy> getEnemiesToRemove(){
         return enemiesToRemove;
     }
 
+    public Array<Enemy> getCurrentEnemies(){
+        return currentEnemies;
+    }
+
+    public void incrementEnemiesToSpawn(){
+        enemiesToSpawn++;
+    }
 
 
-    /**
-     * Update all enemies
-     */
-    public void update(){
-        if(enemies.isEmpty()){
-//            System.out.println("Enemy Manager: No Enemies to update");
-            return;
+
+    public void update(float delta, Vector2 bodyLocation) {
+
+        // Remove and dispose of enemies in one pass
+        for (Iterator<Enemy> iterator = enemiesToRemove.iterator(); iterator.hasNext();) {
+            Enemy enemy = iterator.next();
+            enemy.dispose();
+            currentEnemies.removeValue(enemy, true);
+            iterator.remove();
         }
 
-        for (Enemy enemy: enemies){
+        enemyDifficulty.update(delta);
+        enemyGenerator.update(currentEnemies);
+
+        // Update existing enemies
+        for (Enemy enemy : currentEnemies) {
             enemy.update();
         }
-
     }
-
-    /**
-     * Remove all enemies from the enemiesToRemove Array
-     */
-    public void removeEnemies(){
-
-        if(enemiesToRemove.isEmpty()){
-            return;
-        }
-
-        System.out.println("Enemy Manager: Removing enemies");
-        for (Enemy enemy : enemiesToRemove) {
-            enemy.dispose();
-            enemies.removeValue(enemy, true);
-        }
-        enemiesToRemove.clear();
-
-    }
-
 
     /**
      * Draws all enemies currently spawned in the screen to the ground
      * @param spriteBatch faster way to draw sprites
      */
     public void draw(SpriteBatch spriteBatch){
-        if(enemies.isEmpty()){return;}
+        if(currentEnemies.isEmpty()){return;}
 
-        for(Enemy enemy: enemies){
+        for(Enemy enemy: currentEnemies){
             enemy.draw(spriteBatch);
         }
     }
+
+
 }

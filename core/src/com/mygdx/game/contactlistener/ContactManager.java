@@ -1,12 +1,9 @@
 package com.mygdx.game.contactlistener;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.entity.EntityType;
 import com.mygdx.game.entity.enemies.Enemy;
-import com.mygdx.game.entity.player.Player;
 
 /**
  * Same as GameContactListener.java but just with advanced handling

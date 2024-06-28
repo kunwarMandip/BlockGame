@@ -2,7 +2,6 @@ package com.mygdx.game.contactlistener;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.entity.EntityType;
 import com.mygdx.game.entity.enemies.Enemy;
 import com.mygdx.game.entity.player.Player;
 

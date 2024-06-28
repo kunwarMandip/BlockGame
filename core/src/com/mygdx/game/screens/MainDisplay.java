@@ -113,7 +113,7 @@ public class MainDisplay implements Screen {
 
         // 1/60f: 60 frames per second
         world.step(1/60f, 6, 2);
-        entityManager.update();
+        entityManager.update(delta);
     }
 
     @Override

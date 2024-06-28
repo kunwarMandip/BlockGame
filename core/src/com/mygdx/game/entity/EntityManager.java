@@ -8,15 +8,17 @@ import com.mygdx.game.contactlistener.GameContactListener;
 import com.mygdx.game.entity.enemies.EnemyManager;
 import com.mygdx.game.entity.player.Player;
 
+import java.util.Vector;
+
 /**
  * Responsible for managing all entities that are supposed to be loaded
  * in the current Map including Players, enemies, objects i.e. Bullets
  */
 public class EntityManager {
 
-    private Player player;
-    private EnemyManager enemyManager;
-    private GameContactListener gameContactListener;
+    private final Player player;
+    private final EnemyManager enemyManager;
+    private final GameContactListener gameContactListener;
 
     /**
      * Sets the player, enemies, and the contact listener
@@ -29,19 +31,18 @@ public class EntityManager {
         gameContactListener = new GameContactListener(world, enemyManager.getEnemiesToRemove());
         world.setContactListener(gameContactListener);
 
-        float topBoundary = gameCamera.position.y + gameCamera.viewportHeight / 2;
-        float widthSize= gameCamera.position.x + gameCamera.viewportWidth /2;
-
-        System.out.println("Top Boundary " + topBoundary);
-        System.out.println("Width Size " + widthSize);
+//        float topBoundary = gameCamera.position.y + gameCamera.viewportHeight / 2;
+//        float widthSize= gameCamera.position.x + gameCamera.viewportWidth /2;
+//
+//        System.out.println("Top Boundary " + topBoundary);
+//        System.out.println("Width Size " + widthSize);
     }
 
     /**
      * Update Entities
      */
-    public void update(){
-        enemyManager.update();
-        enemyManager.removeEnemies();
+    public void update(float delta){
+        enemyManager.update(delta, player.getBody().getPosition());
     }
 
     /**
