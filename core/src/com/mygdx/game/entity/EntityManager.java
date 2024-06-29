@@ -27,15 +27,9 @@ public class EntityManager {
      */
     public EntityManager(World world, OrthographicCamera gameCamera){
         player= new Player(world, gameCamera);
-        enemyManager= new EnemyManager(world);
-        gameContactListener = new GameContactListener(world, enemyManager.getEnemiesToRemove());
+        enemyManager= new EnemyManager(world,gameCamera);
+        gameContactListener = new GameContactListener(world, this);
         world.setContactListener(gameContactListener);
-
-//        float topBoundary = gameCamera.position.y + gameCamera.viewportHeight / 2;
-//        float widthSize= gameCamera.position.x + gameCamera.viewportWidth /2;
-//
-//        System.out.println("Top Boundary " + topBoundary);
-//        System.out.println("Width Size " + widthSize);
     }
 
     /**
@@ -54,4 +48,11 @@ public class EntityManager {
         enemyManager.draw(spriteBatch);
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
+    }
 }

@@ -51,9 +51,17 @@ For enemies to spawn
 Width of screen in world is 7.2 max -> starting from 0
 height of where they spawn from is 14.4 
 
-14.4
-7.2 
-yh im stupid
+
+Simple difficulty spawning
+
+After 2 seconds of game starting, spawn one enemy. Score=0
+After enemy dodged. Score=1
+keep on doing this
 
 
 fortune favour lady nikuko: 1:13:0
+
+
+As the games goes on, make the polygons smaller and quicker --> as time goes on
+different shapes
+

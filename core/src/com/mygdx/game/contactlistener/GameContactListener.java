@@ -2,6 +2,7 @@ package com.mygdx.game.contactlistener;
 
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.entity.enemies.Enemy;
 import com.mygdx.game.entity.player.Player;
 
@@ -12,8 +13,8 @@ public class GameContactListener implements ContactListener {
 
     private final ContactManager contactManager;
 
-    public GameContactListener(World world, Array<Enemy> enemiesToRemove){
-        contactManager= new ContactManager(world, enemiesToRemove);
+    public GameContactListener(World world, EntityManager entityManager){
+        contactManager= new ContactManager(world, entityManager);
     }
 
     @Override

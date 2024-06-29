@@ -3,6 +3,8 @@ package com.mygdx.game.contactlistener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GlobalVariables;
+import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.entity.enemies.Enemy;
 
 /**
@@ -11,11 +13,11 @@ import com.mygdx.game.entity.enemies.Enemy;
 public class ContactManager {
 
     private final World world;
-    private Array<Enemy> enemiesToRemove;
+    private EntityManager entityManager;
 
-    public ContactManager(World world, Array<Enemy> enemiesToRemove){
+    public ContactManager(World world, EntityManager entityManager){
         this.world=world;
-        this.enemiesToRemove= enemiesToRemove;
+        this.entityManager= entityManager;
     }
 
 
@@ -25,7 +27,6 @@ public class ContactManager {
      * @param b the enemy instance class
      */
     public void EnemyPlayerContact(Fixture a, Fixture b){
-        System.out.println("Player and Enemy Touching.");
         if(friendlyEnemy(a, b)){
             return;
         }
@@ -33,12 +34,15 @@ public class ContactManager {
         //Add that enemy to remove it from the world
         Enemy enemy= (Enemy) b.getUserData();
 
-        if (enemy != null) {
-            System.out.println("Enemy not null");
-            enemiesToRemove.add(enemy);
+        if (enemy == null) {
+            System.out.println("Enemy null.");
             return;
         }
-        System.out.println("Enemy null.");
+        System.out.println("Player and Enemy Touching.");
+        System.out.println("New Score: " + GlobalVariables.score);
+        GlobalVariables.score++;
+        entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
+//        enemiesToRemove.add(enemy);
 
     }
 
