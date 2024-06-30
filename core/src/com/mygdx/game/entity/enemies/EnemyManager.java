@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.entity.EntityManager;
 
 
 import java.util.Iterator;
@@ -17,6 +18,8 @@ import java.util.Iterator;
  */
 public class EnemyManager {
 
+    private EntityManager entityManager;
+
     //For easy management of all enemies in the world
     private int numEnemiesToSpawn;
     private final Array<Enemy> currentEnemies;
@@ -24,7 +27,8 @@ public class EnemyManager {
 //    private final EnemyDifficulty enemyDifficulty;
     private final EnemyGenerator enemyGenerator;
 
-    public EnemyManager(World world, OrthographicCamera gameCamera){
+    public EnemyManager(World world, OrthographicCamera gameCamera, EntityManager entityManager){
+        this.entityManager=entityManager;
         numEnemiesToSpawn =0;
         currentEnemies = new Array<>();
         enemiesToRemove = new Array<>();
@@ -60,7 +64,7 @@ public class EnemyManager {
         //Increase difficulty and create new Enemy
 //        enemyDifficulty.update(delta);
 //        currentEnemies.add(enemyGenerator.createEnemy());
-        enemyGenerator.createEnemy(numEnemiesToSpawn);
+        enemyGenerator.createEnemy(numEnemiesToSpawn, entityManager.getPlayer().getBody().getPosition());
     }
 
     /**

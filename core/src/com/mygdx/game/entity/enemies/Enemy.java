@@ -20,7 +20,7 @@ public class Enemy {
 
     public Enemy(World world, Vector2 bodyDimension, float spawnLocationX) {
         this.world= world;
-        defineEnemyBody(bodyDimension);
+        defineEnemyBody(bodyDimension, spawnLocationX);
         enemyAnimation= new EnemyAnimation();
     }
 
@@ -53,17 +53,17 @@ public class Enemy {
     }
 
 
-    private void defineEnemyBody(Vector2 bodyDimension) {
+    private void defineEnemyBody(Vector2 bodyDimension, float spawnLocationX) {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
-        bodyDef.position.set(5, 10);
+        bodyDef.position.set(spawnLocationX, 10);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
         //Creates shape for the body
         PolygonShape rectangleShape = new PolygonShape();
-        rectangleShape.setAsBox(bodyDimension.x/100, bodyDimension.y/100);
+        rectangleShape.setAsBox(1, 1);
 
         //Creates fixture definition and applies to body
         FixtureDef fixtureDef = new FixtureDef();

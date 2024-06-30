@@ -2,13 +2,10 @@ package com.mygdx.game.entity;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.contactlistener.GameContactListener;
 import com.mygdx.game.entity.enemies.EnemyManager;
 import com.mygdx.game.entity.player.Player;
-
-import java.util.Vector;
 
 /**
  * Responsible for managing all entities that are supposed to be loaded
@@ -18,7 +15,6 @@ public class EntityManager {
 
     private final Player player;
     private final EnemyManager enemyManager;
-    private final GameContactListener gameContactListener;
 
     /**
      * Sets the player, enemies, and the contact listener
@@ -27,8 +23,8 @@ public class EntityManager {
      */
     public EntityManager(World world, OrthographicCamera gameCamera){
         player= new Player(world, gameCamera);
-        enemyManager= new EnemyManager(world,gameCamera);
-        gameContactListener = new GameContactListener(world, this);
+        enemyManager= new EnemyManager(world, gameCamera, this);
+        GameContactListener gameContactListener = new GameContactListener(world, this);
         world.setContactListener(gameContactListener);
     }
 

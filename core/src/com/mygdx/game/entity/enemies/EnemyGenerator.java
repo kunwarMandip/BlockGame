@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
-import com.badlogic.gdx.utils.Array;
-
 
 /**
  * When called update method, spawns enemies
@@ -13,9 +11,9 @@ import com.badlogic.gdx.utils.Array;
 public class EnemyGenerator {
 
     private final World world;
-    private EnemyManager enemyManager;
-    private float screenHeight;
-    private float screenWidth;
+    private final EnemyManager enemyManager;
+    private final float screenHeight;
+    private final float screenWidth;
 
     public EnemyGenerator(World world, OrthographicCamera gameCamera, EnemyManager enemyManager){
         this.world=world;
@@ -30,9 +28,12 @@ public class EnemyGenerator {
         float spawnLocationY= (screenWidth/bodyWidth)/2;
     }
 
-    public void createEnemy(int numEnemiesToSpawn){
+    public void createEnemy(int numEnemiesToSpawn, Vector2 playerPosition){
+
+        float playerPositionX= playerPosition.x;
+
         for(int i=0; i<numEnemiesToSpawn; i++){
-            enemyManager.getCurrentEnemies().add(new Enemy(world, new Vector2(5, 5), 6));
+            enemyManager.getCurrentEnemies().add(new Enemy(world, new Vector2(5, 5), playerPositionX));
             enemyManager.decrementNumEnemiesToSpawn();
         }
     }
