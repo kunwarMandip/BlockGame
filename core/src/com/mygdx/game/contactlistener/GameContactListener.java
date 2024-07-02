@@ -29,6 +29,9 @@ public class GameContactListener implements ContactListener {
         if(checkPlayerEnemyContact(a, b)){
             return;
         }
+        if(checkEnemyFloorContact(a, b)){
+            return;
+        }
 
 
     }
@@ -55,7 +58,7 @@ public class GameContactListener implements ContactListener {
      * @return true if its player and enemy, false if it isn't
      */
     private boolean checkPlayerEnemyContact(Fixture a, Fixture b){
-        System.out.println("Checking");
+        System.out.println("Checking Player and Enemy");
         if (a.getUserData() instanceof Player && b.getUserData() instanceof Enemy){
             contactManager.EnemyPlayerContact(a, b);
             return true;
@@ -67,6 +70,21 @@ public class GameContactListener implements ContactListener {
         }
         System.out.println("False");
         return false;
+    }
+
+    private boolean checkEnemyFloorContact(Fixture a, Fixture b){
+        System.out.println("Checking Enemy and Floor");
+        if(a.getUserData() instanceof Enemy && b.getUserData()=="floor"){
+            contactManager.EnemyFloorContact(a, b);
+            return  true;
+        }
+
+        if(b.getUserData() instanceof Enemy && a.getUserData()=="floor"){
+            contactManager.EnemyFloorContact(a, b);
+            return true;
+        }
+        System.out.println("False");
+        return  false;
     }
 
 

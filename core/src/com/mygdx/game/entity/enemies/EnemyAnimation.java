@@ -4,12 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.FallingBlocks;
+import com.mygdx.game.GlobalVariables;
 
 public class EnemyAnimation {
 
     private final Texture enemyTexture;
-    private final float width=200/ FallingBlocks.PPM;
-    private final float height=200/FallingBlocks.PPM;
+    private final float width=200/ GlobalVariables.PPM;
+    private final float height=200/GlobalVariables.PPM;
 
     public EnemyAnimation(){
         this.enemyTexture=new Texture("box.png");

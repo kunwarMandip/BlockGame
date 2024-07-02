@@ -57,7 +57,7 @@ public class Enemy {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
-        bodyDef.position.set(spawnLocationX, 10);
+        bodyDef.position.set(spawnLocationX, 13);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 

@@ -13,7 +13,7 @@ import com.mygdx.game.entity.enemies.Enemy;
 public class ContactManager {
 
     private final World world;
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public ContactManager(World world, EntityManager entityManager){
         this.world=world;
@@ -42,11 +42,18 @@ public class ContactManager {
         System.out.println("New Score: " + GlobalVariables.score);
         GlobalVariables.score++;
         entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
-//        enemiesToRemove.add(enemy);
-
     }
 
 
+    public void EnemyFloorContact(Fixture a, Fixture b){
+        Enemy enemy= (Enemy) b.getUserData();
+        if(enemy==null){
+            System.out.println("Enemy null.");
+            return;
+        }
+        GlobalVariables.score++;
+        entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
+    }
 
 
     /**

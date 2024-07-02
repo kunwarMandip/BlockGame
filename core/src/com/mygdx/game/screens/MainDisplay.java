@@ -16,8 +16,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FallingBlocks;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.map.MapLoader;
+import com.mygdx.game.map.MapManager;
 
 import static com.mygdx.game.FallingBlocks.*;
+import static com.mygdx.game.GlobalVariables.*;
 
 /**
  * This class is the main class which holds
@@ -46,7 +48,8 @@ public class MainDisplay implements Screen {
     private World world;
 
     private TiledMap tiledMap;
-    private MapLoader mapLoader;
+//    private MapLoader mapLoader;
+    private MapManager mapManager;
 
     private SpriteBatch spriteBatch;
     private EntityManager entityManager;
@@ -83,7 +86,7 @@ public class MainDisplay implements Screen {
      * Tells the renderer to render the tileMap
      */
     private void createWorld(){
-        world= new World(new Vector2(0, -9.81f), true);
+        world= new World(new Vector2(0, -9.8f), true);
 
         //Init Box2DDebugRenderer and add no colors to objects
         // "set(0, 0, 0, 1)" : sets opacity to 100% for objects
@@ -95,8 +98,9 @@ public class MainDisplay implements Screen {
         tiledMap = new TmxMapLoader().load("map7.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
-        mapLoader = new MapLoader();
-        mapLoader.mapWorld(world, tiledMap);
+//        mapLoader = new MapLoader();
+//        mapLoader.mapWorld(world, tiledMap);
+        mapManager = new MapManager(world, tiledMap);
 
     }
 
@@ -161,5 +165,13 @@ public class MainDisplay implements Screen {
         tiledMap.dispose();
         orthogonalTiledMapRenderer.dispose();
         world.dispose();
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public TiledMap getMap() {
+        return tiledMap;
     }
 }

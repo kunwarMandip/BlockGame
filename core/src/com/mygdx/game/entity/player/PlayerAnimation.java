@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.FallingBlocks;
+import com.mygdx.game.GlobalVariables;
 
 /**
  * Responsible for controlling all the animations
@@ -16,8 +17,8 @@ public class PlayerAnimation {
     /**
      * Width and height of the sprites to be displayed
      */
-    private final float width=200/ FallingBlocks.PPM;
-    private final float height=200/FallingBlocks.PPM;
+    private final float width=200/ GlobalVariables.PPM;
+    private final float height=200/GlobalVariables.PPM;
 
     public PlayerAnimation(){
         this.playerTexture= new Texture("box.png");
