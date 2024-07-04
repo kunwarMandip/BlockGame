@@ -25,14 +25,13 @@ PERKS
 ->  Maybe some MATCHING BLOCKS drop power off where the player blocks can move 
 several places in one second.
 
-WHATS NEEDED TO SPAWN ENEMY
+WHAT'S NEEDED TO SPAWN ENEMY
     WORLD -> To let the blocks spawn
     LOCATION -> at least for x since enemy has to be moving
     COLOR -> enemies have to be different colors
     FALLING speed -> Some blocks may move faster
     BODY SIZE -> Some enemies may be larger
 Color doesn't need to be in entity constructor btw
-
 
 
 ASPECT RATIO
@@ -56,11 +55,7 @@ Simple difficulty spawning
 
 After 2 seconds of game starting, spawn one enemy. Score=0
 After enemy dodged. Score=1
-keep on doing this
-
-
-fortune favour lady nikuko: 1:13:0
-
+keep on doing this 
 
 As the games goes on, make the polygons smaller and quicker --> as time goes on
 different shapes

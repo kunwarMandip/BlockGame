@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -60,6 +61,8 @@ public class MainDisplay implements Screen {
      * create the world and load the tiledMap.
      * Set the entityManager to create and updateEntities
      */
+
+    private ShapeRenderer shapeRenderer;
     public MainDisplay(FallingBlocks fallingBlocks){
         this.fallingBlocks=fallingBlocks;
         spriteBatch= new SpriteBatch();
@@ -98,9 +101,11 @@ public class MainDisplay implements Screen {
         tiledMap = new TmxMapLoader().load("map7.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
+        shapeRenderer= new ShapeRenderer();
+
 //        mapLoader = new MapLoader();
 //        mapLoader.mapWorld(world, tiledMap);
-        mapManager = new MapManager(world, tiledMap);
+        mapManager = new MapManager(world, tiledMap, shapeRenderer, gameCamera);
 
     }
 
@@ -118,6 +123,8 @@ public class MainDisplay implements Screen {
         // 1/60f: 60 frames per second
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
+
+
     }
 
     @Override
@@ -134,6 +141,7 @@ public class MainDisplay implements Screen {
         orthogonalTiledMapRenderer.setView(gameCamera);
         orthogonalTiledMapRenderer.render();
         box2DDebugRenderer.render(world, gameCamera.combined);
+        mapManager.update();
 
         //Render the spriteBatch
         spriteBatch.setProjectionMatrix(gameCamera.combined);

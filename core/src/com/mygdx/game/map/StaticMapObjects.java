@@ -11,6 +11,7 @@ import com.mygdx.game.GlobalVariables;
 /**
  * Maps all static objects in the TiledMap
  * User data for body is set to string as objects are static
+ * if user data is needed, make it dynamic Object type
  */
 public class StaticMapObjects {
 
@@ -39,16 +40,8 @@ public class StaticMapObjects {
         FixtureDef fixtureDef = new FixtureDef();
         Body body;
 
-
         // Get the target layer
         MapLayer targetLayer = map.getLayers().get(layerName);
-
-        // Check if the target layer is null
-//        if (targetLayer == null) {
-//            System.out.println("Layer name " + layerName + " not found");
-//            return;
-//        }
-
 
         for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
@@ -75,7 +68,7 @@ public class StaticMapObjects {
      * @param layerName the name of the layer
      * @return true if found, false if not
      */
-    private boolean checkLayer(TiledMap map, String layerName){
+    public static boolean checkLayer(TiledMap map, String layerName){
         for (MapLayer layer : map.getLayers()) {
             if (layer.getName().equalsIgnoreCase(layerName)) {
                 System.out.println("Map Layer: "+ layerName+ " found.");

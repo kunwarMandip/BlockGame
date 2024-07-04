@@ -3,6 +3,7 @@ package com.mygdx.game.entity.enemies;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.map.SpawnArea;
 
 
 /**
@@ -33,6 +34,7 @@ public class EnemyGenerator {
         float playerPositionX= playerPosition.x;
 
         for(int i=0; i<numEnemiesToSpawn; i++){
+            SpawnArea.getRandomSpawnPosition();
             enemyManager.getCurrentEnemies().add(new Enemy(world, new Vector2(5, 5), playerPositionX));
             enemyManager.decrementNumEnemiesToSpawn();
         }

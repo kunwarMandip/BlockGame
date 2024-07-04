@@ -5,7 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.FallingBlocks;
 
+import javax.management.ValueExp;
 import java.util.Random;
+import java.util.Vector;
+
+import static com.mygdx.game.map.SpawnArea.getRandomSpawnPosition;
+
 
 public class Enemy {
 
@@ -19,6 +24,7 @@ public class Enemy {
     private boolean finishedWaiting = false;
 
     public Enemy(World world, Vector2 bodyDimension, float spawnLocationX) {
+        System.out.println("Creating Enemy");
         this.world= world;
         defineEnemyBody(bodyDimension, spawnLocationX);
         enemyAnimation= new EnemyAnimation();
@@ -57,7 +63,13 @@ public class Enemy {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
 
-        bodyDef.position.set(spawnLocationX, 13);
+//        bodyDef.position.set(spawnLocationX, 13);
+        System.out.println("Enemy Location: " + getRandomSpawnPosition().x);
+        Vector2 enemyPos=getRandomSpawnPosition();
+        float x=enemyPos.x/100;
+        float y=enemyPos.y/100;
+
+        bodyDef.position.set(new Vector2(x, y));
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
