@@ -35,6 +35,7 @@ public class Enemy {
      * Update gameBodies and texture
      */
     public void update() {
+//        body.applyLinearImpulse(new Vector2(0, -10f), body.getWorldCenter(), true);
         if (!finishedWaiting) {
             if (waitTime > 100) {
                 body.setType(BodyDef.BodyType.DynamicBody);
@@ -86,5 +87,6 @@ public class Enemy {
 
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
+
     }
 }

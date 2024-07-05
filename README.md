@@ -60,3 +60,12 @@ keep on doing this
 As the games goes on, make the polygons smaller and quicker --> as time goes on
 different shapes
 
+WE SPAWN ENEMIES INSIDE THE MAP
+
+
+
+FALLING BLOCKS
+
+GAME BETWEEN :-> "Avoider" and "Don't touch the spikes"
+
+

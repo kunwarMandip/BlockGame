@@ -17,35 +17,19 @@ public class PlayerController implements InputProcessor {
     /**
      * For Applying Force, choose between these two:
      * APPLY LINEAR IMPULSE, SET LINEAR VELOCITY
-     *
      * Apply linear impulse looks better
      */
 
     private final Body playerBody;
     private OrthographicCamera gameCamera;
 
-    private int glideDistance;
-
-    private float startingPosition;
+    private float startingPositionX;
+    private float startingPositionY;
     private boolean isDragging;
 
-    private Vector2 force= new Vector2(10f, 0);
     public PlayerController(Body playerBody, OrthographicCamera gameCamera){
         this.playerBody=playerBody;
         this.gameCamera=gameCamera;
-        calculateDistanceToMove();
-    }
-
-    /**
-     * When user scrolls, there's only a CERTAIN AMOUNT THE USER CAN MOVE.
-     * Sets how much player can glide LEFT OR RIGHT (HORIZONTALLY) with every drag.
-     */
-    private void calculateDistanceToMove(){
-
-        //5 lanes
-        glideDistance= Gdx.graphics.getWidth()/5;
-        System.out.println("Screen Size: "+ glideDistance);
-
     }
 
     @Override
@@ -66,8 +50,9 @@ public class PlayerController implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        startingPosition=screenX;
-        isDragging=true;
+        startingPositionX = screenX;
+        startingPositionY = screenY;
+        isDragging = true;
         System.out.println("Initial touch position: (" + screenX + ", " + screenY + ")");
 
         //Just checking screen coordinates
@@ -91,20 +76,31 @@ public class PlayerController implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-
-        if(isDragging){
-            //user dragged screen left
-            if(startingPosition > screenX){
+        if (isDragging) {
+            // User dragged screen left
+            if (startingPositionX > screenX) {
                 System.out.println("Screen dragging left");
-                playerBody.setLinearVelocity(-10f, 0);
-//                playerBody.applyLinearImpulse(new Vector2(-10f, 0), playerBody.getWorldCenter(), true);
+                playerBody.applyLinearImpulse(new Vector2(-10f, 0), playerBody.getWorldCenter(), true);
                 return true;
             }
-
-            //user dragged screen right
-            playerBody.setLinearVelocity(10f, 0);
-//            playerBody.applyLinearImpulse(new Vector2(10f, 0), playerBody.getWorldCenter(), true);
-            System.out.println("Screen dragging right");
+            // User dragged screen right
+            if (startingPositionX < screenX) {
+                System.out.println("Screen dragging right");
+                playerBody.applyLinearImpulse(new Vector2(10f, 0), playerBody.getWorldCenter(), true);
+                return true;
+            }
+            // User dragged screen up
+            if (startingPositionY > screenY) {
+                System.out.println("Screen dragging up");
+                playerBody.applyLinearImpulse(new Vector2(0, 10f), playerBody.getWorldCenter(), true);
+                return true;
+            }
+            // User dragged screen down
+            if (startingPositionY < screenY) {
+                System.out.println("Screen dragging down");
+                playerBody.applyLinearImpulse(new Vector2(0, -10f), playerBody.getWorldCenter(), true);
+                return true;
+            }
         }
         return true;
     }

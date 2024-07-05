@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="21">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="45" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="24">
  <tileset firstgid="1" name="tile2" tilewidth="16" tileheight="16" tilecount="77" columns="11">
   <image source="tile2.png" width="180" height="120"/>
  </tileset>
@@ -191,14 +191,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="3" name="wall">
-  <object id="2" x="-114.469" y="0.8582" width="114.364" height="1481.16"/>
-  <object id="3" x="719.998" y="0.531583" width="112.232" height="1480.91"/>
- </objectgroup>
  <objectgroup id="5" name="floor">
   <object id="18" x="-112.148" y="1440.42" width="943.63" height="95.1617"/>
+  <object id="23" x="-90.9359" y="-95.9436" width="943.63" height="95.1617"/>
+  <object id="21" x="718.155" y="-14.1255" width="292.115" height="1492.13"/>
+  <object id="22" x="-290.936" y="-11.0952" width="292.115" height="1492.13"/>
  </objectgroup>
- <objectgroup id="6" name="spawnArea">
-  <object id="19" x="125.818" y="102.303" width="492" height="564"/>
+ <objectgroup id="6" name="spawnArea" locked="1">
+  <object id="19" x="4.60539" y="-0.727576" width="713.211" height="1436.73"/>
  </objectgroup>
 </map>

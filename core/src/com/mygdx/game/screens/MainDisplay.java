@@ -16,10 +16,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.FallingBlocks;
 import com.mygdx.game.entity.EntityManager;
-import com.mygdx.game.map.MapLoader;
 import com.mygdx.game.map.MapManager;
 
-import static com.mygdx.game.FallingBlocks.*;
 import static com.mygdx.game.GlobalVariables.*;
 
 /**
@@ -89,7 +87,7 @@ public class MainDisplay implements Screen {
      * Tells the renderer to render the tileMap
      */
     private void createWorld(){
-        world= new World(new Vector2(0, -9.8f), true);
+        world= new World(new Vector2(0f, 0f), true);
 
         //Init Box2DDebugRenderer and add no colors to objects
         // "set(0, 0, 0, 1)" : sets opacity to 100% for objects
@@ -101,10 +99,8 @@ public class MainDisplay implements Screen {
         tiledMap = new TmxMapLoader().load("map7.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
-        shapeRenderer= new ShapeRenderer();
+        shapeRenderer= new ShapeRenderer(); //remove later
 
-//        mapLoader = new MapLoader();
-//        mapLoader.mapWorld(world, tiledMap);
         mapManager = new MapManager(world, tiledMap, shapeRenderer, gameCamera);
 
     }
@@ -124,7 +120,6 @@ public class MainDisplay implements Screen {
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
 
-
     }
 
     @Override
@@ -138,6 +133,8 @@ public class MainDisplay implements Screen {
 
         //Change the camera
         gameCamera.update();
+
+        //need to change this to allow dynamic tier loading
         orthogonalTiledMapRenderer.setView(gameCamera);
         orthogonalTiledMapRenderer.render();
         box2DDebugRenderer.render(world, gameCamera.combined);
