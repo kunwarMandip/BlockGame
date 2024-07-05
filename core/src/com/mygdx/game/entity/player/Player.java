@@ -1,8 +1,10 @@
 package com.mygdx.game.entity.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
@@ -10,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.*;
  * Object Body that the user controls aka: the user itself.
  */
 public class Player {
-
 
     private final World world;
     private Body body;
@@ -23,10 +24,18 @@ public class Player {
      */
     public Player(World world,  OrthographicCamera gameCamera) {
         this.world=world;
-        definePlayerBody(new Vector2(100, 100));
-        playerController = new PlayerController(body, gameCamera);
-        Gdx.input.setInputProcessor(playerController);
+        createBox2DBody(new Vector2(100, 100));
         playerAnimation= new PlayerAnimation();
+
+//        playerController = new PlayerController(body, gameCamera);
+//        Gdx.input.setInputProcessor(playerController);
+
+        GestureDetector gestureDetector= new GestureDetector(new GesturePlayerController(body, gameCamera));
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(gestureDetector);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+
+
     }
 
 
@@ -44,7 +53,7 @@ public class Player {
      * Creates box2D body for player
      * @param bodyDimension size of the box2D body
      */
-    private void definePlayerBody(Vector2 bodyDimension){
+    private void createBox2DBody(Vector2 bodyDimension){
 
         //Defining BoyDef with zero Restitution and No friction
         BodyDef bodyDef = new BodyDef();
