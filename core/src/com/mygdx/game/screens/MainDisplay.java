@@ -50,10 +50,9 @@ public class MainDisplay implements Screen {
 //    private MapLoader mapLoader;
     private MapManager mapManager;
 
-    private SpriteBatch spriteBatch;
-    private EntityManager entityManager;
+    private final SpriteBatch spriteBatch;
+    private final EntityManager entityManager;
 
-    private FallingBlocks fallingBlocks;
     /**
      * Set the aspect ratio for the screen
      * create the world and load the tiledMap.
@@ -61,8 +60,7 @@ public class MainDisplay implements Screen {
      */
 
     private ShapeRenderer shapeRenderer;
-    public MainDisplay(FallingBlocks fallingBlocks){
-        this.fallingBlocks=fallingBlocks;
+    public MainDisplay(){
         spriteBatch= new SpriteBatch();
         setAspectRatio();
         createWorld();
@@ -136,7 +134,7 @@ public class MainDisplay implements Screen {
 
         //need to change this to allow dynamic tier loading
         orthogonalTiledMapRenderer.setView(gameCamera);
-        orthogonalTiledMapRenderer.render();
+        orthogonalTiledMapRenderer.render(mapManager.getLowerTiles());
         box2DDebugRenderer.render(world, gameCamera.combined);
         mapManager.update();
 
@@ -145,6 +143,9 @@ public class MainDisplay implements Screen {
         spriteBatch.begin();
         entityManager.drawEntities(spriteBatch);
         spriteBatch.end();
+
+        //last layer ensures that enemies not inside place to be shown aren't shown
+        orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
     }
 
     @Override

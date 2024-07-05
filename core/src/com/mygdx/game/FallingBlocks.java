@@ -5,13 +5,11 @@ import com.mygdx.game.screens.MainDisplay;
 
 public class FallingBlocks extends Game {
 
-
-
 	public static int score=0;
 
 	@Override
 	public void create() {
-		setScreen(new MainDisplay(this));
+		setScreen(new MainDisplay());
 	}
 
 	@Override

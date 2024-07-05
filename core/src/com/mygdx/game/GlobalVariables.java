@@ -12,5 +12,6 @@ public class GlobalVariables {
     public static final float VIRTUAL_HEIGHT = 1440;
     //see description in Readme.md
     public static final float PPM=100;
+    public static final String enemySpawnObjectName="spawnArea";
 
 }

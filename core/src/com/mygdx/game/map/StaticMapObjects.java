@@ -1,5 +1,6 @@
 package com.mygdx.game.map;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -81,6 +82,10 @@ public class StaticMapObjects {
 
     public Array<Body> getStaticMapBodies(){
         return staticMapBodies;
+    }
+
+    public void draw(SpriteBatch spriteBatch){
+
     }
 
 }
