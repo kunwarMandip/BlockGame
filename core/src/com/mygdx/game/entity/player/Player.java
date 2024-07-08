@@ -46,7 +46,7 @@ public class Player {
         //Defining BoyDef with zero Restitution and No friction
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(3, 2);
+        bodyDef.position.set(14, 27);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 

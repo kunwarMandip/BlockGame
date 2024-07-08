@@ -34,7 +34,7 @@ public class EnemyManager {
         enemiesToRemove = new Array<>();
 //        enemyDifficulty = new EnemyDifficulty(this);
         enemyGenerator= new EnemyGenerator(world, gameCamera, this);
-        currentEnemies.add(new Enemy(world, new Vector2(100, 100), 5F));
+//        currentEnemies.add(new Enemy(world, new Vector2(100, 100), 5F));
     }
 
 

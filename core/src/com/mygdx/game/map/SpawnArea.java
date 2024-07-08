@@ -36,6 +36,7 @@ public class SpawnArea {
             System.out.println("Spawn Area Rectangle Found");
             break;
         }
+        System.out.println("Spawn Area INIT FINISHED");
     }
 
 
