@@ -94,7 +94,7 @@ public class MainDisplay implements Screen {
         box2DDebugRenderer.setDrawBodies(true);
 
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
-        tiledMap = new TmxMapLoader().load("map7.tmx");
+        tiledMap = new TmxMapLoader().load("map9.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
         shapeRenderer= new ShapeRenderer(); //remove later

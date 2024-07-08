@@ -7,7 +7,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.GlobalVariables;
+
+import static com.mygdx.game.GlobalVariables.PPM;
+import static com.mygdx.game.GlobalVariables.checkLayer;
 
 /**
  * Maps all static objects in the TiledMap
@@ -19,16 +21,16 @@ public class StaticMapObjects {
     //holds all staticMapObjects
     private final Array<Body> staticMapBodies;
 
-
     public StaticMapObjects(World world, TiledMap map){
         System.out.println("Init StaticMapObjects.class");
         staticMapBodies= new Array<>();
 
         StaticMapObjectTypes[] staticMapObjectsArrayTypes = StaticMapObjectTypes.values();
         for (StaticMapObjectTypes obj : staticMapObjectsArrayTypes) {
-            System.out.println("Checking new one: "+ obj);
+            System.out.println("Checking new Object: "+ obj);
             loadStaticBodies(world, map, obj.toString());
         }
+
     }
 
 
@@ -49,12 +51,12 @@ public class StaticMapObjects {
 
             // Static Map bodies
             bodyDef.type = BodyDef.BodyType.KinematicBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / GlobalVariables.PPM,
-                    (rect.getY() + rect.getHeight() / 2) / GlobalVariables.PPM);
+            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / PPM,
+                    (rect.getY() + rect.getHeight() / 2) / PPM);
 
             body = world.createBody(bodyDef);
 
-            shape.setAsBox(rect.getWidth() / 2 / GlobalVariables.PPM, rect.getHeight() / 2 / GlobalVariables.PPM);
+            shape.setAsBox(rect.getWidth() / 2 / PPM, rect.getHeight() / 2 / PPM);
 
             fixtureDef.shape = shape;
             body.createFixture(fixtureDef).setUserData(layerName);
@@ -63,29 +65,10 @@ public class StaticMapObjects {
         }
     }
 
-    /**
-     * //Given a String, check if a corresponding layer can be found
-     * @param map the map file to search within
-     * @param layerName the name of the layer
-     * @return true if found, false if not
-     */
-    public static boolean checkLayer(TiledMap map, String layerName){
-        for (MapLayer layer : map.getLayers()) {
-            if (layer.getName().equalsIgnoreCase(layerName)) {
-                System.out.println("Map Layer: "+ layerName+ " found.");
-                return true;
-            }
-        }
-        System.out.println("Map Layer: "+ layerName +" not found.");
-        return  false;
-    }
 
-    public Array<Body> getStaticMapBodies(){
-        return staticMapBodies;
-    }
 
     public void draw(SpriteBatch spriteBatch){
-
     }
+
 
 }

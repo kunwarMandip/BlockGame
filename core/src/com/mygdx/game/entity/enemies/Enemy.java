@@ -5,15 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.FallingBlocks;
 
-import javax.management.ValueExp;
-import java.util.Random;
-import java.util.Vector;
 
 import static com.mygdx.game.map.SpawnArea.getRandomSpawnPosition;
 
 
 public class Enemy {
-
 
     private Body body;
     private final World world;
@@ -28,6 +24,7 @@ public class Enemy {
         this.world= world;
         defineEnemyBody(bodyDimension, spawnLocationX);
         enemyAnimation= new EnemyAnimation();
+        System.out.println("Enemy Created");
     }
 
 
@@ -35,7 +32,6 @@ public class Enemy {
      * Update gameBodies and texture
      */
     public void update() {
-//        body.applyLinearImpulse(new Vector2(0, -10f), body.getWorldCenter(), true);
         if (!finishedWaiting) {
             if (waitTime > 100) {
                 body.setType(BodyDef.BodyType.DynamicBody);
@@ -43,7 +39,6 @@ public class Enemy {
             }
             waitTime++;
         }
-        // System.out.println("Score: " + FallingBlocks.score++);
         FallingBlocks.score++;
     }
 

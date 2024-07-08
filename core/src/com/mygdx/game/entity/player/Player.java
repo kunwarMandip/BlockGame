@@ -38,23 +38,11 @@ public class Player {
 
     }
 
-
-    public void update(){
-
-    }
-
-    public void draw(SpriteBatch spriteBatch){
-        Vector2 bodyPosition=body.getPosition();
-        playerAnimation.draw(new Vector2(bodyPosition.x, bodyPosition.y), spriteBatch);
-    }
-
-
     /**
      * Creates box2D body for player
      * @param bodyDimension size of the box2D body
      */
     private void createBox2DBody(Vector2 bodyDimension){
-
         //Defining BoyDef with zero Restitution and No friction
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -75,6 +63,15 @@ public class Player {
 
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
+    }
+
+    public void update(){
+
+    }
+
+    public void draw(SpriteBatch spriteBatch){
+        Vector2 bodyPosition=body.getPosition();
+        playerAnimation.draw(new Vector2(bodyPosition.x, bodyPosition.y), spriteBatch);
     }
 
     public Body getBody(){

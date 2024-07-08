@@ -23,7 +23,7 @@ public class MapManager {
 
     private final StaticMapObjects staticMapObjects;
     private DynamicMapObjects dynamicMapObjects;
-    private SpawnArea spawnArea;
+    private final SpawnArea spawnArea;
 
     //Set which layer should be drawn before box2D and which ones after
     private final int[] upperTiles;

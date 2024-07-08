@@ -7,9 +7,9 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.GlobalVariables;
 
-import static com.mygdx.game.GlobalVariables.PPM;
-import static com.mygdx.game.GlobalVariables.enemySpawnObjectName;
+import static com.mygdx.game.GlobalVariables.*;
 
 /**
  * Responsible for finding the spawnArea Object in TiledMap
@@ -25,7 +25,7 @@ public class SpawnArea {
         System.out.println("INIT Spawn Area");
 
         String targetName=enemySpawnObjectName;
-        if(!StaticMapObjects.checkLayer(tiledMap, targetName)){
+        if(!GlobalVariables.checkLayer(tiledMap, targetName)){
             System.out.println("ERROR: Enemy Spawn Area rectangle object not found");
             return;
         }
@@ -55,8 +55,10 @@ public class SpawnArea {
      * @return location of where the Enemy class should be spawned at from
      */
     public static Vector2 getRandomSpawnPosition() {
+        System.out.println("Getting Enemy Position");
         float x = rectangleSpawnArea.x + (float) Math.random() * rectangleSpawnArea.width;
         float y = rectangleSpawnArea.y + (float) Math.random() * rectangleSpawnArea.height;
+        System.out.println(x + y);
         return new Vector2(x, y);
     }
 
