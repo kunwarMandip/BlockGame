@@ -14,12 +14,6 @@ public class PlayerAnimation {
 
     private final Texture playerTexture;
 
-    /**
-     * Width and height of the sprites to be displayed
-     */
-    private final float width=200/ GlobalVariables.PPM;
-    private final float height=200/GlobalVariables.PPM;
-
     public PlayerAnimation(){
         this.playerTexture= new Texture("box.png");
     }
@@ -30,6 +24,11 @@ public class PlayerAnimation {
      * @param spriteBatch faster way to draw than sprites only
      */
     public void draw(Vector2 playerPosition, SpriteBatch spriteBatch){
+        /**
+         * Width and height of the sprites to be displayed
+         */
+        float width = 200 / GlobalVariables.PPM;
+        float height = 200 / GlobalVariables.PPM;
         spriteBatch.draw(playerTexture, playerPosition.x, playerPosition.y, width, height);
     }
 

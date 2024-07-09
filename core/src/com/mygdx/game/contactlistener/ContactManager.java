@@ -39,8 +39,8 @@ public class ContactManager {
             return;
         }
         System.out.println("Player and Enemy Touching.");
-        System.out.println("New Score: " + GlobalVariables.score);
-        GlobalVariables.score++;
+        System.out.println("New Score: " + GlobalVariables.SCORE);
+        GlobalVariables.SCORE++;
         entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
     }
 
@@ -51,8 +51,8 @@ public class ContactManager {
             System.out.println("Enemy null.");
             return;
         }
-        GlobalVariables.score++;
-        entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
+//        GlobalVariables.score++;
+//        entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
     }
 
 

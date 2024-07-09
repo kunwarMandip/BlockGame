@@ -3,9 +3,11 @@ package com.mygdx.game.entity;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.contactlistener.GameContactListener;
 import com.mygdx.game.entity.enemies.EnemyManager;
 import com.mygdx.game.entity.player.Player;
+import com.mygdx.game.map.SpawnArea;
 
 /**
  * Responsible for managing all entities that are supposed to be loaded
@@ -21,9 +23,9 @@ public class EntityManager {
      * @param world box2D world to deploy body in
      * @param gameCamera camera that shows the viewport
      */
-    public EntityManager(World world, OrthographicCamera gameCamera){
+    public EntityManager(World world, OrthographicCamera gameCamera, Array<SpawnArea> spawnAreas){
         player= new Player(world, gameCamera);
-        enemyManager= new EnemyManager(world, gameCamera, this);
+        enemyManager= new EnemyManager(world, spawnAreas, this);
         GameContactListener gameContactListener = new GameContactListener(world, this);
         world.setContactListener(gameContactListener);
     }
@@ -32,7 +34,7 @@ public class EntityManager {
      * Update Entities
      */
     public void update(float delta){
-        enemyManager.update(delta, player.getBody().getPosition());
+//        enemyManager.update(delta, player.getBody().getPosition());
     }
 
     /**

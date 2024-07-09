@@ -8,25 +8,22 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 
-import static com.mygdx.game.GlobalVariables.PPM;
-import static com.mygdx.game.GlobalVariables.checkLayer;
+import static com.mygdx.game.GlobalVariables.*;
+
 
 /**
- * Maps all static objects in the TiledMap
- * User data for body is set to string as objects are static
- * if user data is needed, make it dynamic Object type
+ * Maps all Tiled Object layers which are in StaticMapObject
  */
 public class StaticMapObjects {
 
-    //holds all staticMapObjects
     private final Array<Body> staticMapBodies;
 
     public StaticMapObjects(World world, TiledMap map){
         System.out.println("Init StaticMapObjects.class");
         staticMapBodies= new Array<>();
 
-        StaticMapObjectTypes[] staticMapObjectsArrayTypes = StaticMapObjectTypes.values();
-        for (StaticMapObjectTypes obj : staticMapObjectsArrayTypes) {
+        STATIC_TILED_MAP_OBJECTS[] staticMapObjectsArrayTypes = STATIC_TILED_MAP_OBJECTS.values();
+        for (STATIC_TILED_MAP_OBJECTS obj : staticMapObjectsArrayTypes) {
             System.out.println("Checking new Object: "+ obj);
             loadStaticBodies(world, map, obj.toString());
         }
@@ -59,6 +56,9 @@ public class StaticMapObjects {
             shape.setAsBox(rect.getWidth() / 2 / PPM, rect.getHeight() / 2 / PPM);
 
             fixtureDef.shape = shape;
+            fixtureDef.filter.categoryBits = CATEGORY_WALL;
+
+
             body.createFixture(fixtureDef).setUserData(layerName);
 
             staticMapBodies.add(body);

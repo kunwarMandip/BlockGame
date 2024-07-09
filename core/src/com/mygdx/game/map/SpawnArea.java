@@ -2,45 +2,31 @@ package com.mygdx.game.map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GlobalVariables;
 
 import static com.mygdx.game.GlobalVariables.*;
 
 /**
  * Responsible for finding the spawnArea Object in TiledMap
- * Creates the box2D body in the world using the TiledMap
+ * Creates a Rectangle Object in the Box2D world (not a body though)
  * Allows Enemies to be spawned from directly within that area
  */
 public class SpawnArea {
 
     private static Rectangle rectangleSpawnArea;
+    private final String rectangleDirection;
 
-
-    public SpawnArea(TiledMap tiledMap){
-        System.out.println("INIT Spawn Area");
-
-        String targetName=enemySpawnObjectName;
-        if(!GlobalVariables.checkLayer(tiledMap, targetName)){
-            System.out.println("ERROR: Enemy Spawn Area rectangle object not found");
-            return;
-        }
-
-        MapLayer targetLayer = tiledMap.getLayers().get(targetName);
-        for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
-            rectangleSpawnArea = object.getRectangle();
-            System.out.println("Spawn Area Rectangle Found");
-            break;
-        }
-        System.out.println("Spawn Area INIT FINISHED");
+    public SpawnArea(RectangleMapObject rectangleObject){
+        rectangleSpawnArea = rectangleObject.getRectangle();
+        this.rectangleDirection= rectangleObject.getProperties().get("name", String.class);
+        System.out.println("Rectangle Properties: "+ rectangleDirection);
     }
 
 
-    public void draw(ShapeRenderer shapeRenderer, OrthographicCamera gameCamera){
+    public void draw( OrthographicCamera gameCamera){
+        ShapeRenderer shapeRenderer= new ShapeRenderer();
         shapeRenderer.setProjectionMatrix(gameCamera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1, 1, 1, 1); // Red color for the rectangle
@@ -51,10 +37,14 @@ public class SpawnArea {
         shapeRenderer.end();
     }
 
-    /**
-     * Gets a random position within the spawn Area for enemy to be spawned from
-     * @return location of where the Enemy class should be spawned at from
-     */
+
+    public String getRectangleDirection(){
+        return rectangleDirection;
+    }
+
+    public Rectangle getRectangleSpawnArea(){
+        return rectangleSpawnArea;
+    }
     public static Vector2 getRandomSpawnPosition() {
         System.out.println("Getting Enemy Position");
         float x = rectangleSpawnArea.x + (float) Math.random() * rectangleSpawnArea.width;

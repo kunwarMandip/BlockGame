@@ -59,12 +59,12 @@ public class MainDisplay implements Screen {
      * Set the entityManager to create and updateEntities
      */
 
-    private ShapeRenderer shapeRenderer;
     public MainDisplay(){
         spriteBatch= new SpriteBatch();
         setAspectRatio();
         createWorld();
-        entityManager = new EntityManager(world, gameCamera);
+
+        entityManager = new EntityManager(world, gameCamera, mapManager.getSpawnAreaList());
     }
 
 
@@ -97,9 +97,7 @@ public class MainDisplay implements Screen {
         tiledMap = new TmxMapLoader().load("map9.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
-        shapeRenderer= new ShapeRenderer(); //remove later
-
-        mapManager = new MapManager(world, tiledMap, shapeRenderer, gameCamera);
+        mapManager = new MapManager(world, tiledMap, gameCamera);
 
     }
 
@@ -143,6 +141,7 @@ public class MainDisplay implements Screen {
         spriteBatch.begin();
         entityManager.drawEntities(spriteBatch);
         spriteBatch.end();
+
 
         //last layer ensures that enemies not inside place to be shown aren't shown
         orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());

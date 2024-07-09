@@ -1,9 +1,9 @@
 package com.mygdx.game.entity.player;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+
 
 /**
  * For Android only
@@ -12,7 +12,7 @@ public class GesturePlayerController implements GestureDetector.GestureListener 
 
     private final Body playerBody;
 
-    public GesturePlayerController(Body playerBody, OrthographicCamera gameCamera){
+    public GesturePlayerController(Body playerBody){
         this.playerBody=playerBody;
     }
 
@@ -39,24 +39,21 @@ public class GesturePlayerController implements GestureDetector.GestureListener 
                 playerBody.setLinearVelocity(new Vector2(10f, 0));
                 System.out.println("Fling Right");
             } else {
-                playerBody.setLinearVelocity(new Vector2(-10f, 0));
-//                playerBody.applyLinearImpulse(new Vector2(-10f, 0), playerBody.getWorldCenter(), true);
+                playerBody.setLinearVelocity(new Vector2(-200f, 0));
                 System.out.println("Fling Left");
             }
 
         } else {
             if (velocityY > 0) {
                 playerBody.setLinearVelocity(new Vector2(0f, -10f));
-//                playerBody.applyLinearImpulse(new Vector2(0f, -10f), playerBody.getWorldCenter(), true);
                 System.out.println("Fling Down");
             } else {
                 playerBody.setLinearVelocity(new Vector2(0f, 10f));
-//                playerBody.applyLinearImpulse(new Vector2(0f, 10f), playerBody.getWorldCenter(), true);
                 System.out.println("Fling Up");
             }
 
         }
-        return false;
+        return true;
 
     }
 

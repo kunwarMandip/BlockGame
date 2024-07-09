@@ -6,9 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.EntityManager;
+import com.mygdx.game.map.SpawnArea;
 
 
 import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * Responsible for managing enemies:
@@ -18,7 +20,7 @@ import java.util.Iterator;
  */
 public class EnemyManager {
 
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     //For easy management of all enemies in the world
     private int numEnemiesToSpawn;
@@ -27,13 +29,14 @@ public class EnemyManager {
 //    private final EnemyDifficulty enemyDifficulty;
     private final EnemyGenerator enemyGenerator;
 
-    public EnemyManager(World world, OrthographicCamera gameCamera, EntityManager entityManager){
+    public EnemyManager(World world, Array<SpawnArea> spawnAreas, EntityManager entityManager){
         this.entityManager=entityManager;
         numEnemiesToSpawn =0;
         currentEnemies = new Array<>();
         enemiesToRemove = new Array<>();
 //        enemyDifficulty = new EnemyDifficulty(this);
-        enemyGenerator= new EnemyGenerator(world, gameCamera, this);
+        enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
+        enemyGenerator.createEnemy(new Vector2(5, 5));
 //        currentEnemies.add(new Enemy(world, new Vector2(100, 100), 5F));
     }
 
@@ -43,7 +46,7 @@ public class EnemyManager {
      * Update existing enemies.
      * Increase difficulty and create new Enemies.
      * @param delta time since last render
-     * @param bodyLocation location of where the player is currently at.
+     * @param bodyLocation Box2D player Body location
      */
     public void update(float delta, Vector2 bodyLocation) {
 
@@ -64,7 +67,9 @@ public class EnemyManager {
         //Increase difficulty and create new Enemy
 //        enemyDifficulty.update(delta);
 //        currentEnemies.add(enemyGenerator.createEnemy());
-        enemyGenerator.createEnemy(numEnemiesToSpawn, entityManager.getPlayer().getBody().getPosition());
+//        enemyGenerator.createEnemy(numEnemiesToSpawn, entityManager.getPlayer().getBody().getPosition());
+//        Vector2 playerLocation= entityManager.getPlayer().getBody().getPosition();
+//        enemyGenerator.createEnemy(playerLocation);
     }
 
     /**

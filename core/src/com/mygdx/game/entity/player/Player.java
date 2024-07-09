@@ -8,6 +8,8 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
+import static com.mygdx.game.GlobalVariables.CATEGORY_PLAYER;
+
 /**
  * Object Body that the user controls aka: the user itself.
  */
@@ -15,7 +17,6 @@ public class Player {
 
     private final World world;
     private Body body;
-    PlayerController playerController;
     private final PlayerAnimation playerAnimation;
 
     /**
@@ -27,10 +28,8 @@ public class Player {
         createBox2DBody(new Vector2(100, 100));
         playerAnimation= new PlayerAnimation();
 
-//        playerController = new PlayerController(body, gameCamera);
-//        Gdx.input.setInputProcessor(playerController);
-
-        GestureDetector gestureDetector= new GestureDetector(new GesturePlayerController(body, gameCamera));
+        //Creating Enemy Controller
+        GestureDetector gestureDetector= new GestureDetector(new GesturePlayerController(body));
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
@@ -52,7 +51,7 @@ public class Player {
 
         //Create shape for the body
         PolygonShape rectangleShape = new PolygonShape();
-        rectangleShape.setAsBox(bodyDimension.x/100, bodyDimension.y/100);
+        rectangleShape.setAsBox(2, 2);
 
         // Creates fixture definition and applies to body
         FixtureDef fixtureDef = new FixtureDef();
@@ -61,6 +60,7 @@ public class Player {
         fixtureDef.friction = 0.0f;
         fixtureDef.restitution = 0.0f;
 
+        fixtureDef.filter.categoryBits=CATEGORY_PLAYER;
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
     }

@@ -73,18 +73,18 @@ public class GameContactListener implements ContactListener {
     }
 
     private boolean checkEnemyFloorContact(Fixture a, Fixture b){
-        System.out.println("Checking Enemy and Floor");
-        if(a.getUserData() instanceof Enemy && b.getUserData()=="floor"){
+        System.out.println("Checking Enemy and Wall");
+        if(a.getUserData() instanceof Enemy && b.getUserData()=="wall"){
             contactManager.EnemyFloorContact(a, b);
             return  true;
         }
 
-        if(b.getUserData() instanceof Enemy && a.getUserData()=="floor"){
+        if(b.getUserData() instanceof Enemy && a.getUserData()=="wall"){
             contactManager.EnemyFloorContact(a, b);
             return true;
         }
         System.out.println("False");
-        return  false;
+        return false;
     }
 
 
