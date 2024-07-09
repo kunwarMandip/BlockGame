@@ -53,12 +53,13 @@ public class StaticMapObjects {
 
             fixtureDef.shape = shape;
             fixtureDef.filter.categoryBits = CATEGORY_WALL;
-//            fixtureDef.filter.maskBits = ~CATEGORY_ENEMY;
 
             body.createFixture(fixtureDef).setUserData(layerName);
 
             staticMapBodies.add(body);
         }
+
+
     }
 
 

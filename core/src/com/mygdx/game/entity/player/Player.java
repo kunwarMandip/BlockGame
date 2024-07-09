@@ -63,6 +63,7 @@ public class Player {
         fixtureDef.filter.categoryBits=CATEGORY_PLAYER;
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
+        System.out.println("Players Body Location: " + body.getPosition().x +" :...: "+ body.getPosition().y );
     }
 
     public void update(){

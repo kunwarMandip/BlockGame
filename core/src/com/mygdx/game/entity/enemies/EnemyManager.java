@@ -27,13 +27,13 @@ public class EnemyManager {
 //    private final EnemyDifficulty enemyDifficulty;
     private final EnemyGenerator enemyGenerator;
 
-    public EnemyManager(World world, Array<SpawnArea> spawnAreas, EntityManager entityManager){
-        this.entityManager=entityManager;
-        numEnemiesToSpawn =0;
+    public EnemyManager(World world, Array<SpawnArea> spawnAreas, EntityManager entityManager, Vector2 playerPosition){
+        this.entityManager = entityManager;
+        numEnemiesToSpawn = 0;
         currentEnemies = new Array<>();
         enemiesToRemove = new Array<>();
         enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
-        enemyGenerator.createEnemy(new Vector2(5, 5));
+        enemyGenerator.createEnemy(playerPosition);
     }
 
 

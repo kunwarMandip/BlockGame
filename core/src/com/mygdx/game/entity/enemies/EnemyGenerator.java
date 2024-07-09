@@ -45,17 +45,13 @@ public class EnemyGenerator {
 
     /**
      * Choose the X and Y location to spawn Enemy from using playerLocation
-     * @param playerLocation the location of the body of the player
      */
     public void createEnemy(Vector2 playerLocation){
-
         SpawnArea spawnArea= spawnAreas.get(chooseRectangleToSpawn()-1);
         System.out.println("Rectangle to Spawn: "+ spawnArea.getRectangleDirection());
 
-        Vector2 enemySpeed; //how fast the enemy move
-        Vector2 spawnLocation;
-        float spawnLocationX;
-        float spawnLocationY;
+        Vector2 enemySpeed, spawnLocation; //how fast the enemy move
+        float spawnLocationX, spawnLocationY;
 
         switch(spawnArea.getRectangleDirection()){
             case "top":
@@ -69,20 +65,22 @@ public class EnemyGenerator {
                 enemySpeed= new Vector2(0, 10f);
                 break;
             case "left":
+                spawnLocationX= (spawnArea.getRectangleSpawnArea().y/GlobalVariables.PPM)/2;
                 spawnLocationY= playerLocation.y;
-                spawnLocationX= (spawnArea.getRectangleSpawnArea().x/GlobalVariables.PPM)/2;
                 enemySpeed= new Vector2(-10f, 0);
                 break;
             default: //For right and default
+                spawnLocationX= (spawnArea.getRectangleSpawnArea().y/GlobalVariables.PPM)/2;
                 spawnLocationY= playerLocation.y;
-                spawnLocationX= (spawnArea.getRectangleSpawnArea().x/GlobalVariables.PPM)/2;
                 enemySpeed= new Vector2(10f, 0);
                 break;
         }
 
-        spawnLocation= new Vector2(spawnLocationX, spawnLocationY);
-        enemyManager.getCurrentEnemies().add(new Enemy(world, spawnLocation, enemySpeed));
+        System.out.println("Player Location: " + playerLocation.x +" :...: "+  playerLocation.y);
+        System.out.println("Spawn location: " +spawnLocationX +" :...: "+ spawnLocationY);
 
+        spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
+        enemyManager.getCurrentEnemies().add(new Enemy(world, spawnLocation,  enemySpeed));
     }
 
 }

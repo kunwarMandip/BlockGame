@@ -56,10 +56,7 @@ public class Enemy {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-        Vector2 enemyPos=getRandomSpawnPosition();
-        float x=enemyPos.x/100;
-        float y=enemyPos.y/100;
-        bodyDef.position.set(x, y);
+        bodyDef.position.set(spawnLocation.x, spawnLocation.y);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
