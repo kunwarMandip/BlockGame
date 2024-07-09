@@ -19,12 +19,13 @@ public class Enemy {
     private int waitTime = 0;
     private boolean finishedWaiting = false;
 
+    private final Vector2 speed;
 
     public Enemy(World world, Vector2 spawnLocation, Vector2 speed){
         this.world=world;
-        defineEnemy(spawnLocation, speed);
+        this.speed=speed;
+        defineEnemy(spawnLocation);
         enemyAnimation= new EnemyAnimation();
-
     }
 
 
@@ -39,7 +40,7 @@ public class Enemy {
             }
             waitTime++;
         }
-        body.applyLinearImpulse(new Vector2(0, 10f), body.getWorldCenter(), true);
+        body.setLinearVelocity(speed);
         FallingBlocks.score++;
     }
 
@@ -50,31 +51,21 @@ public class Enemy {
     }
 
 
-    public void dispose() {
-        world.destroyBody(body);
-        enemyAnimation.dispose();
-    }
 
-
-
-
-    private void defineEnemy(Vector2 spawnLocation, Vector2 speed) {
+    private void defineEnemy(Vector2 spawnLocation) {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
 
-//        bodyDef.position.set(spawnLocationX, 13);
-        System.out.println("Enemy Location: " + getRandomSpawnPosition().x);
         Vector2 enemyPos=getRandomSpawnPosition();
         float x=enemyPos.x/100;
         float y=enemyPos.y/100;
-
-        bodyDef.position.set(spawnLocation);
+        bodyDef.position.set(x, y);
         bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
         //Creates shape for the body
         PolygonShape rectangleShape = new PolygonShape();
-        rectangleShape.setAsBox(5, 5);
+        rectangleShape.setAsBox(2, 2);
 
         //Creates fixture definition and applies to body
         FixtureDef fixtureDef = new FixtureDef();
@@ -86,10 +77,13 @@ public class Enemy {
         fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
         fixtureDef.filter.maskBits = ~CATEGORY_WALL; // Collides with everything except walls
 
-
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
 
+    }
 
+    public void dispose() {
+        world.destroyBody(body);
+        enemyAnimation.dispose();
     }
 }

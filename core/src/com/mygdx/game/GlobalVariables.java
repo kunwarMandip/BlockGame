@@ -24,17 +24,17 @@ public class GlobalVariables {
     public static final short CATEGORY_OUTER_BOUND  = 0x0008;
 
 
-    public static enum STATIC_TILED_MAP_OBJECTS{
-        wall, outerBound;
+    public enum STATIC_TILED_MAP_OBJECTS{
+        wall;
     }
 
     /**
-     * //Given a String, check if a corresponding layer can be found
+     * Given a String, check if a corresponding layer can be found
      * @param map the map file to search within
      * @param layerName the name of the layer
      * @return true if found, false if not
      */
-    public static boolean checkLayer(TiledMap map, String layerName){
+    public static boolean CHECK_LAYER(TiledMap map, String layerName){
         for (MapLayer layer : map.getLayers()) {
             if (layer.getName().equalsIgnoreCase(layerName)) {
                 System.out.println("Map Layer: "+ layerName+ " found.");

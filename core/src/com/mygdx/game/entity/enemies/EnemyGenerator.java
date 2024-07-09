@@ -20,7 +20,7 @@ public class EnemyGenerator {
     private final Array<SpawnArea> spawnAreas;
     private final EnemyManager enemyManager;
 
-    private int lastNumber = -1;
+    private int lastNumber = 1;
     private final Random random;
 
     public EnemyGenerator(World world, Array<SpawnArea> spawnAreas, EnemyManager enemyManager){
@@ -49,11 +49,10 @@ public class EnemyGenerator {
      */
     public void createEnemy(Vector2 playerLocation){
 
-        System.out.println("Spawn: " +chooseRectangleToSpawn());
-        SpawnArea spawnArea= spawnAreas.get(chooseRectangleToSpawn());
+        SpawnArea spawnArea= spawnAreas.get(chooseRectangleToSpawn()-1);
+        System.out.println("Rectangle to Spawn: "+ spawnArea.getRectangleDirection());
 
-        Vector2 enemySpeed; //how fast the enemy moves
-        //Y Coordinate doesn't matter unless its left or right rectangle
+        Vector2 enemySpeed; //how fast the enemy move
         Vector2 spawnLocation;
         float spawnLocationX;
         float spawnLocationY;
@@ -85,11 +84,5 @@ public class EnemyGenerator {
         enemyManager.getCurrentEnemies().add(new Enemy(world, spawnLocation, enemySpeed));
 
     }
-
-
-    public void chooseEnemy(){
-    }
-
-
 
 }

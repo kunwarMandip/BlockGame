@@ -39,7 +39,7 @@ public class GesturePlayerController implements GestureDetector.GestureListener 
                 playerBody.setLinearVelocity(new Vector2(10f, 0));
                 System.out.println("Fling Right");
             } else {
-                playerBody.setLinearVelocity(new Vector2(-200f, 0));
+                playerBody.setLinearVelocity(new Vector2(-10f, 0));
                 System.out.println("Fling Left");
             }
 

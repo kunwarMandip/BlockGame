@@ -1,6 +1,5 @@
 package com.mygdx.game.entity.enemies;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -10,7 +9,6 @@ import com.mygdx.game.map.SpawnArea;
 
 
 import java.util.Iterator;
-import java.util.Vector;
 
 /**
  * Responsible for managing enemies:
@@ -34,10 +32,8 @@ public class EnemyManager {
         numEnemiesToSpawn =0;
         currentEnemies = new Array<>();
         enemiesToRemove = new Array<>();
-//        enemyDifficulty = new EnemyDifficulty(this);
         enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
         enemyGenerator.createEnemy(new Vector2(5, 5));
-//        currentEnemies.add(new Enemy(world, new Vector2(100, 100), 5F));
     }
 
 

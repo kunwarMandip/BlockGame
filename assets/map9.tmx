@@ -275,7 +275,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="33" name="outerBound">
+ <objectgroup id="33" name="outerBound" locked="1">
   <object id="46" x="-109.876" y="-93.3333" width="658.51" height="1021.65"/>
  </objectgroup>
 </map>

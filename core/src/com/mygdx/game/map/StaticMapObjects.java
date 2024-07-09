@@ -1,6 +1,5 @@
 package com.mygdx.game.map;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -11,9 +10,6 @@ import com.badlogic.gdx.utils.Array;
 import static com.mygdx.game.GlobalVariables.*;
 
 
-/**
- * Maps all Tiled Object layers which are in StaticMapObject
- */
 public class StaticMapObjects {
 
     private final Array<Body> staticMapBodies;
@@ -33,7 +29,7 @@ public class StaticMapObjects {
 
     private void loadStaticBodies(World world, TiledMap map, String layerName) {
 
-        if(!checkLayer(map, layerName)){return;}
+        if(!CHECK_LAYER(map, layerName)){return;}
 
         BodyDef bodyDef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -46,18 +42,18 @@ public class StaticMapObjects {
         for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = object.getRectangle();
 
-            // Static Map bodies
-            bodyDef.type = BodyDef.BodyType.KinematicBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2) / PPM,
-                    (rect.getY() + rect.getHeight() / 2) / PPM);
+            bodyDef.type = BodyDef.BodyType.StaticBody; // Static Map bodies
+
+            float positionX = (rect.getX() +rect.getWidth()/2) /PPM;
+            float positionY = (rect.getY() + rect.getHeight()/2) /PPM;
+            bodyDef.position.set(positionX, positionY);
 
             body = world.createBody(bodyDef);
-
             shape.setAsBox(rect.getWidth() / 2 / PPM, rect.getHeight() / 2 / PPM);
 
             fixtureDef.shape = shape;
             fixtureDef.filter.categoryBits = CATEGORY_WALL;
-
+//            fixtureDef.filter.maskBits = ~CATEGORY_ENEMY;
 
             body.createFixture(fixtureDef).setUserData(layerName);
 
@@ -67,8 +63,6 @@ public class StaticMapObjects {
 
 
 
-    public void draw(SpriteBatch spriteBatch){
-    }
 
 
 }
