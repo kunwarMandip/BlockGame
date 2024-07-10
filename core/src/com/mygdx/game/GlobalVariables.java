@@ -1,8 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-
 public class GlobalVariables {
     public static int SCORE=0;
 
@@ -21,28 +18,7 @@ public class GlobalVariables {
     public static final short CATEGORY_PLAYER = 0x0001;
     public static final short CATEGORY_ENEMY  = 0x0002;
     public static final short CATEGORY_WALL   = 0x0004;
-    public static final short CATEGORY_OUTER_BOUND  = 0x0008;
-
-
-    public enum STATIC_TILED_MAP_OBJECTS{
-        wall;
-    }
-
-    /**
-     * Given a String, check if a corresponding layer can be found
-     * @param map the map file to search within
-     * @param layerName the name of the layer
-     * @return true if found, false if not
-     */
-    public static boolean CHECK_LAYER(TiledMap map, String layerName){
-        for (MapLayer layer : map.getLayers()) {
-            if (layer.getName().equalsIgnoreCase(layerName)) {
-                System.out.println("Map Layer: "+ layerName+ " found.");
-                return true;
-            }
-        }
-        System.out.println("Map Layer: "+ layerName +" not found.");
-        return false;
-    }
+    public static final short CATEGORY_ENEMY_SPAWN_AREA   = 0x0008;
+    public static final short CATEGORY_OUTER_BOUND  = 0x00016;
 
 }

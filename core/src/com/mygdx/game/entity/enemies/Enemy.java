@@ -7,7 +7,6 @@ import com.mygdx.game.FallingBlocks;
 
 
 import static com.mygdx.game.GlobalVariables.*;
-import static com.mygdx.game.map.SpawnArea.getRandomSpawnPosition;
 
 
 public class Enemy {

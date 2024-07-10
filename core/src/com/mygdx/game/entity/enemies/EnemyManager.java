@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.EntityManager;
-import com.mygdx.game.map.SpawnArea;
+import com.mygdx.game.map.objects.EnemySpawnArea;
 
 
 import java.util.Iterator;
@@ -24,15 +24,15 @@ public class EnemyManager {
     private int numEnemiesToSpawn;
     private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
-//    private final EnemyDifficulty enemyDifficulty;
     private final EnemyGenerator enemyGenerator;
 
-    public EnemyManager(World world, Array<SpawnArea> spawnAreas, EntityManager entityManager, Vector2 playerPosition){
+    public EnemyManager(World world, Array<EnemySpawnArea> spawnAreas, EntityManager entityManager, Vector2 playerPosition){
         this.entityManager = entityManager;
         numEnemiesToSpawn = 0;
         currentEnemies = new Array<>();
         enemiesToRemove = new Array<>();
         enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
+//        enemyGenerator.create(playerPosition);
         enemyGenerator.createEnemy(playerPosition);
     }
 
@@ -60,12 +60,14 @@ public class EnemyManager {
             enemy.update();
         }
 
-        //Increase difficulty and create new Enemy
-//        enemyDifficulty.update(delta);
-//        currentEnemies.add(enemyGenerator.createEnemy());
-//        enemyGenerator.createEnemy(numEnemiesToSpawn, entityManager.getPlayer().getBody().getPosition());
-//        Vector2 playerLocation= entityManager.getPlayer().getBody().getPosition();
-//        enemyGenerator.createEnemy(playerLocation);
+        //Create new Enemies
+//        for(int i=0; i<numEnemiesToSpawn; i++){
+//            System.out.println("Creating enemies");
+//            enemyGenerator.create(bodyLocation);
+//        }
+
+//        enemyGenerator.create(bodyLocation);
+
     }
 
     /**
@@ -105,6 +107,5 @@ public class EnemyManager {
     public void setNumEnemiesToSpawn(int numEnemiesToSpawn) {
         this.numEnemiesToSpawn = numEnemiesToSpawn;
     }
-
 
 }

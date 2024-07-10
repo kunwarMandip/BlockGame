@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.entity.enemies.Enemy;
 import com.mygdx.game.entity.player.Player;
+import com.mygdx.game.map.objects.OuterBound;
 
 /**
  * Responsible for handling when two box2D bodies collide or touch
@@ -30,6 +31,10 @@ public class GameContactListener implements ContactListener {
             return;
         }
         if(checkEnemyFloorContact(a, b)){
+            return;
+        }
+
+        if(checkEnemyBoundContact(a, b)){
             return;
         }
 
@@ -72,6 +77,20 @@ public class GameContactListener implements ContactListener {
         return false;
     }
 
+    private boolean checkEnemyBoundContact(Fixture a, Fixture b){
+        System.out.println("Checking Enemy and OuterBound");
+        if (a.getUserData() instanceof Enemy && b.getUserData() instanceof OuterBound){
+            contactManager.handleEnemyOuterBoundContact(a, b);
+            return true;
+        }
+
+        if (a.getUserData() instanceof OuterBound && b.getUserData() instanceof Enemy){
+            contactManager.handleEnemyOuterBoundContact(b, a);
+            return true;
+        }
+        return false;
+
+    }
     private boolean checkEnemyFloorContact(Fixture a, Fixture b){
         System.out.println("Checking Enemy and Wall");
 //        if(a.getUserData() instanceof Enemy && b.getUserData()=="wall"){

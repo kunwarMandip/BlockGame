@@ -7,7 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.contactlistener.GameContactListener;
 import com.mygdx.game.entity.enemies.EnemyManager;
 import com.mygdx.game.entity.player.Player;
-import com.mygdx.game.map.SpawnArea;
+import com.mygdx.game.map.objects.EnemySpawnArea;
 
 /**
  * Responsible for managing all entities that are supposed to be loaded
@@ -23,7 +23,7 @@ public class EntityManager {
      * @param world box2D world to deploy body in
      * @param gameCamera camera that shows the viewport
      */
-    public EntityManager(World world, OrthographicCamera gameCamera, Array<SpawnArea> spawnAreas){
+    public EntityManager(World world, OrthographicCamera gameCamera, Array<EnemySpawnArea> spawnAreas){
         player= new Player(world, gameCamera);
         enemyManager= new EnemyManager(world, spawnAreas, this, player.getBody().getPosition());
         GameContactListener gameContactListener = new GameContactListener(world, this);
@@ -34,8 +34,8 @@ public class EntityManager {
      * Update Entities
      */
     public void update(float delta){
-//        System.out.println("Hello: " +  player.getBody().getPosition().x +" :...: "+  player.getBody().getPosition().y );
         enemyManager.update(delta, player.getBody().getPosition());
+        enemyManager.getEnemyGenerator().create(player.getBody().getPosition());
     }
 
     /**

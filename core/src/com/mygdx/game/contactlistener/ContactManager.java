@@ -27,23 +27,41 @@ public class ContactManager {
      * @param b the enemy instance class
      */
     public void EnemyPlayerContact(Fixture a, Fixture b){
+        System.out.println("Player and Enemy Touching.");
+
         if(friendlyEnemy(a, b)){
             return;
         }
-
         //Add that enemy to remove it from the world
         Enemy enemy= (Enemy) b.getUserData();
-
         if (enemy == null) {
-            System.out.println("Enemy null.");
+            System.out.println("Enemy Null: ContactManager.EnemyPlayerContact");
             return;
         }
-        System.out.println("Player and Enemy Touching.");
+
         System.out.println("New Score: " + GlobalVariables.SCORE);
         GlobalVariables.SCORE++;
         entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
     }
 
+
+    /**
+     *
+     * @param a should always be Enemy
+     * @param b should always be outerBound
+     */
+    public void handleEnemyOuterBoundContact(Fixture a, Fixture b){
+        System.out.println("Enemy and OuterBound Matched");
+        Enemy enemy=(Enemy) a.getUserData();
+        if(enemy==null){
+            System.out.println("Enemy Null: ContactManager.handleEnemyOuterBoundContact");
+            return;
+        }
+        System.out.println("Set to Remove Enemy");
+        entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
+//        entityManager.getEnemyManager().incrementEnemiesToSpawn();
+//        entityManager.getEnemyManager().getEnemyGenerator().createEnemy(entityManager.getPlayer().getBody().getPosition());
+    }
 
     public void EnemyFloorContact(Fixture a, Fixture b){
         Enemy enemy= (Enemy) b.getUserData();

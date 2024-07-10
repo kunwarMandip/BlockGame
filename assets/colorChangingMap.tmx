@@ -191,7 +191,7 @@
 79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79,79
 </data>
  </layer>
- <objectgroup id="6" name="spawnArea" locked="1">
+ <objectgroup id="6" name="enemyRectangleSpawnArea" locked="1">
   <object id="1" x="64.0115" y="64.113" width="592.003" height="1311.82"/>
  </objectgroup>
  <objectgroup id="7" name="wall">

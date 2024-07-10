@@ -7,7 +7,8 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.GlobalVariables;
+import com.mygdx.game.map.objects.EnemyRectangleSpawnArea;
+import com.mygdx.game.map.objects.EnemySpawnArea;
 
 
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class MapManager {
 //    private final ShapeRenderer shapeRenderer;
     private final OrthographicCamera gameCamera;
 
-    private final StaticMapObjects staticMapObjects;
-    private Array<SpawnArea> spawnAreaList;
+    private final LoadMapObjects staticMapObjects;
+    private Array<EnemyRectangleSpawnArea> spawnAreaList;
 
     //Set which layer should be drawn before box2D and which ones after
     private int[] upperTiles;
@@ -42,8 +43,8 @@ public class MapManager {
         this.gameCamera=gameCamera;
 
         defineLowerUpperTileLayers(tiledMap);
-        staticMapObjects = new StaticMapObjects(world, tiledMap);
-        createEnemySpawnRectangle(tiledMap);
+        staticMapObjects = new LoadMapObjects(world, tiledMap);
+//        createEnemySpawnRectangle(tiledMap);
     }
 
 
@@ -80,19 +81,17 @@ public class MapManager {
 
     private void createEnemySpawnRectangle(TiledMap tiledMap){
         spawnAreaList= new Array<>();
-        MapLayer targetLayer = tiledMap.getLayers().get(GlobalVariables.ENEMY_SPAWN_OBJECT_NAME);
-        if(targetLayer!=null){
-            for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
-                spawnAreaList.add(new SpawnArea(object));
-            }
+        MapLayer targetLayer = tiledMap.getLayers().get("EnemySpawnRectangle");
+        for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
+            spawnAreaList.add(new EnemyRectangleSpawnArea(object));
         }
     }
 
     public void update(){
     }
 
-    public Array<SpawnArea> getSpawnAreaList(){
-        return spawnAreaList;
+    public Array<EnemySpawnArea> getSpawnAreaList(){
+        return staticMapObjects.getSpawnAreaList();
     }
 
     public int[] getUpperTiles(){

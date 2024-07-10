@@ -197,7 +197,7 @@
   <object id="21" x="718.155" y="-14.1255" width="292.115" height="1492.13"/>
   <object id="22" x="-290.936" y="-11.0952" width="292.115" height="1492.13"/>
  </objectgroup>
- <objectgroup id="6" name="spawnArea" locked="1">
+ <objectgroup id="6" name="enemyRectangleSpawnArea" locked="1">
   <object id="19" x="4.60539" y="-0.727576" width="713.211" height="1436.73"/>
  </objectgroup>
 </map>
