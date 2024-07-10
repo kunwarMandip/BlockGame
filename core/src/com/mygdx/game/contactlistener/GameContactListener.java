@@ -30,9 +30,6 @@ public class GameContactListener implements ContactListener {
         if(checkPlayerEnemyContact(a, b)){
             return;
         }
-        if(checkEnemyFloorContact(a, b)){
-            return;
-        }
 
         if(checkEnemyBoundContact(a, b)){
             return;
@@ -56,12 +53,7 @@ public class GameContactListener implements ContactListener {
 
     }
 
-    /**
-     * Check if its player and enemy Co
-     * @param a Fixture A
-     * @param b Fixture b
-     * @return true if its player and enemy, false if it isn't
-     */
+
     private boolean checkPlayerEnemyContact(Fixture a, Fixture b){
         System.out.println("Checking Player and Enemy");
         if (a.getUserData() instanceof Player && b.getUserData() instanceof Enemy){
@@ -73,7 +65,7 @@ public class GameContactListener implements ContactListener {
             contactManager.EnemyPlayerContact(b, a);
             return true;
         }
-        System.out.println("False");
+        System.out.println("Not Matched: Player and Enemy");
         return false;
     }
 
@@ -88,22 +80,9 @@ public class GameContactListener implements ContactListener {
             contactManager.handleEnemyOuterBoundContact(b, a);
             return true;
         }
+        System.out.println("Not Matched: Enemy and OuterBound");
         return false;
 
-    }
-    private boolean checkEnemyFloorContact(Fixture a, Fixture b){
-        System.out.println("Checking Enemy and Wall");
-//        if(a.getUserData() instanceof Enemy && b.getUserData()=="wall"){
-//            contactManager.EnemyFloorContact(a, b);
-//            return  true;
-//        }
-//
-//        if(b.getUserData() instanceof Enemy && a.getUserData()=="wall"){
-//            contactManager.EnemyFloorContact(a, b);
-//            return true;
-//        }
-        System.out.println("False");
-        return false;
     }
 
 

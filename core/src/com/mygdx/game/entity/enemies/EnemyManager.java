@@ -38,16 +38,14 @@ public class EnemyManager {
 
 
     /**
-     * Remove and dispose of enemies in one pass.
-     * Update existing enemies.
-     * Increase difficulty and create new Enemies.
+     * Removes Enemies. Updates Enemies. Creates Enemies. Increases Difficulty
      * @param delta time since last render
-     * @param bodyLocation Box2D player Body location
      */
-    public void update(float delta, Vector2 bodyLocation) {
+    public void update(float delta) {
 
         //Remove and dispose of enemies in one pass
         for (Iterator<Enemy> iterator = enemiesToRemove.iterator(); iterator.hasNext();) {
+            System.out.println("Removing Enemy");
             Enemy enemy = iterator.next();
             enemy.dispose();
             currentEnemies.removeValue(enemy, true);
@@ -61,12 +59,11 @@ public class EnemyManager {
         }
 
         //Create new Enemies
-//        for(int i=0; i<numEnemiesToSpawn; i++){
-//            System.out.println("Creating enemies");
-//            enemyGenerator.create(bodyLocation);
-//        }
-
-//        enemyGenerator.create(bodyLocation);
+        while(numEnemiesToSpawn>0){
+            System.out.println("Creating new Enemies");
+            enemyGenerator.createEnemy(entityManager.getPlayer().getBody().getPosition());
+            numEnemiesToSpawn--;
+        }
 
     }
 

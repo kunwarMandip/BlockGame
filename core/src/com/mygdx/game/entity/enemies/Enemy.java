@@ -71,7 +71,7 @@ public class Enemy {
         fixtureDef.restitution = 0.0f;
 
         fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
-        fixtureDef.filter.maskBits = ~CATEGORY_WALL; // Collides with everything except walls
+        fixtureDef.filter.maskBits =~(CATEGORY_WALL | CATEGORY_ENEMY); // Collides with everything except walls
 
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();

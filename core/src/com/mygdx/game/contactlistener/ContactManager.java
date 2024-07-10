@@ -59,19 +59,12 @@ public class ContactManager {
         }
         System.out.println("Set to Remove Enemy");
         entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
+        entityManager.getEnemyManager().incrementEnemiesToSpawn();
 //        entityManager.getEnemyManager().incrementEnemiesToSpawn();
 //        entityManager.getEnemyManager().getEnemyGenerator().createEnemy(entityManager.getPlayer().getBody().getPosition());
     }
 
-    public void EnemyFloorContact(Fixture a, Fixture b){
-        Enemy enemy= (Enemy) b.getUserData();
-        if(enemy==null){
-            System.out.println("Enemy null.");
-            return;
-        }
-//        GlobalVariables.score++;
-//        entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
-    }
+
 
 
     /**
