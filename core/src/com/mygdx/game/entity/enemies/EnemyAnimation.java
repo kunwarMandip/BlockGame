@@ -22,7 +22,16 @@ public class EnemyAnimation {
      * @param spriteBatch faster way to draw than sprites only
      */
     public void draw(Vector2 playerPosition, SpriteBatch spriteBatch){
-        spriteBatch.draw(enemyTexture, playerPosition.x, playerPosition.y, width, height);
+
+        float width=200/GlobalVariables.PPM;
+        float height=200/GlobalVariables.PPM;
+
+        float spawnLocationX=playerPosition.x - (float) 2 / 2;
+        float spawnLocationY=playerPosition.y- (float) 2 / 2;
+        spriteBatch.draw(enemyTexture, spawnLocationX, spawnLocationY, 2, 2);
+
+
+//        spriteBatch.draw(enemyTexture, playerPosition.x, playerPosition.y, width, height);
     }
 
     public void dispose(){

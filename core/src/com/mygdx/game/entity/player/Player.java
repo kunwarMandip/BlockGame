@@ -71,8 +71,7 @@ public class Player {
     }
 
     public void draw(SpriteBatch spriteBatch){
-        Vector2 bodyPosition=body.getPosition();
-        playerAnimation.draw(new Vector2(bodyPosition.x, bodyPosition.y), spriteBatch);
+        playerAnimation.draw(body, spriteBatch);
     }
 
     public Body getBody(){
