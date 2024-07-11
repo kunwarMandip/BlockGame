@@ -57,7 +57,6 @@ public class EnemyGenerator {
      */
     public void createEnemy(Vector2 playerLocation){
         EnemySpawnArea spawnArea= spawnAreas.get(chooseRectangleToSpawn()-1);
-        System.out.println("Creating New Rectangle");
 
         //Mind that height and width are flipped for left and right rectangles
         //since they are dragged vertically instead of horizontally
@@ -98,8 +97,10 @@ public class EnemyGenerator {
                 break;
         }
 
-        System.out.println("Player Location: " + playerLocation.x +" :...: "+  playerLocation.y);
-        System.out.println("Spawn location: " +spawnLocationX +" :...: "+ spawnLocationY);
+        System.out.println("Creating New Rectangle. Player Location: "
+                + playerLocation.x + " :: " + playerLocation.y
+                + ", Spawn location: " + spawnLocationX + " :: " + spawnLocationY);
+
 
         spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
         enemyManager.getCurrentEnemies().add(new Enemy(world, spawnLocation,  enemyFallSpeed));

@@ -35,7 +35,7 @@ public class EntityManager {
      */
     public void update(float delta){
         enemyManager.update(delta);
-        enemyManager.getEnemyGenerator().create(player.getBody().getPosition());
+//        enemyManager.getEnemyGenerator().create(player.getBody().getPosition());
     }
 
     /**

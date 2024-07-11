@@ -2,7 +2,6 @@ package com.mygdx.game.contactlistener;
 
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GlobalVariables;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.entity.enemies.Enemy;
@@ -58,14 +57,10 @@ public class ContactManager {
             return;
         }
         System.out.println("Set to Remove Enemy");
+        GlobalVariables.SCORE++;
         entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
         entityManager.getEnemyManager().incrementEnemiesToSpawn();
-//        entityManager.getEnemyManager().incrementEnemiesToSpawn();
-//        entityManager.getEnemyManager().getEnemyGenerator().createEnemy(entityManager.getPlayer().getBody().getPosition());
     }
-
-
-
 
     /**
      * Manages if player and enemy have the same color

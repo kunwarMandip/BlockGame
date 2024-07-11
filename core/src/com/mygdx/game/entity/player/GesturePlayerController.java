@@ -37,19 +37,19 @@ public class GesturePlayerController implements GestureDetector.GestureListener 
 
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
             if (velocityX > 0) {
-                playerBody.setLinearVelocity(new Vector2(10f, 0));
+                playerBody.setLinearVelocity(new Vector2(20f, 0));
                 System.out.println("Fling Right");
             } else {
-                playerBody.setLinearVelocity(new Vector2(-10f, 0));
+                playerBody.setLinearVelocity(new Vector2(-20f, 0));
                 System.out.println("Fling Left");
             }
 
         } else {
             if (velocityY > 0) {
-                playerBody.setLinearVelocity(new Vector2(0f, -10f));
+                playerBody.setLinearVelocity(new Vector2(0f, -20f));
                 System.out.println("Fling Down");
             } else {
-                playerBody.setLinearVelocity(new Vector2(0f, 10f));
+                playerBody.setLinearVelocity(new Vector2(0f, 20f));
                 System.out.println("Fling Up");
             }
 

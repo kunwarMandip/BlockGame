@@ -61,7 +61,7 @@ public class EnemyManager {
         //Create new Enemies
         while(numEnemiesToSpawn>0){
             System.out.println("Creating new Enemies");
-            enemyGenerator.createEnemy(entityManager.getPlayer().getBody().getPosition());
+            enemyGenerator.create(entityManager.getPlayer().getBody().getPosition());
             numEnemiesToSpawn--;
         }
 
