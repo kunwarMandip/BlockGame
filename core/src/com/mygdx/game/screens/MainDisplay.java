@@ -97,7 +97,7 @@ public class MainDisplay implements Screen {
         tiledMap = new TmxMapLoader().load("map9.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
-        mapManager = new MapManager(world, tiledMap, gameCamera);
+        mapManager = new MapManager(world, tiledMap);
 
     }
 
@@ -134,6 +134,7 @@ public class MainDisplay implements Screen {
         orthogonalTiledMapRenderer.setView(gameCamera);
         orthogonalTiledMapRenderer.render(mapManager.getLowerTiles());
         box2DDebugRenderer.render(world, gameCamera.combined);
+//        orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
         mapManager.update();
 
         //Render the spriteBatch
@@ -145,6 +146,8 @@ public class MainDisplay implements Screen {
 
         //last layer ensures that enemies not inside place to be shown aren't shown
         orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
+
+
     }
 
     @Override
