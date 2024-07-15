@@ -26,13 +26,20 @@ public class EnemyManager {
     private final Array<Enemy> enemiesToRemove;
     private final EnemyGenerator enemyGenerator;
 
-    public EnemyManager(World world, Array<EnemySpawnArea> spawnAreas, EntityManager entityManager, Vector2 playerPosition){
+    /**
+     *
+     * @param world Box2D world
+     * @param spawnAreas the 4 Rectangles body where enemies are supposed to spawn from
+     * @param entityManager has IMPORTANT variables
+     * @param playerPosition position of the players
+     */
+    public EnemyManager(World world, Array<EnemySpawnArea> spawnAreas,
+                        EntityManager entityManager, Vector2 playerPosition){
         this.entityManager = entityManager;
-        numEnemiesToSpawn = 0;
-        currentEnemies = new Array<>();
-        enemiesToRemove = new Array<>();
-        enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
-//        enemyGenerator.create(playerPosition);
+        this.numEnemiesToSpawn = 0;
+        this.currentEnemies = new Array<>();
+        this.enemiesToRemove = new Array<>();
+        this.enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
         enemyGenerator.createEnemy(playerPosition);
     }
 
@@ -57,6 +64,11 @@ public class EnemyManager {
         for (Enemy enemy : currentEnemies) {
             enemy.update();
         }
+
+//        if(readyToSpawn){
+//
+//            readyToSpawn=false;
+//        }
 
         //Create new Enemies
         while(numEnemiesToSpawn>0){
@@ -104,5 +116,8 @@ public class EnemyManager {
     public void setNumEnemiesToSpawn(int numEnemiesToSpawn) {
         this.numEnemiesToSpawn = numEnemiesToSpawn;
     }
+//    public static boolean isReadyToSpawn(){
+//        return readyToSpawn;
+//    }
 
 }

@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GlobalVariables;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.entity.enemies.Enemy;
+import com.mygdx.game.entity.enemies.EnemyManager;
 
 /**
  * Same as GameContactListener.java but just with advanced handling
@@ -13,10 +14,12 @@ public class ContactManager {
 
     private final World world;
     private final EntityManager entityManager;
+    private final EnemyManager enemyManager;
 
     public ContactManager(World world, EntityManager entityManager){
         this.world=world;
         this.entityManager= entityManager;
+        this.enemyManager=entityManager.getEnemyManager();
     }
 
 
@@ -38,7 +41,7 @@ public class ContactManager {
             return;
         }
 
-        System.out.println("New Score: " + GlobalVariables.SCORE);
+        System.out.println("Resetting Score");
         GlobalVariables.SCORE++;
         entityManager.getEnemyManager().getEnemiesToRemove().add(enemy);
     }

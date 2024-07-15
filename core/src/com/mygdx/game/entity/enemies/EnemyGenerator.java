@@ -18,17 +18,29 @@ public class EnemyGenerator {
 
     private final World world;
     private final Array<EnemySpawnArea> spawnAreas;
+    private final Array<Enemy> enemiesToSpawn;
     private final EnemyManager enemyManager;
 
     private int lastNumber = 1;
     private final Random random;
     private int lastScore=GlobalVariables.SCORE;
 
+
     public EnemyGenerator(World world, Array<EnemySpawnArea> spawnAreas, EnemyManager enemyManager){
         this.world=world;
         this.spawnAreas= spawnAreas;
         this.enemyManager= enemyManager;
+        this.enemiesToSpawn= new Array<>();
         random = new Random();
+    }
+
+    public void create(Vector2 playerLocation){
+        if(GlobalVariables.SCORE> lastScore){
+            createEnemy(playerLocation);
+            lastScore=GlobalVariables.SCORE;
+        }
+
+
     }
 
     /**
@@ -44,12 +56,6 @@ public class EnemyGenerator {
         return number;
     }
 
-    public void create(Vector2 playerLocation){
-        if(GlobalVariables.SCORE> lastScore){
-            createEnemy(playerLocation);
-            lastScore=GlobalVariables.SCORE;
-        }
-    }
 
     /**
      * Creates Enemy class to be added to the screen
@@ -64,35 +70,38 @@ public class EnemyGenerator {
         float spawnLocationX, spawnLocationY;
         Vector2 enemyFallSpeed, spawnLocation;
 
+        float speedIncrement = 1f * GlobalVariables.SCORE;
+        System.out.println("New Score: " + GlobalVariables.SCORE);
+
         switch(spawnArea.getSpawnDirection()){
             case "top":
-                spawnLocationX=playerLocation.x;
-                spawnLocationY=spawnArea.getPosition().y;
-                enemyFallSpeed=new Vector2(0, -10f);
+                spawnLocationX = playerLocation.x;
+                spawnLocationY = spawnArea.getPosition().y;
+                enemyFallSpeed = new Vector2(0, -10f - speedIncrement);
                 System.out.println("Rectangle Top");
                 break;
             case "bottom":
-                spawnLocationX=playerLocation.x;
-                spawnLocationY=spawnArea.getPosition().y;
-                enemyFallSpeed=new Vector2(0, 10f);
+                spawnLocationX = playerLocation.x;
+                spawnLocationY = spawnArea.getPosition().y;
+                enemyFallSpeed = new Vector2(0, 10f + speedIncrement);
                 System.out.println("Rectangle Bottom");
                 break;
             case "left":
-                spawnLocationX=spawnArea.getPosition().x;
-                spawnLocationY=playerLocation.y;
-                enemyFallSpeed=new Vector2(10f, 0);
+                spawnLocationX = spawnArea.getPosition().x;
+                spawnLocationY = playerLocation.y;
+                enemyFallSpeed = new Vector2(10f + speedIncrement, 0);
                 System.out.println("Rectangle Left");
                 break;
             case "right":
-                spawnLocationX=spawnArea.getPosition().y;
-                spawnLocationY=playerLocation.y;
-                enemyFallSpeed=new Vector2(-10f, 0);
+                spawnLocationX = spawnArea.getPosition().y;
+                spawnLocationY = playerLocation.y;
+                enemyFallSpeed = new Vector2(-10f - speedIncrement, 0);
                 System.out.println("Rectangle Right");
                 break;
             default:
-                spawnLocationX= 5;
-                spawnLocationY=5;
-                enemyFallSpeed=new Vector2(0, 0);
+                spawnLocationX = 5;
+                spawnLocationY = 5;
+                enemyFallSpeed = new Vector2(0, 0);
                 System.out.println("Rectangle Default");
                 break;
         }

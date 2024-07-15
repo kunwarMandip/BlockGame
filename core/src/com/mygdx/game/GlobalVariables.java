@@ -1,7 +1,9 @@
 package com.mygdx.game;
 
 public class GlobalVariables {
+
     public static int SCORE=0;
+    public static boolean READY_TO_SPAWN=false;
 
     //9:18 ratio to ensure it fits on every device
     //Since game is PORTRAIT mode only, the height is longer than width

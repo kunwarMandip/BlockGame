@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -14,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.FallingBlocks;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.map.MapManager;
 
@@ -30,11 +28,7 @@ public class MainDisplay implements Screen {
     public OrthographicCamera gameCamera;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    /**
-     * Allows to retain aspect ratio on different sized screens
-     * Fit viewport for the game
-     * TODO fix the black corners using other viewport
-     */
+    //To retain Aspect ratio
     private Viewport viewport;
 
     /**
@@ -47,24 +41,25 @@ public class MainDisplay implements Screen {
     private World world;
 
     private TiledMap tiledMap;
-//    private MapLoader mapLoader;
     private MapManager mapManager;
 
     private final SpriteBatch spriteBatch;
     private final EntityManager entityManager;
+
+    private Hud hudScene;
 
     /**
      * Set the aspect ratio for the screen
      * create the world and load the tiledMap.
      * Set the entityManager to create and updateEntities
      */
-
     public MainDisplay(){
         spriteBatch= new SpriteBatch();
         setAspectRatio();
         createWorld();
 
         entityManager = new EntityManager(world, gameCamera, mapManager.getSpawnAreaList());
+        hudScene= new Hud(spriteBatch);
     }
 
 
@@ -115,6 +110,7 @@ public class MainDisplay implements Screen {
         // 1/60f: 60 frames per second
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
+        hudScene.update();
 
     }
 
@@ -134,18 +130,20 @@ public class MainDisplay implements Screen {
         orthogonalTiledMapRenderer.setView(gameCamera);
         orthogonalTiledMapRenderer.render(mapManager.getLowerTiles());
         box2DDebugRenderer.render(world, gameCamera.combined);
-//        orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
         mapManager.update();
 
         //Render the spriteBatch
         spriteBatch.setProjectionMatrix(gameCamera.combined);
         spriteBatch.begin();
         entityManager.drawEntities(spriteBatch);
+
+        //Set our batch to now draw what the Hud camera sees.
         spriteBatch.end();
-
-
         //last layer ensures that enemies not inside place to be shown aren't shown
         orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
+
+        spriteBatch.setProjectionMatrix(hudScene.getStage().getCamera().combined);
+        hudScene.getStage().draw();
 
 
     }

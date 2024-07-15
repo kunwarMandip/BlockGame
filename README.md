@@ -62,13 +62,8 @@ different shapes
 
 WE SPAWN ENEMIES INSIDE THE MAP
 
-
-
 FALLING BLOCKS
-
 GAME BETWEEN :-> "Avoider" and "Don't touch the spikes"
 
-
-Spawn location: 13.0 :...: 5.0
-13.0 :...: 5.0
-13.0 :...: 5.0
+Need to add Asap
+//Scoreboard -Top of the screen

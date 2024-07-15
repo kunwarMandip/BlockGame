@@ -51,9 +51,9 @@ public class TileLayerManager {
     private void redGreen(){
         System.out.println("Setting RedGreen");
         TileGroup tileGroup= new TileGroup("GreenRed");
-        tileGroup.addToUpperTile(mapLayers.getIndex("redBackground"));
-        tileGroup.addToLowerTiles(mapLayers.getIndex("greenTop"));
-        System.out.println("Tiles Index: "+ mapLayers.getIndex("greenTop")+ mapLayers.getIndex("redBackground"));
+        tileGroup.addToUpperTile(mapLayers.getIndex("YellowOutside"));
+        tileGroup.addToLowerTiles(mapLayers.getIndex("BlueInside"));
+        System.out.println("Tiles Index: "+ mapLayers.getIndex("YellowOutside")+ mapLayers.getIndex("BlueInside"));
         tileGroups.add(tileGroup);
     }
 
