@@ -54,7 +54,7 @@ public class EnemyGenerator {
 
         //Increase max enemy in the map at any given time
         int currentScore = GlobalVariables.SCORE;
-        int[] scoreThresholds = {5, 15, 20, 40};
+        int[] scoreThresholds = {6, 16, 21, 41};
         currentEnemyCountThreshold = MAX_ENEMY_THRESHOLD;
 
         for (int i = 0; i < scoreThresholds.length; i++) {

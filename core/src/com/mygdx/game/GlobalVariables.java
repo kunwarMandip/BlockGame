@@ -22,7 +22,7 @@ public class GlobalVariables {
 
     public static final float STEADY_SPEED_INCREASE =0.1f;
     public static final float BOOST_SPEED_INCREASE =2.5f;
-    public static final Vector2 BASE_SPEED = new Vector2(10f, 10f);
+    public static final Vector2 BASE_SPEED = new Vector2(1f, 1f);
 
     public static  final int MAX_ENEMY_THRESHOLD =5;
 
