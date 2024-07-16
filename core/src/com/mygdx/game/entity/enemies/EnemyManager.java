@@ -18,10 +18,7 @@ import java.util.Iterator;
  */
 public class EnemyManager {
 
-    private final EntityManager entityManager;
-
     //For easy management of all enemies in the world
-    private int numEnemiesToSpawn;
     private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
     private final EnemyGenerator enemyGenerator;
@@ -31,50 +28,35 @@ public class EnemyManager {
      * @param world Box2D world
      * @param spawnAreas the 4 Rectangles body where enemies are supposed to spawn from
      * @param entityManager has IMPORTANT variables
-     * @param playerPosition position of the players
      */
-    public EnemyManager(World world, Array<EnemySpawnArea> spawnAreas,
-                        EntityManager entityManager, Vector2 playerPosition){
-        this.entityManager = entityManager;
-        this.numEnemiesToSpawn = 0;
+    public EnemyManager(World world, Array<EnemySpawnArea> spawnAreas, EntityManager entityManager){
         this.currentEnemies = new Array<>();
         this.enemiesToRemove = new Array<>();
         this.enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
-        enemyGenerator.createEnemy(playerPosition);
     }
 
 
     /**
-     * Removes Enemies. Updates Enemies. Creates Enemies. Increases Difficulty
+     * Removes Enemies. Updates Enemies. Increases Difficulty
      * @param delta time since last render
      */
-    public void update(float delta) {
+    public void update(float delta, Vector2 playerPosition) {
 
-        //Remove and dispose of enemies in one pass
+        //Dispose of enemies
         for (Iterator<Enemy> iterator = enemiesToRemove.iterator(); iterator.hasNext();) {
             System.out.println("Removing Enemy");
             Enemy enemy = iterator.next();
             enemy.dispose();
             currentEnemies.removeValue(enemy, true);
-            numEnemiesToSpawn++;
             iterator.remove();
         }
 
-        //Update existing enemies
+        //Add new enemies
+        enemyGenerator.spawnEnemies(playerPosition);
+
+        //Update enemies
         for (Enemy enemy : currentEnemies) {
             enemy.update();
-        }
-
-//        if(readyToSpawn){
-//
-//            readyToSpawn=false;
-//        }
-
-        //Create new Enemies
-        while(numEnemiesToSpawn>0){
-            System.out.println("Creating new Enemies");
-            enemyGenerator.create(entityManager.getPlayer().getBody().getPosition());
-            numEnemiesToSpawn--;
         }
 
     }
@@ -89,7 +71,6 @@ public class EnemyManager {
         for (Enemy enemy : currentEnemies) {
             enemy.draw(spriteBatch);
         }
-
     }
 
     public Array<Enemy> getEnemiesToRemove(){
@@ -100,24 +81,9 @@ public class EnemyManager {
         return currentEnemies;
     }
 
-    public void incrementEnemiesToSpawn(){
-        numEnemiesToSpawn++;
-    }
-
-
     public EnemyGenerator getEnemyGenerator() {
         return enemyGenerator;
     }
 
-    public void decrementNumEnemiesToSpawn(){
-        numEnemiesToSpawn--;
-    }
-
-    public void setNumEnemiesToSpawn(int numEnemiesToSpawn) {
-        this.numEnemiesToSpawn = numEnemiesToSpawn;
-    }
-//    public static boolean isReadyToSpawn(){
-//        return readyToSpawn;
-//    }
 
 }

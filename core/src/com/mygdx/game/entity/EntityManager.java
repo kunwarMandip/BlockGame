@@ -25,8 +25,8 @@ public class EntityManager {
      */
     public EntityManager(World world, OrthographicCamera gameCamera, Array<EnemySpawnArea> spawnAreas){
         player= new Player(world, gameCamera);
-        enemyManager= new EnemyManager(world, spawnAreas, this, player.getBody().getPosition());
-        GameContactListener gameContactListener = new GameContactListener(world, this);
+        enemyManager= new EnemyManager(world, spawnAreas, this);
+        GameContactListener gameContactListener = new GameContactListener(this);
         world.setContactListener(gameContactListener);
     }
 
@@ -34,7 +34,7 @@ public class EntityManager {
      * Update Entities
      */
     public void update(float delta){
-        enemyManager.update(delta);
+        enemyManager.update(delta, player.getBody().getPosition());
 //        enemyManager.getEnemyGenerator().create(player.getBody().getPosition());
     }
 

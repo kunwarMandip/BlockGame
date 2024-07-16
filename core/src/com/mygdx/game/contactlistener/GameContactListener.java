@@ -14,8 +14,8 @@ public class GameContactListener implements ContactListener {
 
     private final ContactManager contactManager;
 
-    public GameContactListener(World world, EntityManager entityManager){
-        contactManager= new ContactManager(world, entityManager);
+    public GameContactListener(EntityManager entityManager){
+        contactManager= new ContactManager(entityManager);
     }
 
     @Override
@@ -27,14 +27,12 @@ public class GameContactListener implements ContactListener {
         if (a == null || b == null){return;}
         if (a.getUserData() == null|| b.getUserData() == null){return;}
 
+        //JUST KEEP ADDING ELSE IF
         if(checkPlayerEnemyContact(a, b)){
             return;
-        }
-
-        if(checkEnemyBoundContact(a, b)){
+        }else if(checkEnemyBoundContact(a, b)){
             return;
         }
-
 
     }
 
