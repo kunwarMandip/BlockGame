@@ -1,6 +1,7 @@
 package com.mygdx.game.entity.enemies;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -22,17 +23,19 @@ public class EnemyManager {
     private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
     private final EnemyGenerator enemyGenerator;
-
+    private final EnemySpawnDirection enemySpawnDirection;
     /**
      *
      * @param world Box2D world
      * @param spawnAreas the 4 Rectangles body where enemies are supposed to spawn from
      * @param entityManager has IMPORTANT variables
      */
-    public EnemyManager(World world, Array<EnemySpawnArea> spawnAreas, EntityManager entityManager){
+    public EnemyManager(World world, TiledMap tiledMap, Array<EnemySpawnArea> spawnAreas, EntityManager entityManager){
         this.currentEnemies = new Array<>();
         this.enemiesToRemove = new Array<>();
         this.enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
+        this.enemySpawnDirection=new EnemySpawnDirection(world, tiledMap);
+
     }
 
 
@@ -58,7 +61,6 @@ public class EnemyManager {
         for (Enemy enemy : currentEnemies) {
             enemy.update();
         }
-
     }
 
     /**
@@ -66,11 +68,14 @@ public class EnemyManager {
      * @param spriteBatch faster way to draw sprites
      */
     public void draw(SpriteBatch spriteBatch){
-        if(currentEnemies.isEmpty()){return;}
 
+        enemySpawnDirection.draw(spriteBatch);
+
+        if(currentEnemies.isEmpty()){return;}
         for (Enemy enemy : currentEnemies) {
             enemy.draw(spriteBatch);
         }
+
     }
 
     public Array<Enemy> getEnemiesToRemove(){
@@ -85,5 +90,7 @@ public class EnemyManager {
         return enemyGenerator;
     }
 
-
+    public EnemySpawnDirection getEnemySpawnDirection(){
+        return enemySpawnDirection;
+    }
 }

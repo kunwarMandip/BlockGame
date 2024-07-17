@@ -138,6 +138,7 @@ public class EnemyGenerator {
 
         spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
         enemyManager.getCurrentEnemies().add(new Enemy(world, spawnLocation, enemyFallSpeed));
+        enemyManager.getEnemySpawnDirection().setDirection(spawnArea.getSpawnDirection());
     }
 
 

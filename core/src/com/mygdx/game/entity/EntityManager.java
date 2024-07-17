@@ -2,6 +2,7 @@ package com.mygdx.game.entity;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.contactlistener.GameContactListener;
@@ -23,9 +24,9 @@ public class EntityManager {
      * @param world box2D world to deploy body in
      * @param gameCamera camera that shows the viewport
      */
-    public EntityManager(World world, OrthographicCamera gameCamera, Array<EnemySpawnArea> spawnAreas){
+    public EntityManager(World world, TiledMap tiledMap, OrthographicCamera gameCamera, Array<EnemySpawnArea> spawnAreas){
         player= new Player(world, gameCamera);
-        enemyManager= new EnemyManager(world, spawnAreas, this);
+        enemyManager= new EnemyManager(world, tiledMap, spawnAreas, this);
         GameContactListener gameContactListener = new GameContactListener(this);
         world.setContactListener(gameContactListener);
     }
@@ -39,11 +40,12 @@ public class EntityManager {
 
     /**
      * Calls to draw every entity such as Players and Enemies
+     * Enemy has to be drawn first due to the EnemySpawnDirection.class
      * @param spriteBatch used to draw sprites faster and efficiently
      */
     public void drawEntities(SpriteBatch spriteBatch){
-        player.draw(spriteBatch);
         enemyManager.draw(spriteBatch);
+        player.draw(spriteBatch);
     }
 
     public Player getPlayer() {
