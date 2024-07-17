@@ -19,11 +19,12 @@ public class GlobalVariables {
     public static final short CATEGORY_ENEMY_SPAWN_AREA   = 0x0008;
     public static final short CATEGORY_OUTER_BOUND  = 0x00016;
 
-
+    //Increasing difficulty
     public static final float STEADY_SPEED_INCREASE =0.1f;
     public static final float BOOST_SPEED_INCREASE =2.5f;
-    public static final Vector2 BASE_SPEED = new Vector2(1f, 1f);
+    public static final Vector2 BASE_SPEED = new Vector2(0.5f, 0.5f);
 
+    //Most enemies that can be in the map at the same time
     public static  final int MAX_ENEMY_THRESHOLD =5;
 
 }

@@ -61,11 +61,12 @@ public class TileLayerManager {
      * Setting PURPLE and TEAL color
      */
     private void purpleTeal(){
-        System.out.println("Setting PurpleTeal");
-//        TileGroup tileGroup= new TileGroup("blueTeal");
-//        tileGroup.addToUpperTile(mapLayers.getIndex("tealTop"));
-//        tileGroup.addToLowerTiles(mapLayers.getIndex("purpleBackground"));
-//        tileGroups.add(tileGroup);
+        System.out.println("Setting RedGreen");
+        TileGroup tileGroup= new TileGroup("GreenCyan");
+        tileGroup.addToUpperTile(mapLayers.getIndex("GreenOutside"));
+        tileGroup.addToLowerTiles(mapLayers.getIndex("CyanInside"));
+        System.out.println("Tiles Index: "+ mapLayers.getIndex("GreenOutside")+ mapLayers.getIndex("CyanInside"));
+        tileGroups.add(tileGroup);
     }
 
 

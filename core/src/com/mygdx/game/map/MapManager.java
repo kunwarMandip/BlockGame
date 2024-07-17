@@ -3,6 +3,7 @@ package com.mygdx.game.map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GlobalVariables;
 import com.mygdx.game.map.objects.EnemyRectangleSpawnArea;
 import com.mygdx.game.map.objects.EnemySpawnArea;
 
@@ -13,7 +14,7 @@ import com.mygdx.game.map.objects.EnemySpawnArea;
  */
 public class MapManager {
 
-    private final LoadMapObjects staticMapObjects;
+    private final LoadMapObjects loadMapObjects;
     private Array<EnemyRectangleSpawnArea> spawnAreaList;
     private final TileLayerManager tileLayerManager;
 
@@ -24,29 +25,33 @@ public class MapManager {
      * Allows some layers to be displayed first or later, to create Z-index(see CSS)
      * @param world box2D world
      * @param tiledMap TiledMap
-     * @param gameCamera to get correct position for the spawn Area
      */
     public MapManager(World world, TiledMap tiledMap){
         System.out.println("INIT MapManager...");
-        //    private final ShapeRenderer shapeRenderer;
 
         tileLayerManager= new TileLayerManager(tiledMap);
         tileLayerManager.setNewTiles("GreenRed");
         upperTiles=tileLayerManager.getCurrentUpperTile();
         lowerTiles=tileLayerManager.getCurrentLowerTiles();
 
-//        defineLowerUpperTileLayers(tiledMap);
-        staticMapObjects = new LoadMapObjects(world, tiledMap);
+        loadMapObjects = new LoadMapObjects(world, tiledMap);
 
     }
 
 
 
     public void update(){
+        int tempScore=GlobalVariables.SCORE;
+
+        if(tempScore!=0 && tempScore%2==0){
+            tileLayerManager.setNewTiles("GreenCyan");
+            upperTiles=tileLayerManager.getCurrentUpperTile();
+            lowerTiles=tileLayerManager.getCurrentLowerTiles();
+        }
     }
 
     public Array<EnemySpawnArea> getSpawnAreaList(){
-        return staticMapObjects.getSpawnAreaList();
+        return loadMapObjects.getSpawnAreaList();
     }
 
     public int[] getUpperTiles(){
