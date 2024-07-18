@@ -22,9 +22,10 @@ public class GlobalVariables {
     //Increasing difficulty
     public static final float STEADY_SPEED_INCREASE =0.1f;
     public static final float BOOST_SPEED_INCREASE =2.5f;
+    public static final float BASE_ENEMY_WAIT_TIME= 5;
     public static final Vector2 BASE_SPEED = new Vector2(0.5f, 0.5f);
 
     //Most enemies that can be in the map at the same time
-    public static final int MAX_ENEMY_THRESHOLD =5;
+    public static final int MAX_ENEMY_THRESHOLD =2;
 
 }

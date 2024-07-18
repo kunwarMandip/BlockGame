@@ -20,6 +20,7 @@ import java.util.Iterator;
 public class EnemyManager {
 
     //For easy management of all enemies in the world
+    private final Array<Enemy> enemiesToAdd;
     private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
     private final EnemyGenerator enemyGenerator;
@@ -31,6 +32,7 @@ public class EnemyManager {
      * @param entityManager has IMPORTANT variables
      */
     public EnemyManager(World world, TiledMap tiledMap, Array<EnemySpawnArea> spawnAreas, EntityManager entityManager){
+        this.enemiesToAdd = new Array<>();
         this.currentEnemies = new Array<>();
         this.enemiesToRemove = new Array<>();
         this.enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
@@ -54,13 +56,18 @@ public class EnemyManager {
             iterator.remove();
         }
 
-        //Add new enemies
+        //Check if new enemies need to be spawned
         enemyGenerator.spawnEnemies(playerPosition);
 
         //Update enemies
         for (Enemy enemy : currentEnemies) {
-            enemy.update();
+            enemy.update(delta);
         }
+
+        for(Enemy enemy: enemiesToAdd){
+            enemy.update(delta);
+        }
+
     }
 
     /**
@@ -92,5 +99,9 @@ public class EnemyManager {
 
     public EnemySpawnDirection getEnemySpawnDirection(){
         return enemySpawnDirection;
+    }
+
+    public Array<Enemy> getEnemiesToAdd() {
+        return enemiesToAdd;
     }
 }

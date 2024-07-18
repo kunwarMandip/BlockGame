@@ -75,9 +75,14 @@ public class EnemyGenerator {
         enemySpeedY= BASE_SPEED.y;
     }
 
+    /**
+     * Checks if new enemies can be spawned in the map, and does so if possible
+     * @param playerLocation location of player Box2D body
+     */
     public void spawnEnemies(Vector2 playerLocation){
         //Amount of enemies we need to spawn
-        int numEnemiesToSpawn=currentEnemyCountThreshold - enemyManager.getCurrentEnemies().size;
+//        int numEnemiesToSpawn=currentEnemyCountThreshold - enemyManager.getCurrentEnemies().size;
+        int numEnemiesToSpawn=currentEnemyCountThreshold - enemyManager.getEnemiesToAdd().size;
         if(numEnemiesToSpawn==0){return;}
 
         for(int i=0; i<numEnemiesToSpawn; i++){
@@ -137,7 +142,9 @@ public class EnemyGenerator {
         System.out.println("Spawn location: " + spawnLocationX + " : " + spawnLocationY);
 
         spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
-        enemyManager.getCurrentEnemies().add(new Enemy(world, spawnLocation, enemyFallSpeed));
+//        enemyManager.getCurrentEnemies().add(new Enemy(world, spawnLocation, enemyFallSpeed, BASE_ENEMY_WAIT_TIME));
+//        enemyManager.getEnemySpawnDirection().setDirection(spawnArea.getSpawnDirection());
+        enemyManager.getEnemiesToAdd().add(new Enemy(enemyManager, world, spawnLocation, enemyFallSpeed, BASE_ENEMY_WAIT_TIME));
         enemyManager.getEnemySpawnDirection().setDirection(spawnArea.getSpawnDirection());
     }
 

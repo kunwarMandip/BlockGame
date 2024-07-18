@@ -3,11 +3,12 @@ package com.mygdx.game.map;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.GlobalVariables;
 import com.mygdx.game.map.objects.TileGroup;
 
-import java.util.Random;
-
+/**
+ * Manages TileGroup Array to allow the upper and lower tiles
+ * to be set more easily in the MapManager. Class
+ */
 public class TileLayersManager {
 
     private final MapLayers mapLayers;
@@ -17,7 +18,7 @@ public class TileLayersManager {
     private final Array<Integer> currentUpperTiles;
     private final Array<Integer> currentLowerTiles;
 
-    private Random random;
+
     public TileLayersManager(TiledMap tiledMap){
         System.out.println("New TileLayerManager");
 
@@ -25,12 +26,9 @@ public class TileLayersManager {
         currentUpperTiles= new Array<>();
         currentLowerTiles=new Array<>();
         tileGroups= new Array<>();
-        random= new Random();
         redGreen();
         purpleTeal();
     }
-
-
 
 
     /**
@@ -75,7 +73,7 @@ public class TileLayersManager {
     private void purpleTeal(){
         System.out.println("Setting RedGreen");
         TileGroup tileGroup= new TileGroup("GreenCyan");
-        tileGroup.addToUpperTile(mapLayers.getIndex("GreenOutside"));
+        tileGroup.addToUpperTile(mapLayers.getIndex("RedOutside"));
         tileGroup.addToLowerTiles(mapLayers.getIndex("CyanInside"));
         System.out.println("Tiles Index: "+ mapLayers.getIndex("GreenOutside")+ mapLayers.getIndex("CyanInside"));
         tileGroups.add(tileGroup);

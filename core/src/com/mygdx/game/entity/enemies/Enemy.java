@@ -11,36 +11,42 @@ import static com.mygdx.game.GlobalVariables.*;
 
 public class Enemy {
 
+    private final EnemyManager enemyManager;
     private Body body;
     private final World world;
     private final EnemyAnimation enemyAnimation;
 
-    private int waitTime = 0;
-    private boolean finishedWaiting = false;
 
-    private final Vector2 speed;
+    private final Vector2 movementSpeed, spawnLocation;
+    private final float waitTime;
+    private float timeCounter;
+    private boolean hasEnemySpawned;
 
-    public Enemy(World world, Vector2 spawnLocation, Vector2 speed){
+
+    public Enemy(EnemyManager enemyManager, World world, Vector2 spawnLocation, Vector2 speed, float waitTime){
+        this.enemyManager=enemyManager;
         this.world=world;
-        this.speed=speed;
-        defineEnemy(spawnLocation);
+        this.movementSpeed=speed;
+        this.waitTime=waitTime;
+        this.timeCounter=0;
+        this.spawnLocation=spawnLocation;
+        this.hasEnemySpawned=false;
         enemyAnimation= new EnemyAnimation();
     }
 
-
-    /**
-     * Update gameBodies and texture
-     */
-    public void update() {
-        if (!finishedWaiting) {
-            if (waitTime > 100) {
-                body.setType(BodyDef.BodyType.DynamicBody);
-                finishedWaiting = true;
+    public void update(float delta){
+        if(!hasEnemySpawned){
+            if(timeCounter>=waitTime){
+                defineEnemy(spawnLocation);
+                enemyManager.getCurrentEnemies().add(this);
+                enemyManager.getEnemiesToAdd().removeValue(this, true);
+                hasEnemySpawned=true;
             }
-            waitTime++;
+            timeCounter+=delta;
+            System.out.println("Time: "+timeCounter);
+        }else{
+            body.setLinearVelocity(movementSpeed);
         }
-        body.setLinearVelocity(speed);
-        FallingBlocks.score++;
     }
 
 

@@ -15,22 +15,19 @@ import com.mygdx.game.GlobalVariables;
 public class Hud implements Disposable {
 
     private final Stage stage;
-    private final Viewport viewport;
-
-    private int score;
-    private Label scoreLabel;
+    private final Label scoreLabel;
 
     public Hud(SpriteBatch spriteBatch){
-        viewport= new FitViewport(GlobalVariables.VIRTUAL_WIDTH/GlobalVariables.PPM,
-                                GlobalVariables.VIRTUAL_HEIGHT/GlobalVariables.PPM,
-                                            new OrthographicCamera());
+        Viewport viewport = new FitViewport(GlobalVariables.VIRTUAL_WIDTH / GlobalVariables.PPM,
+                GlobalVariables.VIRTUAL_HEIGHT / GlobalVariables.PPM,
+                new OrthographicCamera());
         stage= new Stage(viewport, spriteBatch);
 
         Table table= new Table();
         table.top();
         table.setFillParent(true);
 
-        score=0;
+        int score=0;
         scoreLabel =new Label(String.format("%d", score), new Label.LabelStyle(new BitmapFont(), Color.BLACK));
         table.add(scoreLabel).expandX();
 
