@@ -3,25 +3,35 @@ package com.mygdx.game.map;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GlobalVariables;
+import com.mygdx.game.map.objects.TileGroup;
 
-public class TileLayerManager {
+import java.util.Random;
+
+public class TileLayersManager {
 
     private final MapLayers mapLayers;
     private final Array<TileGroup> tileGroups;
+
+    private String currentPrimaryColorsName;
     private final Array<Integer> currentUpperTiles;
     private final Array<Integer> currentLowerTiles;
 
-    public TileLayerManager(TiledMap tiledMap){
+    private Random random;
+    public TileLayersManager(TiledMap tiledMap){
         System.out.println("New TileLayerManager");
 
         this.mapLayers=tiledMap.getLayers();
         currentUpperTiles= new Array<>();
         currentLowerTiles=new Array<>();
         tileGroups= new Array<>();
-
+        random= new Random();
         redGreen();
         purpleTeal();
     }
+
+
+
 
     /**
      * Sets new Lower and upper tiles to be accessed given the Color
@@ -40,6 +50,8 @@ public class TileLayerManager {
                 for(int i: tileGroup.getLowerTile()){
                     currentLowerTiles.add(i);
                 }
+
+                this.currentPrimaryColorsName =tileGroup.getPrimaryColorName();
                 return;
             }
         }
@@ -88,6 +100,10 @@ public class TileLayerManager {
         return lowerTiles;
     }
 
+
+    public String getCurrentPrimaryColorsName(){
+        return currentPrimaryColorsName;
+    }
     public Array<TileGroup> getTileGroups() {
         return tileGroups;
     }

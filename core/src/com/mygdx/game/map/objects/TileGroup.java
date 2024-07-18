@@ -1,4 +1,4 @@
-package com.mygdx.game.map;
+package com.mygdx.game.map.objects;
 
 import java.util.ArrayList;
 
