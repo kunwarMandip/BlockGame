@@ -35,13 +35,12 @@ public class MapManager {
         System.out.println("INIT MapManager...");
 
         tileLayersManager = new TileLayersManager(tiledMap);
-        tileLayersManager.setNewTiles("GreenRed");
+        tileLayersManager.setNewTiles("CyanLightBlue");
         upperTiles= tileLayersManager.getCurrentUpperTile();
         lowerTiles= tileLayersManager.getCurrentLowerTiles();
         loadMapObjects = new LoadMapObjects(world, tiledMap);
         this.random=new Random();
     }
-
 
 
     public void update(){
@@ -60,8 +59,6 @@ public class MapManager {
             lowerTiles= tileLayersManager.getCurrentLowerTiles();
             lastChangeScore=tempScore;
         }
-
-
     }
 
     public Array<EnemySpawnArea> getSpawnAreaList(){

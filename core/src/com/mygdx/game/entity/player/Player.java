@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import static com.mygdx.game.GlobalVariables.CATEGORY_PLAYER;
 
 /**
- * Object Body that the user controls aka: the user itself.
+ * PLayer Entity Class. Contains everything about the player class
  */
 public class Player {
 
@@ -33,16 +33,12 @@ public class Player {
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(gestureDetector);
         Gdx.input.setInputProcessor(inputMultiplexer);
-
-
     }
 
-    /**
-     * Creates box2D body for player
-     * @param bodyDimension size of the box2D body
-     */
+
     private void createBox2DBody(Vector2 bodyDimension){
         //Defining BoyDef with zero Restitution and No friction
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(14, 27);
@@ -66,15 +62,13 @@ public class Player {
         System.out.println("Players Body Location: " + body.getPosition().x +" :...: "+ body.getPosition().y );
     }
 
-    public void update(){
-
-    }
 
     public void draw(SpriteBatch spriteBatch){
-        playerAnimation.draw(body, spriteBatch);
+        playerAnimation.draw(body.getPosition(), spriteBatch);
     }
 
     public Body getBody(){
         return body;
     }
+
 }

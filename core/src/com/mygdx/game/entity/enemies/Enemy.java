@@ -1,5 +1,6 @@
 package com.mygdx.game.entity.enemies;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -31,7 +32,7 @@ public class Enemy {
         this.timeCounter=0;
         this.spawnLocation=spawnLocation;
         this.hasEnemySpawned=false;
-        enemyAnimation= new EnemyAnimation();
+        enemyAnimation= new EnemyAnimation(new Texture("box.png"));
     }
 
     public void update(float delta){

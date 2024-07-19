@@ -28,6 +28,7 @@ public class TileLayersManager {
         tileGroups= new Array<>();
         redGreen();
         purpleTeal();
+        purpleBlue();
     }
 
 
@@ -60,10 +61,10 @@ public class TileLayersManager {
      */
     private void redGreen(){
         System.out.println("Setting RedGreen");
-        TileGroup tileGroup= new TileGroup("GreenRed");
-        tileGroup.addToUpperTile(mapLayers.getIndex("YellowOutside"));
-        tileGroup.addToLowerTiles(mapLayers.getIndex("BlueInside"));
-        System.out.println("Tiles Index: "+ mapLayers.getIndex("YellowOutside")+ mapLayers.getIndex("BlueInside"));
+        TileGroup tileGroup= new TileGroup("CyanLightBlue");
+        tileGroup.addToUpperTile(mapLayers.getIndex("CyanOutside"));
+        tileGroup.addToLowerTiles(mapLayers.getIndex("LightBlueInside"));
+//        System.out.println("Tiles Index: "+ mapLayers.getIndex("YellowOutside")+ mapLayers.getIndex("BlueInside"));
         tileGroups.add(tileGroup);
     }
 
@@ -72,10 +73,19 @@ public class TileLayersManager {
      */
     private void purpleTeal(){
         System.out.println("Setting RedGreen");
-        TileGroup tileGroup= new TileGroup("GreenCyan");
-        tileGroup.addToUpperTile(mapLayers.getIndex("RedOutside"));
-        tileGroup.addToLowerTiles(mapLayers.getIndex("CyanInside"));
-        System.out.println("Tiles Index: "+ mapLayers.getIndex("GreenOutside")+ mapLayers.getIndex("CyanInside"));
+        TileGroup tileGroup= new TileGroup("GreenOrange");
+        tileGroup.addToUpperTile(mapLayers.getIndex("GreenOutside"));
+        tileGroup.addToLowerTiles(mapLayers.getIndex("OrangeInside"));
+//        System.out.println("Tiles Index: "+ mapLayers.getIndex("GreenOutside")+ mapLayers.getIndex("CyanInside"));
+        tileGroups.add(tileGroup);
+    }
+
+    private void purpleBlue(){
+        System.out.println("Setting RedGreen");
+        TileGroup tileGroup= new TileGroup("PurpleBlue");
+        tileGroup.addToUpperTile(mapLayers.getIndex("PurpleOutside"));
+        tileGroup.addToLowerTiles(mapLayers.getIndex("BlueInside"));
+//        System.out.println("Tiles Index: "+ mapLayers.getIndex("GreenOutside")+ mapLayers.getIndex("CyanInside"));
         tileGroups.add(tileGroup);
     }
 
