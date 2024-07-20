@@ -24,9 +24,9 @@ public class EntityManager {
      * @param world box2D world to deploy body in
      * @param gameCamera camera that shows the viewport
      */
-    public EntityManager(World world, TiledMap tiledMap, OrthographicCamera gameCamera, Array<EnemySpawnArea> spawnAreas){
+    public EntityManager(World world, TiledMap tiledMap, OrthographicCamera gameCamera){
         player= new Player(world, gameCamera);
-        enemyManager= new EnemyManager(world, tiledMap, spawnAreas, this);
+        enemyManager= new EnemyManager(world, tiledMap, this);
         GameContactListener gameContactListener = new GameContactListener(this);
         world.setContactListener(gameContactListener);
     }

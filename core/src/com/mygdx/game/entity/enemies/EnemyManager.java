@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.EntityManager;
-import com.mygdx.game.map.objects.EnemySpawnArea;
 
 
 import java.util.Iterator;
@@ -24,19 +23,19 @@ public class EnemyManager {
     private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
     private final EnemyGenerator enemyGenerator;
-    private final EnemySpawnDirection enemySpawnDirection;
+    private final EnemyIncomingDirection enemySpawnDirection;
     /**
      *
      * @param world Box2D world
      * @param spawnAreas the 4 Rectangles body where enemies are supposed to spawn from
      * @param entityManager has IMPORTANT variables
      */
-    public EnemyManager(World world, TiledMap tiledMap, Array<EnemySpawnArea> spawnAreas, EntityManager entityManager){
+    public EnemyManager(World world, TiledMap tiledMap, EntityManager entityManager){
         this.enemiesToAdd = new Array<>();
         this.currentEnemies = new Array<>();
         this.enemiesToRemove = new Array<>();
-        this.enemyGenerator= new EnemyGenerator(world, spawnAreas, this);
-        this.enemySpawnDirection=new EnemySpawnDirection(world, tiledMap);
+        this.enemyGenerator= new EnemyGenerator(world, tiledMap, this);
+        this.enemySpawnDirection=new EnemyIncomingDirection(world, tiledMap);
 
     }
 
@@ -97,7 +96,7 @@ public class EnemyManager {
         return enemyGenerator;
     }
 
-    public EnemySpawnDirection getEnemySpawnDirection(){
+    public EnemyIncomingDirection getEnemySpawnDirection(){
         return enemySpawnDirection;
     }
 

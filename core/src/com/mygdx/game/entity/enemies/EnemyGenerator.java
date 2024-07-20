@@ -1,10 +1,15 @@
 package com.mygdx.game.entity.enemies;
 
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GlobalVariables;
 import com.mygdx.game.map.objects.EnemySpawnArea;
+import org.w3c.dom.css.Rect;
 
 import java.util.Random;
 
@@ -20,8 +25,7 @@ public class EnemyGenerator {
 
     private final World world;
     private final EnemyManager enemyManager;
-    private final Array<EnemySpawnArea> spawnAreas;
-
+    private final Array<EnemySpawnArea> spawnAreaRectangles;
     private int lastNumber = 1;
     private final Random random;
 
@@ -31,13 +35,14 @@ public class EnemyGenerator {
     //Most amount of enemy that can be on the Map at the same time
     private int currentEnemyCountThreshold=1;
 
-    public EnemyGenerator(World world, Array<EnemySpawnArea> spawnAreas, EnemyManager enemyManager){
-        this.world=world;
-        this.spawnAreas= spawnAreas;
-        this.enemyManager= enemyManager;
-        random = new Random();
-    }
 
+    public EnemyGenerator(World world, TiledMap tiledMap, EnemyManager enemyManager){
+        this.world=world;
+        this.enemyManager= enemyManager;
+        spawnAreaRectangles=new Array<>();
+        random = new Random();
+        loadEnemyRectangleSpawnArea(tiledMap);
+    }
 
     /**
      * Increases Difficulty based on Score
@@ -81,7 +86,6 @@ public class EnemyGenerator {
      */
     public void spawnEnemies(Vector2 playerLocation){
         //Amount of enemies we need to spawn
-//        int numEnemiesToSpawn=currentEnemyCountThreshold - enemyManager.getCurrentEnemies().size;
         int numEnemiesToSpawn=currentEnemyCountThreshold - enemyManager.getEnemiesToAdd().size;
         if(numEnemiesToSpawn==0){return;}
 
@@ -106,7 +110,7 @@ public class EnemyGenerator {
 
 
     private void createEnemy(Vector2 playerLocation){
-        EnemySpawnArea spawnArea= spawnAreas.get(chooseRectangleToSpawn()-1);
+        EnemySpawnArea spawnArea= spawnAreaRectangles.get(chooseRectangleToSpawn()-1);
 
         float spawnLocationX, spawnLocationY;
         Vector2 spawnLocation, enemyFallSpeed;
@@ -146,6 +150,17 @@ public class EnemyGenerator {
         enemyManager.getEnemySpawnDirection().setDirection(spawnArea.getSpawnDirection());
     }
 
+
+    /**
+     * Sets Areas for where the enemy can be spawned from
+     * @param tiledMap map to search the objects from
+     */
+    private void loadEnemyRectangleSpawnArea(TiledMap tiledMap){
+        MapLayer targetLayer= tiledMap.getLayers().get("EnemyRectangleSpawnArea");
+        for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
+            spawnAreaRectangles.add(new EnemySpawnArea(world, tiledMap, object));
+        }
+    }
 
 
 

@@ -14,13 +14,13 @@ import static com.mygdx.game.GlobalVariables.PPM;
  * Responsible for showing which four Cardinal direction
  * the Enemy will be spawning from
  */
-public class EnemySpawnDirection {
+public class EnemyIncomingDirection {
 
     public Rectangle bound;
     private final Texture texture;
     private float textureRotation;
 
-    public EnemySpawnDirection(World world, TiledMap tiledMap){
+    public EnemyIncomingDirection(World world, TiledMap tiledMap){
         //Create the bound
         MapLayer targetLayer= tiledMap.getLayers().get("EnemyDirection");
         for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
@@ -40,7 +40,7 @@ public class EnemySpawnDirection {
         float originY = height / 2;
 
 //      Draw texture with adjusted origin and position
-        spriteBatch.draw(texture, x, y, originX, originY, width, height, 1, 1,
+        spriteBatch.draw(texture, x, y, originX, originY, width, height, 2, 2,
                 textureRotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
 
     }
@@ -62,6 +62,5 @@ public class EnemySpawnDirection {
                 break;
         }
     }
-
 
 }

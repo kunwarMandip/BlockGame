@@ -58,7 +58,7 @@ public class MainDisplay implements Screen {
         setAspectRatio();
         createWorld();
 
-        entityManager = new EntityManager(world, tiledMap, gameCamera, mapManager.getSpawnAreaList());
+        entityManager = new EntityManager(world, tiledMap, gameCamera);
         hudScene= new Hud(spriteBatch);
     }
 

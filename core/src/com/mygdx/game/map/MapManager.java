@@ -4,7 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GlobalVariables;
-import com.mygdx.game.map.objects.EnemyRectangleSpawnArea;
+import com.mygdx.game.entity.enemies.EnemyRectangleSpawnArea;
 import com.mygdx.game.map.objects.EnemySpawnArea;
 
 import java.util.Random;

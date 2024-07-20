@@ -1,4 +1,4 @@
-package com.mygdx.game.map.objects;
+package com.mygdx.game.entity.enemies;
 
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -17,8 +17,8 @@ public class EnemyRectangleSpawnArea {
         rectangleSpawnArea = rectangleObject.getRectangle();
         this.rectangleDirection= rectangleObject.getProperties().get("name", String.class);
 
-        System.out.println("Rectangle Properties: "+ "Position: " + rectangleSpawnArea.x +  " : " + rectangleSpawnArea.y
-                +  " . " + rectangleDirection);
+        System.out.println("Rectangle Properties: "+ "Position: " + rectangleSpawnArea.x +
+                " : " + rectangleSpawnArea.y  +  " . " + rectangleDirection);
     }
 
 
