@@ -1,6 +1,5 @@
 package com.mygdx.game.entity.enemies;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -31,29 +30,38 @@ public class Enemy {
         this.spawnLocation=spawnLocation;
         this.hasEnemySpawned=false;
         enemyAnimation= new EnemyAnimation(textureColor);
+
     }
 
+    /**
+     * Update the timeCounter until it reaches waitTime
+     * when reached, create the BOX2D body, update it to enemyManager
+     * @param delta time passed since last render(not even sure atp)
+     */
     public void update(float delta){
         if(!hasEnemySpawned){
-            if(timeCounter>=waitTime){
-                defineEnemy(spawnLocation);
-                enemyManager.getCurrentEnemies().add(this);
-                enemyManager.getEnemiesToAdd().removeValue(this, true);
-                hasEnemySpawned=true;
-            }
-            timeCounter+=delta;
-            System.out.println("Time: "+timeCounter);
-        }else{
-            body.setLinearVelocity(movementSpeed);
+            updateTimer(delta);
+            return;
         }
+        body.setLinearVelocity(movementSpeed);
+
     }
+
+    private void updateTimer(float delta){
+        if(timeCounter>=waitTime){
+            defineEnemy(spawnLocation);
+            enemyManager.getCurrentEnemies().add(this);
+            enemyManager.getEnemiesToAdd().removeValue(this, true);
+            hasEnemySpawned=true;
+        }
+        timeCounter+=delta;
+    }
+
 
     public void draw(SpriteBatch spriteBatch) {
         Vector2 bodyPosition=body.getPosition();
         enemyAnimation.draw(new Vector2(bodyPosition.x, bodyPosition.y), spriteBatch);
     }
-
-
 
     private void defineEnemy(Vector2 spawnLocation) {
         BodyDef bodyDef = new BodyDef();

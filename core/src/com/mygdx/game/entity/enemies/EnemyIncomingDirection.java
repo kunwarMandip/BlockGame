@@ -44,7 +44,6 @@ public class EnemyIncomingDirection {
 
     }
 
-
     public void setDirection(String direction){
         switch (direction){
             case "right":

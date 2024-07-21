@@ -5,8 +5,7 @@ import java.util.Random;
 
 
 public class EnemyTextureChooser {
-    private final int targetNumber;
-    private final int rewardThreshold;
+    private final int targetNumber, rewardThreshold;
     private int rewardThresholdCounter;
 
     public EnemyTextureChooser(){

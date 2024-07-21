@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.HashMap;
 
 /**
- * Create PUBLIC STATIC hashMap to allow for easier access to textures
+ * Create a PUBLIC STATIC Hashmap of String and texture to be accessed easily
  */
 public class DefineTexture {
 

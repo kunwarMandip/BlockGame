@@ -28,20 +28,19 @@ public class EnemyGenerator {
     private final EnemyManager enemyManager;
     private final GameStateVariables gameStateVariables;
     private final Array<EnemySpawnArea> spawnAreaRectangles;
+
     private int lastNumber = 1;
     private final Random random;
-
-    //Most amount of enemy that can be on the Map at the same time
-    private int currentEnemyCountThreshold=1;
 
     private final EnemyTextureChooser enemyTextureChooser;
     public EnemyGenerator(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, EnemyManager enemyManager){
         this.world=world;
         this.enemyManager= enemyManager;
         this.gameStateVariables=gameStateVariables;
-        spawnAreaRectangles=new Array<>();
         this.enemyTextureChooser= new EnemyTextureChooser();
+
         random = new Random();
+        spawnAreaRectangles=new Array<>();
         loadEnemyRectangleSpawnArea(tiledMap);
     }
 
@@ -49,6 +48,13 @@ public class EnemyGenerator {
      * Increases Difficulty based on Score
      */
     public void increaseDifficulty(){
+
+        //if score hasn't changed at all
+        if(gameStateVariables.score ==gameStateVariables.lastScore){
+            return;
+        }
+        //Update last score so now the score needs to be increased again
+        gameStateVariables.lastScore++;
 
         //Increase Fall Speed. Lower wait time for new enemy to drop
         if(gameStateVariables.getScore() % 10==0){
@@ -62,39 +68,15 @@ public class EnemyGenerator {
         }
 
         //Increase max enemy in the map at any given time
-        int currentScore = gameStateVariables.getScore();
-        int[] scoreThresholds = {6, 16, 21, 41};
-        currentEnemyCountThreshold = MAX_ENEMY_THRESHOLD;
-
-        for (int i = 0; i < scoreThresholds.length; i++) {
-            if (currentScore < scoreThresholds[i]) {
-                currentEnemyCountThreshold = i + 1;
+        int tempCurrentScore=gameStateVariables.score;
+        gameStateVariables.maxEnemyThreshold=MAX_ENEMY_THRESHOLD;
+        for(int i =0; i< scoreThresholds.length; i++){
+            //if current score is less than the number in that index
+            if(tempCurrentScore < scoreThresholds[i]){
+                gameStateVariables.maxEnemyThreshold= i+1;
                 break;
             }
         }
-    }
-
-    /**
-     * To reset difficulty when the game ends
-     */
-    public void resetDifficulty(){
-        gameStateVariables.reset();
-        currentEnemyCountThreshold=1;
-    }
-
-
-    /**
-     * Chooses a random number between 1 and 4 with
-     * @return int (between 1 and 4
-     */
-    private int chooseRectangleToSpawn(){
-        int number = random.nextInt(4) +1;
-
-        while (number == lastNumber && random.nextDouble() < 0.75) {
-            number = random.nextInt(4) + 1; // Retry generating a number
-        }
-        lastNumber = number; // Update lastNumber with the generated number
-        return number;
     }
 
     /**
@@ -103,8 +85,13 @@ public class EnemyGenerator {
      */
     public void spawnEnemies(Vector2 playerLocation, String playerColor){
         //Amount of enemies we need to spawn
-        int numEnemiesToSpawn=currentEnemyCountThreshold - enemyManager.getEnemiesToAdd().size;
-        if(numEnemiesToSpawn==0){return;}
+        int enemiesToAddSize=enemyManager.getEnemiesToAdd().size;
+        int currentEnemiesSize=enemyManager.getCurrentEnemies().size;
+        int numEnemiesToSpawn=gameStateVariables.maxEnemyThreshold - (enemiesToAddSize + currentEnemiesSize);
+
+        if(numEnemiesToSpawn<0){
+            return;
+        }
 
         for(int i=0; i<numEnemiesToSpawn; i++){
             createEnemy(playerLocation, playerColor);
@@ -146,21 +133,29 @@ public class EnemyGenerator {
                 break;
         }
 
-//        System.out.println("Creating New Rectangle: "+ spawnArea.getSpawnDirection());
-//        System.out.println("Spawn location: " + spawnLocationX + " : " + spawnLocationY);
+        float waitTime=gameStateVariables.waitTime;
         String enemyColor= chooseEnemyTexture(playerColor);
         spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
-        float waitTime=gameStateVariables.waitTime;
         enemyManager.getEnemiesToAdd().add(new Enemy(enemyManager, world, enemyColor, spawnLocation, enemyFallSpeed, waitTime));
         enemyManager.getEnemySpawnDirection().setDirection(spawnArea.getSpawnDirection());
     }
 
-
     /**
-     * Returns
-     * @param playerColor
-     * @return
+     * Chooses a random number between 1 and 4 with
+     * @return int (between 1 and 4
      */
+    private int chooseRectangleToSpawn(){
+        int number = random.nextInt(4) +1;
+
+        while (number == lastNumber && random.nextDouble() < 0.75) {
+            number = random.nextInt(4) + 1; // Retry generating a number
+        }
+        lastNumber = number; // Update lastNumber with the generated number
+        return number;
+    }
+
+
+
     private String chooseEnemyTexture(String playerColor){
         //Enemy and Player match color
         if(enemyTextureChooser.update()){
@@ -186,5 +181,12 @@ public class EnemyGenerator {
         for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
             spawnAreaRectangles.add(new EnemySpawnArea(world, tiledMap, object));
         }
+    }
+
+    /**
+     * To reset difficulty when the game ends
+     */
+    public void resetDifficulty(){
+       gameStateVariables.reset();
     }
 }

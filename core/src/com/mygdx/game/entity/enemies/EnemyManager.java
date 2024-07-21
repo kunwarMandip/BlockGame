@@ -23,12 +23,11 @@ public class EnemyManager {
     private final Array<Enemy> enemiesToAdd;
     private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
+
     private final EnemyGenerator enemyGenerator;
-
-    private final EnemyIncomingDirection enemySpawnDirection;
     public final GameStateVariables gameStateVariables;
+    private final EnemyIncomingDirection enemySpawnDirection;
 
-    private DefineTexture defineTexture;
 
     public EnemyManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables){
         this.gameStateVariables=gameStateVariables;
@@ -55,14 +54,16 @@ public class EnemyManager {
             iterator.remove();
         }
 
-        //Check if new enemies need to be spawned
-        enemyGenerator.spawnEnemies(playerPosition, playerColor);
-
         //Update enemies
         for (Enemy enemy : currentEnemies) {
             enemy.update(delta);
         }
 
+        //Check if new enemies can be created
+        enemyGenerator.spawnEnemies(playerPosition, playerColor);
+        enemyGenerator.increaseDifficulty();
+
+        //Update the enemies timer
         for(Enemy enemy: enemiesToAdd){
             enemy.update(delta);
         }

@@ -4,8 +4,6 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.map.objects.EnemySpawnArea;
 import com.mygdx.game.map.objects.OuterBound;
 import com.mygdx.game.map.objects.PlayerWall;
 
@@ -15,14 +13,11 @@ public class LoadMapObjects {
     private final World world;
     private final TiledMap tiledMap;
 
-    private Array<EnemySpawnArea> spawnAreaList;
-
     public LoadMapObjects(World world, TiledMap tiledMap){
         this.world=world;
         this.tiledMap=tiledMap;
         loadWall();
         loadOuterBound();
-//        loadEnemyRectangleSpawnArea();
     }
 
     private void loadWall(){
@@ -48,8 +43,5 @@ public class LoadMapObjects {
 //        }
 //    }
 
-    public Array<EnemySpawnArea> getSpawnAreaList(){
-        return spawnAreaList;
-    }
 
 }

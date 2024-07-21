@@ -8,7 +8,7 @@ import static com.mygdx.game.StaticVariables.BASE_SPEED;
  */
 public class GameStateVariables {
 
-    public int score;
+    public int score, lastScore, maxEnemyThreshold;
     public float enemySpeedX, enemySpeedY, waitTime;
 
     public GameStateVariables(){
@@ -20,6 +20,8 @@ public class GameStateVariables {
      */
     public void reset(){
         this.score=0;
+        this.lastScore=0;
+        this.maxEnemyThreshold = 1;
         this.enemySpeedX=BASE_SPEED.x;
         this.enemySpeedY=BASE_SPEED.y;
         this.waitTime=5f;

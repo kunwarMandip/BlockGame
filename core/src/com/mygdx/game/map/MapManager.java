@@ -2,9 +2,7 @@ package com.mygdx.game.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameStateVariables;
-import com.mygdx.game.entity.enemies.EnemyRectangleSpawnArea;
 
 import java.util.Random;
 
@@ -16,13 +14,10 @@ import java.util.Random;
 public class MapManager {
 
     private final GameStateVariables gameStateVariables;
-    private final LoadMapObjects loadMapObjects;
-    private Array<EnemyRectangleSpawnArea> spawnAreaList;
     private final TileLayersManager tileLayersManager;
     private int[] upperTiles;
     private int[] lowerTiles;
 
-    private final Random random;
     private int lastChangeScore;
 
     /**
@@ -39,16 +34,19 @@ public class MapManager {
         tileLayersManager.setNewTiles("CyanLightBlue");
         upperTiles= tileLayersManager.getCurrentUpperTile();
         lowerTiles= tileLayersManager.getCurrentLowerTiles();
-        loadMapObjects = new LoadMapObjects(world, tiledMap);
-        this.random=new Random();
+
+        LoadMapObjects loadMapObjects = new LoadMapObjects(world, tiledMap);
     }
 
-
+    /**
+     * If current score is divisible by 2, Changes the map to a new map
+     * and gets its upper and lower tiles. Else, doesn't do anything at all
+     */
     public void update(){
         int tempScore= gameStateVariables.getScore();
         String newPrimaryColors;
         if(tempScore%2==0 && tempScore!=0 && lastChangeScore!=tempScore){
-
+            Random random=new Random();
             do{
                 int randomIndex= random.nextInt(tileLayersManager.getTileGroups().size);
                 newPrimaryColors=tileLayersManager.getTileGroups().get(randomIndex).getPrimaryColorName();
@@ -69,10 +67,6 @@ public class MapManager {
 
     public int[] getLowerTiles(){
         return lowerTiles;
-    }
-
-    public TileLayersManager getTileLayerManager(){
-        return tileLayersManager;
     }
 
 }
