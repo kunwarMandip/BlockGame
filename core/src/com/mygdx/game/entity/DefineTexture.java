@@ -1,6 +1,7 @@
 package com.mygdx.game.entity;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 
 import java.util.HashMap;
 
@@ -11,12 +12,13 @@ public class DefineTexture {
 
     public static final HashMap<String, Texture> textureHashMap;
     public static final int textureHashMapSize;
+    public static String[] textureNames={"red", "brown", "yellow"};
 
     static{
         textureHashMap= new HashMap<>();
-        textureHashMap.put("red", new Texture("characters/brown.png"));
+        textureHashMap.put("red", new Texture("characters/red.png"));
         textureHashMap.put("brown", new Texture("characters/brown.png"));
-        textureHashMap.put("yellow", new Texture("characters/brown.png"));
+        textureHashMap.put("yellow", new Texture("characters/yellow.png"));
         textureHashMapSize= textureHashMap.size();
     }
 

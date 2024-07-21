@@ -34,14 +34,6 @@ public class LoadMapObjects {
         }
     }
 
-//    private void loadEnemyRectangleSpawnArea(){
-//        spawnAreaList=new Array<>();
-//        MapLayer targetLayer= tiledMap.getLayers().get("EnemyRectangleSpawnArea");
-//
-//        for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
-//            spawnAreaList.add(new EnemySpawnArea(world, tiledMap, object));
-//        }
-//    }
 
 
 }

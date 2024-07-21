@@ -15,6 +15,7 @@ import java.util.Random;
 
 import static com.mygdx.game.StaticVariables.*;
 import static com.mygdx.game.entity.DefineTexture.textureHashMap;
+import static com.mygdx.game.entity.DefineTexture.textureNames;
 
 
 /**
@@ -155,21 +156,20 @@ public class EnemyGenerator {
     }
 
 
-
     private String chooseEnemyTexture(String playerColor){
         //Enemy and Player match color
         if(enemyTextureChooser.update()){
            return playerColor;
         }
 
-        Random random= new Random();
-        int randomIndex=random.nextInt(DefineTexture.textureHashMapSize);
-        Iterator<String> iterator = textureHashMap.keySet().iterator();
-        for (int i = 0; i < randomIndex; i++) {
-            iterator.next();
-        }
-
-        return iterator.next();
+        Random random = new Random();
+        String enemyColor;
+        int randomIndex;
+        do {
+            randomIndex = random.nextInt(DefineTexture.textureHashMapSize);
+            enemyColor = DefineTexture.textureNames[randomIndex];
+        } while (enemyColor.equals(playerColor));
+        return  enemyColor;
     }
 
     /**
