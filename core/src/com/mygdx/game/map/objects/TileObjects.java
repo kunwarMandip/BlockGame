@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.GlobalVariables;
+import com.mygdx.game.StaticVariables;
 
 public class TileObjects {
 
@@ -27,13 +27,13 @@ public class TileObjects {
         PolygonShape shape = new PolygonShape();
 
         bodyDef.type = BodyDef.BodyType.StaticBody;
-        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / GlobalVariables.PPM,
-                (bounds.getY() + bounds.getHeight() / 2) / GlobalVariables.PPM);
+        bodyDef.position.set((bounds.getX() + bounds.getWidth() / 2) / StaticVariables.PPM,
+                (bounds.getY() + bounds.getHeight() / 2) / StaticVariables.PPM);
 
         body = world.createBody(bodyDef);
 
-        shape.setAsBox(bounds.getWidth() / 2 / GlobalVariables.PPM,
-                bounds.getHeight() / 2 / GlobalVariables.PPM);
+        shape.setAsBox(bounds.getWidth() / 2 / StaticVariables.PPM,
+                bounds.getHeight() / 2 / StaticVariables.PPM);
         fixtureDef.shape = shape;
         fixture = body.createFixture(fixtureDef);
 

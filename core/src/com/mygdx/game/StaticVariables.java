@@ -2,9 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class GlobalVariables {
-
-    public static int SCORE=0;
+public class StaticVariables {
 
     //9:18 ratio to ensure it fits on every device
     //Since game is PORTRAIT mode only, the height is longer than width
@@ -26,6 +24,8 @@ public class GlobalVariables {
     public static final Vector2 BASE_SPEED = new Vector2(0.5f, 0.5f);
 
     //Most enemies that can be in the map at the same time
-    public static final int MAX_ENEMY_THRESHOLD =2;
+    public static final int MAX_ENEMY_THRESHOLD =5;
+
+    public static final int SAME_COLOR_ENEMY_THRESHOLD=15;
 
 }

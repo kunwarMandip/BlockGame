@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
  */
 public class EnemyRectangleSpawnArea {
 
-    private static Rectangle rectangleSpawnArea;
+    private final Rectangle rectangleSpawnArea;
     private final String rectangleDirection;
 
     public EnemyRectangleSpawnArea(RectangleMapObject rectangleObject){

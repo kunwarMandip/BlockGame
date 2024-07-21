@@ -13,10 +13,11 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.GameStateVariables;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.map.MapManager;
 
-import static com.mygdx.game.GlobalVariables.*;
+import static com.mygdx.game.StaticVariables.*;
 
 /**
  * This class is the main class which holds
@@ -46,8 +47,9 @@ public class MainDisplay implements Screen {
     private final SpriteBatch spriteBatch;
     private final EntityManager entityManager;
 
-    private Hud hudScene;
+    private final Hud hudScene;
 
+    public final GameStateVariables gameStateVariables;
     /**
      * Set the aspect ratio for the screen
      * create the world and load the tiledMap.
@@ -55,11 +57,12 @@ public class MainDisplay implements Screen {
      */
     public MainDisplay(){
         spriteBatch= new SpriteBatch();
+        gameStateVariables= new GameStateVariables();
         setAspectRatio();
         createWorld();
 
-        entityManager = new EntityManager(world, tiledMap, gameCamera);
-        hudScene= new Hud(spriteBatch);
+        entityManager = new EntityManager(world, tiledMap, gameStateVariables);
+        hudScene= new Hud(gameStateVariables, spriteBatch);
     }
 
 
@@ -92,8 +95,7 @@ public class MainDisplay implements Screen {
         tiledMap = new TmxMapLoader().load("newMap.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
-        mapManager = new MapManager(world, tiledMap);
-
+        mapManager = new MapManager(world, tiledMap, gameStateVariables);
     }
 
     @Override
@@ -106,12 +108,10 @@ public class MainDisplay implements Screen {
      * @param delta time in seconds since last render
      */
     public void update(float delta){
-
         // 1/60f: 60 frames per second
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
         hudScene.update();
-
     }
 
     @Override
@@ -159,8 +159,8 @@ public class MainDisplay implements Screen {
 
     @Override
     public void resume() {
-
     }
+
 
     @Override
     public void hide() {

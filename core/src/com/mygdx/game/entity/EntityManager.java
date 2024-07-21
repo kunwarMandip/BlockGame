@@ -1,14 +1,12 @@
 package com.mygdx.game.entity;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GameStateVariables;
 import com.mygdx.game.contactlistener.GameContactListener;
 import com.mygdx.game.entity.enemies.EnemyManager;
 import com.mygdx.game.entity.player.Player;
-import com.mygdx.game.map.objects.EnemySpawnArea;
 
 /**
  * Responsible for managing all entities that are supposed to be loaded
@@ -18,16 +16,14 @@ public class EntityManager {
 
     private final Player player;
     private final EnemyManager enemyManager;
-
     /**
      * Sets the player, enemies, and the contact listener
      * @param world box2D world to deploy body in
-     * @param gameCamera camera that shows the viewport
      */
-    public EntityManager(World world, TiledMap tiledMap, OrthographicCamera gameCamera){
-        player= new Player(world, gameCamera);
-        enemyManager= new EnemyManager(world, tiledMap, this);
-        GameContactListener gameContactListener = new GameContactListener(this);
+    public EntityManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables){
+        player= new Player(world);
+        enemyManager= new EnemyManager(world, tiledMap, gameStateVariables);
+        GameContactListener gameContactListener = new GameContactListener(this, gameStateVariables);
         world.setContactListener(gameContactListener);
     }
 
@@ -35,12 +31,12 @@ public class EntityManager {
      * Update Entities
      */
     public void update(float delta){
-        enemyManager.update(delta, player.getBody().getPosition());
+        enemyManager.update(delta, player.getBody().getPosition(), player.getPlayerTextureName());
     }
 
     /**
      * Calls to draw every entity such as Players and Enemies
-     * Enemy has to be drawn first due to the EnemySpawnDirection.class
+     * Enemy has to be drawn first due to the EnemySpawnDirection.Class
      * @param spriteBatch used to draw sprites faster and efficiently
      */
     public void drawEntities(SpriteBatch spriteBatch){

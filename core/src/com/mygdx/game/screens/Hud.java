@@ -10,16 +10,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.game.GlobalVariables;
+import com.mygdx.game.GameStateVariables;
+import com.mygdx.game.StaticVariables;
 
 public class Hud implements Disposable {
 
     private final Stage stage;
     private final Label scoreLabel;
+    private final GameStateVariables gameStateVariables;
 
-    public Hud(SpriteBatch spriteBatch){
-        Viewport viewport = new FitViewport(GlobalVariables.VIRTUAL_WIDTH / GlobalVariables.PPM,
-                GlobalVariables.VIRTUAL_HEIGHT / GlobalVariables.PPM,
+    public Hud(GameStateVariables gameStateVariables, SpriteBatch spriteBatch){
+
+        this.gameStateVariables= gameStateVariables;
+        Viewport viewport = new FitViewport(StaticVariables.VIRTUAL_WIDTH / StaticVariables.PPM,
+                StaticVariables.VIRTUAL_HEIGHT / StaticVariables.PPM,
                 new OrthographicCamera());
         stage= new Stage(viewport, spriteBatch);
 
@@ -40,8 +44,7 @@ public class Hud implements Disposable {
     }
 
     public void update(){
-        int newScore=GlobalVariables.SCORE;
-        scoreLabel.setText(String.format("%d", newScore));
+        scoreLabel.setText(String.format("%d", gameStateVariables.getScore()));
     }
 
     @Override

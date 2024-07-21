@@ -1,7 +1,9 @@
 package com.mygdx.game.contactlistener;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.mygdx.game.GlobalVariables;
+import com.mygdx.game.GameStateVariables;
+import com.mygdx.game.StaticVariables;
 import com.mygdx.game.entity.EntityManager;
 import com.mygdx.game.entity.enemies.Enemy;
 import com.mygdx.game.entity.enemies.EnemyManager;
@@ -13,10 +15,12 @@ public class ContactManager {
 
     private final EntityManager entityManager;
     private final EnemyManager enemyManager;
+    private final GameStateVariables gameStateVariables;
 
-    public ContactManager(EntityManager entityManager){
+    public ContactManager(EntityManager entityManager, GameStateVariables gameStateVariables){
         this.entityManager= entityManager;
         this.enemyManager=entityManager.getEnemyManager();
+        this.gameStateVariables=gameStateVariables;
     }
 
 
@@ -48,7 +52,7 @@ public class ContactManager {
         Enemy enemy=(Enemy) a.getUserData();
         if(checkEnemyNull(enemy)){return;}
 
-        GlobalVariables.SCORE++;
+        gameStateVariables.incrementScore();
         enemyManager.getEnemyGenerator().increaseDifficulty();
         enemyManager.getEnemiesToRemove().add(enemy);
     }

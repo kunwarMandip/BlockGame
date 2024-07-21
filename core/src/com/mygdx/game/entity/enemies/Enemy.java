@@ -4,19 +4,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.game.FallingBlocks;
 
 
-import static com.mygdx.game.GlobalVariables.*;
+import static com.mygdx.game.StaticVariables.*;
 
 
 public class Enemy {
 
-    private final EnemyManager enemyManager;
     private Body body;
     private final World world;
+    private final EnemyManager enemyManager;
     private final EnemyAnimation enemyAnimation;
-
 
     private final Vector2 movementSpeed, spawnLocation;
     private final float waitTime;
@@ -24,7 +22,7 @@ public class Enemy {
     private boolean hasEnemySpawned;
 
 
-    public Enemy(EnemyManager enemyManager, World world, Vector2 spawnLocation, Vector2 speed, float waitTime){
+    public Enemy(EnemyManager enemyManager, World world, String textureColor, Vector2 spawnLocation,  Vector2 speed, float waitTime){
         this.enemyManager=enemyManager;
         this.world=world;
         this.movementSpeed=speed;
@@ -32,7 +30,7 @@ public class Enemy {
         this.timeCounter=0;
         this.spawnLocation=spawnLocation;
         this.hasEnemySpawned=false;
-        enemyAnimation= new EnemyAnimation(new Texture("box.png"));
+        enemyAnimation= new EnemyAnimation(textureColor);
     }
 
     public void update(float delta){
@@ -49,7 +47,6 @@ public class Enemy {
             body.setLinearVelocity(movementSpeed);
         }
     }
-
 
     public void draw(SpriteBatch spriteBatch) {
         Vector2 bodyPosition=body.getPosition();
@@ -78,11 +75,11 @@ public class Enemy {
         fixtureDef.restitution = 0.0f;
 
         fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
-        fixtureDef.filter.maskBits =~(CATEGORY_WALL | CATEGORY_ENEMY); // Collides with everything except walls
+        // Collides with everything except walls
+        fixtureDef.filter.maskBits =~(CATEGORY_WALL | CATEGORY_ENEMY);
 
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
-
     }
 
     public void dispose() {

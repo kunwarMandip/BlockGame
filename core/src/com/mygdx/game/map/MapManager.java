@@ -3,9 +3,8 @@ package com.mygdx.game.map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.GlobalVariables;
+import com.mygdx.game.GameStateVariables;
 import com.mygdx.game.entity.enemies.EnemyRectangleSpawnArea;
-import com.mygdx.game.map.objects.EnemySpawnArea;
 
 import java.util.Random;
 
@@ -16,6 +15,7 @@ import java.util.Random;
  */
 public class MapManager {
 
+    private final GameStateVariables gameStateVariables;
     private final LoadMapObjects loadMapObjects;
     private Array<EnemyRectangleSpawnArea> spawnAreaList;
     private final TileLayersManager tileLayersManager;
@@ -31,8 +31,9 @@ public class MapManager {
      * @param world box2D world
      * @param tiledMap TiledMap
      */
-    public MapManager(World world, TiledMap tiledMap){
+    public MapManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables){
         System.out.println("INIT MapManager...");
+        this.gameStateVariables= gameStateVariables;
 
         tileLayersManager = new TileLayersManager(tiledMap);
         tileLayersManager.setNewTiles("CyanLightBlue");
@@ -44,7 +45,7 @@ public class MapManager {
 
 
     public void update(){
-        int tempScore=GlobalVariables.SCORE;
+        int tempScore= gameStateVariables.getScore();
         String newPrimaryColors;
         if(tempScore%2==0 && tempScore!=0 && lastChangeScore!=tempScore){
 
@@ -61,9 +62,6 @@ public class MapManager {
         }
     }
 
-    public Array<EnemySpawnArea> getSpawnAreaList(){
-        return loadMapObjects.getSpawnAreaList();
-    }
 
     public int[] getUpperTiles(){
         return upperTiles;

@@ -3,43 +3,44 @@ package com.mygdx.game.entity.enemies;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.GlobalVariables;
+import com.mygdx.game.GameStateVariables;
+import com.mygdx.game.entity.DefineTexture;
 import com.mygdx.game.map.objects.EnemySpawnArea;
-import org.w3c.dom.css.Rect;
 
+import java.util.Iterator;
 import java.util.Random;
 
-import static com.mygdx.game.GlobalVariables.*;
+import static com.mygdx.game.StaticVariables.*;
+import static com.mygdx.game.entity.DefineTexture.textureHashMap;
 
 
 /**
  * Responsible for choosing:
- *      :which Rectangle Spawn Area to spawn Enemy Object from
- *      :Create a fair System from to choose the Spawn Point
+ * Which Rectangle Spawn Area to spawn Enemy Object from
+ * Create a fair System from to choose the Spawn Point
  */
 public class EnemyGenerator {
 
     private final World world;
     private final EnemyManager enemyManager;
+    private final GameStateVariables gameStateVariables;
     private final Array<EnemySpawnArea> spawnAreaRectangles;
     private int lastNumber = 1;
     private final Random random;
 
-    private float enemySpeedX= BASE_SPEED.x;
-    private float enemySpeedY= BASE_SPEED.y;
-
     //Most amount of enemy that can be on the Map at the same time
     private int currentEnemyCountThreshold=1;
 
-
-    public EnemyGenerator(World world, TiledMap tiledMap, EnemyManager enemyManager){
+    private final EnemyTextureChooser enemyTextureChooser;
+    public EnemyGenerator(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, EnemyManager enemyManager){
         this.world=world;
         this.enemyManager= enemyManager;
+        this.gameStateVariables=gameStateVariables;
         spawnAreaRectangles=new Array<>();
+        this.enemyTextureChooser= new EnemyTextureChooser();
         random = new Random();
         loadEnemyRectangleSpawnArea(tiledMap);
     }
@@ -48,17 +49,20 @@ public class EnemyGenerator {
      * Increases Difficulty based on Score
      */
     public void increaseDifficulty(){
-        //Increase Fall Speed
-        if(GlobalVariables.SCORE % 10==0){
-            enemySpeedX= BASE_SPEED.x + BOOST_SPEED_INCREASE;
-            enemySpeedY= BASE_SPEED.y + BOOST_SPEED_INCREASE;
+
+        //Increase Fall Speed. Lower wait time for new enemy to drop
+        if(gameStateVariables.getScore() % 10==0){
+            gameStateVariables.enemySpeedX=BASE_SPEED.x + BOOST_SPEED_INCREASE;
+            gameStateVariables.enemySpeedY=BASE_SPEED.x + BOOST_SPEED_INCREASE;
+            gameStateVariables.waitTime= gameStateVariables.waitTime-0.1f;
         } else{
-            enemySpeedX= BASE_SPEED.x + STEADY_SPEED_INCREASE;
-            enemySpeedY= BASE_SPEED.y+ STEADY_SPEED_INCREASE;
+            gameStateVariables.enemySpeedX= BASE_SPEED.x + STEADY_SPEED_INCREASE;
+            gameStateVariables.enemySpeedY= BASE_SPEED.y+ STEADY_SPEED_INCREASE;
+            gameStateVariables.waitTime= gameStateVariables.waitTime-0.5f;
         }
 
         //Increase max enemy in the map at any given time
-        int currentScore = GlobalVariables.SCORE;
+        int currentScore = gameStateVariables.getScore();
         int[] scoreThresholds = {6, 16, 21, 41};
         currentEnemyCountThreshold = MAX_ENEMY_THRESHOLD;
 
@@ -74,25 +78,10 @@ public class EnemyGenerator {
      * To reset difficulty when the game ends
      */
     public void resetDifficulty(){
-        GlobalVariables.SCORE=0;
+        gameStateVariables.reset();
         currentEnemyCountThreshold=1;
-        enemySpeedX= BASE_SPEED.x;
-        enemySpeedY= BASE_SPEED.y;
     }
 
-    /**
-     * Checks if new enemies can be spawned in the map, and does so if possible
-     * @param playerLocation location of player Box2D body
-     */
-    public void spawnEnemies(Vector2 playerLocation){
-        //Amount of enemies we need to spawn
-        int numEnemiesToSpawn=currentEnemyCountThreshold - enemyManager.getEnemiesToAdd().size;
-        if(numEnemiesToSpawn==0){return;}
-
-        for(int i=0; i<numEnemiesToSpawn; i++){
-            createEnemy(playerLocation);
-        }
-    }
 
     /**
      * Chooses a random number between 1 and 4 with
@@ -108,12 +97,27 @@ public class EnemyGenerator {
         return number;
     }
 
+    /**
+     * Checks if new enemies can be spawned in the map, and does so if possible
+     * @param playerLocation location of player Box2D body
+     */
+    public void spawnEnemies(Vector2 playerLocation, String playerColor){
+        //Amount of enemies we need to spawn
+        int numEnemiesToSpawn=currentEnemyCountThreshold - enemyManager.getEnemiesToAdd().size;
+        if(numEnemiesToSpawn==0){return;}
 
-    private void createEnemy(Vector2 playerLocation){
+        for(int i=0; i<numEnemiesToSpawn; i++){
+            createEnemy(playerLocation, playerColor);
+        }
+    }
+
+    private void createEnemy(Vector2 playerLocation, String playerColor){
         EnemySpawnArea spawnArea= spawnAreaRectangles.get(chooseRectangleToSpawn()-1);
 
         float spawnLocationX, spawnLocationY;
         Vector2 spawnLocation, enemyFallSpeed;
+        float enemySpeedX= gameStateVariables.enemySpeedX;
+        float enemySpeedY= gameStateVariables.enemySpeedY;
 
         switch(spawnArea.getSpawnDirection()){
             case "bottom":
@@ -142,14 +146,36 @@ public class EnemyGenerator {
                 break;
         }
 
-        System.out.println("Creating New Rectangle: "+ spawnArea.getSpawnDirection());
-        System.out.println("Spawn location: " + spawnLocationX + " : " + spawnLocationY);
-
+//        System.out.println("Creating New Rectangle: "+ spawnArea.getSpawnDirection());
+//        System.out.println("Spawn location: " + spawnLocationX + " : " + spawnLocationY);
+        String enemyColor= chooseEnemyTexture(playerColor);
         spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
-        enemyManager.getEnemiesToAdd().add(new Enemy(enemyManager, world, spawnLocation, enemyFallSpeed, BASE_ENEMY_WAIT_TIME));
+        float waitTime=gameStateVariables.waitTime;
+        enemyManager.getEnemiesToAdd().add(new Enemy(enemyManager, world, enemyColor, spawnLocation, enemyFallSpeed, waitTime));
         enemyManager.getEnemySpawnDirection().setDirection(spawnArea.getSpawnDirection());
     }
 
+
+    /**
+     * Returns
+     * @param playerColor
+     * @return
+     */
+    private String chooseEnemyTexture(String playerColor){
+        //Enemy and Player match color
+        if(enemyTextureChooser.update()){
+           return playerColor;
+        }
+
+        Random random= new Random();
+        int randomIndex=random.nextInt(DefineTexture.textureHashMapSize);
+        Iterator<String> iterator = textureHashMap.keySet().iterator();
+        for (int i = 0; i < randomIndex; i++) {
+            iterator.next();
+        }
+
+        return iterator.next();
+    }
 
     /**
      * Sets Areas for where the enemy can be spawned from
@@ -161,7 +187,4 @@ public class EnemyGenerator {
             spawnAreaRectangles.add(new EnemySpawnArea(world, tiledMap, object));
         }
     }
-
-
-
 }

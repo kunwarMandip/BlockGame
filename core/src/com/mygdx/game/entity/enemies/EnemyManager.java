@@ -5,7 +5,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.entity.EntityManager;
+import com.mygdx.game.GameStateVariables;
+import com.mygdx.game.entity.DefineTexture;
 
 
 import java.util.Iterator;
@@ -23,20 +24,19 @@ public class EnemyManager {
     private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
     private final EnemyGenerator enemyGenerator;
+
     private final EnemyIncomingDirection enemySpawnDirection;
-    /**
-     *
-     * @param world Box2D world
-     * @param spawnAreas the 4 Rectangles body where enemies are supposed to spawn from
-     * @param entityManager has IMPORTANT variables
-     */
-    public EnemyManager(World world, TiledMap tiledMap, EntityManager entityManager){
+    public final GameStateVariables gameStateVariables;
+
+    private DefineTexture defineTexture;
+
+    public EnemyManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables){
+        this.gameStateVariables=gameStateVariables;
         this.enemiesToAdd = new Array<>();
         this.currentEnemies = new Array<>();
         this.enemiesToRemove = new Array<>();
-        this.enemyGenerator= new EnemyGenerator(world, tiledMap, this);
-        this.enemySpawnDirection=new EnemyIncomingDirection(world, tiledMap);
-
+        this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this);
+        this.enemySpawnDirection=new EnemyIncomingDirection(tiledMap);
     }
 
 
@@ -44,7 +44,7 @@ public class EnemyManager {
      * Removes Enemies. Updates Enemies. Increases Difficulty
      * @param delta time since last render
      */
-    public void update(float delta, Vector2 playerPosition) {
+    public void update(float delta, Vector2 playerPosition, String playerColor) {
 
         //Dispose of enemies
         for (Iterator<Enemy> iterator = enemiesToRemove.iterator(); iterator.hasNext();) {
@@ -56,7 +56,7 @@ public class EnemyManager {
         }
 
         //Check if new enemies need to be spawned
-        enemyGenerator.spawnEnemies(playerPosition);
+        enemyGenerator.spawnEnemies(playerPosition, playerColor);
 
         //Update enemies
         for (Enemy enemy : currentEnemies) {
@@ -81,7 +81,6 @@ public class EnemyManager {
         for (Enemy enemy : currentEnemies) {
             enemy.draw(spriteBatch);
         }
-
     }
 
     public Array<Enemy> getEnemiesToRemove(){

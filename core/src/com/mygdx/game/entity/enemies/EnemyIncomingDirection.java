@@ -6,9 +6,8 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.physics.box2d.World;
 
-import static com.mygdx.game.GlobalVariables.PPM;
+import static com.mygdx.game.StaticVariables.PPM;
 
 /**
  * Responsible for showing which four Cardinal direction
@@ -20,7 +19,7 @@ public class EnemyIncomingDirection {
     private final Texture texture;
     private float textureRotation;
 
-    public EnemyIncomingDirection(World world, TiledMap tiledMap){
+    public EnemyIncomingDirection(TiledMap tiledMap){
         //Create the bound
         MapLayer targetLayer= tiledMap.getLayers().get("EnemyDirection");
         for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
@@ -40,7 +39,7 @@ public class EnemyIncomingDirection {
         float originY = height / 2;
 
 //      Draw texture with adjusted origin and position
-        spriteBatch.draw(texture, x, y, originX, originY, width, height, 2, 2,
+        spriteBatch.draw(texture, x, y, originX, originY, width, height, 1, 1,
                 textureRotation, 0, 0, texture.getWidth(), texture.getHeight(), false, false);
 
     }
