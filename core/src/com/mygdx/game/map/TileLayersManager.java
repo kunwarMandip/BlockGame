@@ -26,9 +26,8 @@ public class TileLayersManager {
         currentUpperTiles= new Array<>();
         currentLowerTiles=new Array<>();
         tileGroups= new Array<>();
-        redGreen();
-        purpleTeal();
-        purpleBlue();
+
+        setTiles();
     }
 
 
@@ -56,18 +55,12 @@ public class TileLayersManager {
         }
     }
 
-
-    private void redGreen(){
-        addTileGroup("CyanLightBlue", "CyanOutside", "LightBlueInside");
+    private void setTiles(){
+        addTileGroup("CyanLightBlue", "BlackOutside", "WhiteInside");
+        addTileGroup("GreenOrange", "RedOutside", "GreyInside");
     }
 
-    private void purpleTeal(){
-        addTileGroup("GreenOrange", "GreenOutside", "OrangeInside");
-    }
 
-    private void purpleBlue(){
-        addTileGroup("PurpleBlue", "PurpleOutside", "BlueInside");
-    }
 
     private void addTileGroup(String groupName, String outsideLayer, String insideLayer){
         TileGroup tileGroup= new TileGroup(groupName);

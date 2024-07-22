@@ -8,8 +8,10 @@ public class StaticVariables {
     //9:18 ratio to ensure it fits on every device
     //Since game is PORTRAIT mode only, the height is longer than width
     public static final float PPM=16;
-    public static final float VIRTUAL_WIDTH = 432;
-    public static final float VIRTUAL_HEIGHT = 864;
+//    public static final float VIRTUAL_WIDTH = 432;
+//    public static final float VIRTUAL_HEIGHT = 864;
+    public static final float VIRTUAL_WIDTH = 720;
+    public static final float VIRTUAL_HEIGHT = 1440;
 
     //Loggers
     public static final Logger enemyLogger = new Logger("EnemyLogger", Logger.DEBUG);

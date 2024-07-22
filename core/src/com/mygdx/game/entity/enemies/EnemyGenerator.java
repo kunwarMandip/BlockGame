@@ -177,7 +177,7 @@ public class EnemyGenerator {
      * @param tiledMap map to search the objects from
      */
     private void loadEnemyRectangleSpawnArea(TiledMap tiledMap){
-        MapLayer targetLayer= tiledMap.getLayers().get("EnemyRectangleSpawnArea");
+        MapLayer targetLayer= tiledMap.getLayers().get("EnemySpawn");
         for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
             spawnAreaRectangles.add(new EnemySpawnArea(world, tiledMap, object));
         }
