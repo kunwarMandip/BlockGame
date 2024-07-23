@@ -48,8 +48,8 @@ public class MainDisplay implements Screen {
     private final EntityManager entityManager;
 
     private final Hud hudScene;
-
     public final GameStateVariables gameStateVariables;
+
     /**
      * Set the aspect ratio for the screen
      * create the world and load the tiledMap.
@@ -62,7 +62,7 @@ public class MainDisplay implements Screen {
         createWorld();
 
         entityManager = new EntityManager(world, tiledMap, gameStateVariables);
-        hudScene= new Hud(gameStateVariables, spriteBatch);
+        hudScene= new Hud(gameStateVariables, spriteBatch, tiledMap);
     }
 
 

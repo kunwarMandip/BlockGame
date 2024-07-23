@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entity.DefineTexture;
-import com.mygdx.game.entity.StringTexturePair;
 
 
 public class PlayerAnimation {
@@ -33,9 +32,15 @@ public class PlayerAnimation {
      * @param textureColor the color of the texture we are looking for
      */
     public void setTexture(String textureColor){
-        StringTexturePair stringTexturePair= DefineTexture.getTexturePair(textureColor);
-        this.textureName=stringTexturePair.textureName;
-        this.playerTexture=stringTexturePair.texture;
+
+        Texture tempTexture= DefineTexture.getTexture(textureColor);
+        if(tempTexture==null){
+            throw new RuntimeException("NO PLAYER TEXTURE FOUND");
+        }
+        else{
+            this.textureName=textureColor;
+            this.playerTexture= DefineTexture.getTexture(textureColor);
+        }
     }
 
     public String getTextureName(){

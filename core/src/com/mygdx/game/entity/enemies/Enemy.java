@@ -20,12 +20,11 @@ public class Enemy {
     private float timeCounter;
     private boolean hasEnemySpawned;
 
-
     public Enemy(EnemyManager enemyManager, World world, String textureColor, Vector2 spawnLocation,  Vector2 speed, float waitTime){
         this.enemyManager=enemyManager;
         this.world=world;
         this.movementSpeed=speed;
-        this.waitTime=waitTime;
+        this.waitTime=0;
         this.timeCounter=0;
         this.spawnLocation=spawnLocation;
         this.hasEnemySpawned=false;
@@ -73,7 +72,7 @@ public class Enemy {
 
         //Creates shape for the body
         PolygonShape rectangleShape = new PolygonShape();
-        rectangleShape.setAsBox(2, 2);
+        rectangleShape.setAsBox(3, 3);
 
         //Creates fixture definition and applies to body
         FixtureDef fixtureDef = new FixtureDef();

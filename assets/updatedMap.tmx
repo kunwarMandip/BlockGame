@@ -39,7 +39,7 @@
   <object id="49" x="-177" y="960.813" width="781.593" height="74.3521"/>
   <object id="47" x="560.892" y="-116.5" width="43.682" height="1076.98"/>
  </objectgroup>
- <objectgroup id="29" name="EnemyRectangleSpawnArea" visible="0" locked="1">
+ <objectgroup id="29" name="EnemyRectangleSpawnArea" locked="1">
   <object id="23" name="top" x="48" y="16" width="337.557" height="64.2304">
    <properties>
     <property name="name" value="top"/>
