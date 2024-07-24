@@ -389,7 +389,7 @@
   <object id="57" x="48" y="1280" width="32" height="16"/>
   <object id="58" x="48" y="192" width="32" height="16"/>
  </objectgroup>
- <objectgroup id="12" name="EnemySpawn" visible="0" locked="1">
+ <objectgroup id="12" name="EnemySpawn" locked="1">
   <object id="26" x="48" y="112" width="624" height="16">
    <properties>
     <property name="name" value="top"/>
@@ -411,16 +411,16 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="13" name="OuterBound" visible="0" locked="1">
+ <objectgroup id="13" name="OuterBound" locked="1">
   <object id="33" x="-144.014" y="-97.5" width="32.0286" height="1681.5"/>
   <object id="37" x="832.01" y="-96" width="32.0096" height="1680.5"/>
   <object id="38" x="-112" y="1552" width="944" height="32"/>
   <object id="39" x="-112" y="-96" width="944" height="32"/>
  </objectgroup>
- <objectgroup id="17" name="EnemyDirection" visible="0" locked="1">
+ <objectgroup id="17" name="EnemyDirection" locked="1">
   <object id="41" x="304" y="640" width="111.75" height="127.714"/>
  </objectgroup>
- <objectgroup id="18" name="Score" visible="0" locked="1">
+ <objectgroup id="18" name="Score" locked="1">
   <object id="49" x="512" y="80" width="128" height="64"/>
  </objectgroup>
 </map>

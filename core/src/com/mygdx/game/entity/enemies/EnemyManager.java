@@ -8,8 +8,6 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameStateVariables;
 
 
-import java.util.Iterator;
-
 /**
  * Responsible for managing enemies:
  * manages enemies spawn
@@ -18,9 +16,7 @@ import java.util.Iterator;
  */
 public class EnemyManager {
 
-
     //For easy management of all enemies in the world
-    private final Array<Enemy> enemiesToAdd;
     private final Array<Enemy> currentEnemies;
     private final Array<Enemy> enemiesToRemove;
 
@@ -31,7 +27,6 @@ public class EnemyManager {
 
     public EnemyManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables){
         this.gameStateVariables=gameStateVariables;
-        this.enemiesToAdd = new Array<>();
         this.currentEnemies = new Array<>();
         this.enemiesToRemove = new Array<>();
         this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this);
@@ -50,14 +45,7 @@ public class EnemyManager {
             return;
         }
 
-        //Dispose of enemies
-        for (Iterator<Enemy> iterator = enemiesToRemove.iterator(); iterator.hasNext();) {
-            System.out.println("Removing Enemy");
-            Enemy enemy = iterator.next();
-            enemy.dispose();
-            currentEnemies.removeValue(enemy, true);
-            iterator.remove();
-        }
+        removeEnemy();
 
         //Update enemies
         for(int i=0; i<currentEnemies.size; i++){
@@ -69,28 +57,33 @@ public class EnemyManager {
         enemyGenerator.spawnEnemies(playerPosition, playerColor);
         enemyGenerator.increaseDifficulty();
 
-        //Update the enemies timer
-        for(int i=0; i<enemiesToAdd.size; i++){
-            Enemy enemy=enemiesToAdd.get(i);
-            enemy.update(delta);
-        }
-
     }
 
     /**
-     * Draws all enemies currently spawned in the screen to the ground
+     * Draws TEXTURES to the BOX2D body
      * @param spriteBatch faster way to draw sprites
      */
     public void draw(SpriteBatch spriteBatch){
-
         enemySpawnDirection.draw(spriteBatch);
-
-        if(currentEnemies.isEmpty()){return;}
-        for (Enemy enemy : currentEnemies) {
-            enemy.draw(spriteBatch);
+        for(int i=0; i<currentEnemies.size; i++){
+            currentEnemies.get(i).draw(spriteBatch);
         }
     }
 
+    /**
+     * Call dispose method on each ENEMY in enemiesToRemove
+     * Then empty the enemiesToRemove Array
+     */
+    public void removeEnemy(){
+        for (int i=0; i<enemiesToRemove.size; i++){
+            System.out.println("Removing Enemy");
+            Enemy enemy=enemiesToRemove.get(i);
+            enemy.dispose();
+            currentEnemies.removeValue(enemy, true);
+        }
+        enemiesToRemove.clear();
+
+    }
     public Array<Enemy> getEnemiesToRemove(){
         return enemiesToRemove;
     }
@@ -99,15 +92,8 @@ public class EnemyManager {
         return currentEnemies;
     }
 
-    public EnemyGenerator getEnemyGenerator() {
-        return enemyGenerator;
-    }
-
     public EnemyIncomingDirection getEnemySpawnDirection(){
         return enemySpawnDirection;
     }
 
-    public Array<Enemy> getEnemiesToAdd() {
-        return enemiesToAdd;
-    }
 }

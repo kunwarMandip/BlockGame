@@ -4,7 +4,6 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.entity.enemies.Enemy;
 import com.mygdx.game.entity.enemies.EnemyManager;
 
-import java.util.Iterator;
 
 import static com.mygdx.game.StaticVariables.BASE_SPEED;
 
@@ -20,6 +19,10 @@ public class GameStateVariables {
     private boolean reset;
 
     public GameStateVariables(){
+        reset();
+    }
+
+    private void reset(){
         this.score=0;
         this.lastScore=0;
         this.maxEnemyThreshold=1;
@@ -36,15 +39,9 @@ public class GameStateVariables {
      * @param enemyManager enemy controller
      */
     public void reset(EnemyManager enemyManager){
-        this.score=0;
-        this.lastScore=0;
-        this.maxEnemyThreshold=1;
-        this.enemySpeedX=BASE_SPEED.x;
-        this.enemySpeedY=BASE_SPEED.y;
-        this.waitTime=3f;
+
 
         Array<Enemy> currentEnemies= enemyManager.getCurrentEnemies();
-        Array<Enemy> enemiesToAdd= enemyManager.getEnemiesToAdd();
         Array<Enemy> enemiesToRemove= enemyManager.getEnemiesToRemove();
 
         enemiesToRemove.clear();
@@ -53,9 +50,9 @@ public class GameStateVariables {
             enemy.dispose();
         }
         currentEnemies.clear();
-        enemiesToAdd.clear();
 
         this.reset=false;
+
     }
 
     public int getScore() {

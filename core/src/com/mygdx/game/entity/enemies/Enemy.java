@@ -13,55 +13,54 @@ public class Enemy {
     private BodyDef bodyDef;
 
     private final World world;
-    private final EnemyManager enemyManager;
     private final EnemyAnimation enemyAnimation;
 
     private final Vector2 movementSpeed, spawnLocation;
-    private final float waitTime;
-    private float timeCounter;
+    private final float waitTimer;
+    private float waitTimeCounter;
     private boolean hasEnemySpawned;
 
-    public Enemy(EnemyManager enemyManager, World world, String textureColor, Vector2 spawnLocation,  Vector2 speed, float waitTime){
-        this.enemyManager=enemyManager;
+    public Enemy(World world, String textureColor, Vector2 spawnLocation,  Vector2 speed, float waitTime){
         this.world=world;
         this.movementSpeed=speed;
-        this.waitTime=waitTime;
-        this.timeCounter=0;
+        this.waitTimer=waitTime;
+        this.waitTimeCounter=0;
         this.spawnLocation=spawnLocation;
         this.hasEnemySpawned=false;
-        defineEnemy(spawnLocation);
         enemyAnimation= new EnemyAnimation(textureColor);
     }
 
+
     /**
-     * Update the timeCounter until it reaches waitTime
-     * when reached, create the BOX2D body, update it to enemyManager
-     * @param delta time passed since last render(not even sure atp)
+     * Check to waitTimeCounter to see if it has reached the waitTimer
+     * if true, spawn enemy, else increment waitTimeCounter;
+     * @param deltaTime time since last render
      */
-    public void update(float delta){
-        if(!hasEnemySpawned){
-            updateTimer(delta);
+    public void update(float deltaTime){
+        //Check if enemy has been created
+        if(hasEnemySpawned){
+            body.setLinearVelocity(movementSpeed);
             return;
         }
-        body.setLinearVelocity(movementSpeed);
+
+        if(waitTimeCounter >=waitTimer){
+            defineEnemy();
+            this.hasEnemySpawned=true;
+            return;
+        }
+        waitTimeCounter +=deltaTime;
+
     }
 
-    private void updateTimer(float delta){
-        if(timeCounter>=waitTime){
-            defineEnemy(spawnLocation);
-            enemyManager.getCurrentEnemies().add(this);
-            enemyManager.getEnemiesToAdd().removeValue(this, true);
-            hasEnemySpawned=true;
-        }
-        timeCounter+=delta;
-    }
 
     public void draw(SpriteBatch spriteBatch) {
-        Vector2 bodyPosition=body.getPosition();
-        enemyAnimation.draw(new Vector2(bodyPosition.x, bodyPosition.y), spriteBatch);
+        if(hasEnemySpawned){
+            Vector2 bodyPosition=body.getPosition();
+            enemyAnimation.draw(new Vector2(bodyPosition.x, bodyPosition.y), spriteBatch);
+        }
     }
 
-    private void defineEnemy(Vector2 spawnLocation) {
+    private void defineEnemy() {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
@@ -82,7 +81,8 @@ public class Enemy {
 
         fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
         // Collides with everything except walls
-        fixtureDef.filter.maskBits =~(CATEGORY_WALL | CATEGORY_ENEMY);
+//        fixtureDef.filter.maskBits =~(CATEGORY_WALL | CATEGORY_ENEMY);
+        fixtureDef.filter.maskBits =~CATEGORY_WALL;
 
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();

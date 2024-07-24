@@ -10,12 +10,10 @@ import com.mygdx.game.GameStateVariables;
 import com.mygdx.game.entity.DefineTexture;
 import com.mygdx.game.map.objects.EnemySpawnArea;
 
-import java.util.Iterator;
 import java.util.Random;
 
 import static com.mygdx.game.StaticVariables.*;
-import static com.mygdx.game.entity.DefineTexture.textureHashMap;
-import static com.mygdx.game.entity.DefineTexture.textureNames;
+
 
 
 /**
@@ -34,6 +32,7 @@ public class EnemyGenerator {
     private final Random random;
 
     private final EnemyTextureChooser enemyTextureChooser;
+
     public EnemyGenerator(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, EnemyManager enemyManager){
         this.world=world;
         this.enemyManager= enemyManager;
@@ -42,7 +41,13 @@ public class EnemyGenerator {
 
         random = new Random();
         spawnAreaRectangles=new Array<>();
-        loadEnemyRectangleSpawnArea(tiledMap);
+
+
+        //Get the rectangleArea Spawn Objects
+        MapLayer targetLayer= tiledMap.getLayers().get("EnemySpawn");
+        for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
+            spawnAreaRectangles.add(new EnemySpawnArea(world, tiledMap, object));
+        }
     }
 
     /**
@@ -86,9 +91,7 @@ public class EnemyGenerator {
      */
     public void spawnEnemies(Vector2 playerLocation, String playerColor){
         //Amount of enemies we need to spawn
-        int enemiesToAddSize=enemyManager.getEnemiesToAdd().size;
-        int currentEnemiesSize=enemyManager.getCurrentEnemies().size;
-        int numEnemiesToSpawn=gameStateVariables.maxEnemyThreshold - (enemiesToAddSize + currentEnemiesSize);
+        int numEnemiesToSpawn=gameStateVariables.maxEnemyThreshold - enemyManager.getCurrentEnemies().size;
 
         if(numEnemiesToSpawn<0){
             return;
@@ -139,7 +142,7 @@ public class EnemyGenerator {
         spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
         System.out.println("Player Color: "+ playerColor + " .Enemy Color: "+ enemyColor);
 
-        enemyManager.getEnemiesToAdd().add(new Enemy(enemyManager, world, enemyColor, spawnLocation, enemyFallSpeed, waitTime));
+        enemyManager.getCurrentEnemies().add(new Enemy(world, enemyColor, spawnLocation, enemyFallSpeed, waitTime));
         enemyManager.getEnemySpawnDirection().setDirection(spawnArea.getSpawnDirection());
     }
 
@@ -174,15 +177,5 @@ public class EnemyGenerator {
         return  enemyColor;
     }
 
-    /**
-     * Sets Areas for where the enemy can be spawned from
-     * @param tiledMap map to search the objects from
-     */
-    private void loadEnemyRectangleSpawnArea(TiledMap tiledMap){
-        MapLayer targetLayer= tiledMap.getLayers().get("EnemySpawn");
-        for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
-            spawnAreaRectangles.add(new EnemySpawnArea(world, tiledMap, object));
-        }
-    }
 
 }

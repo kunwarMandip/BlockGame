@@ -33,8 +33,6 @@ public class ContactManager {
         Enemy enemy= (Enemy) b.getUserData();
         if(checkEnemyNull(enemy)){return;}
 
-        System.out.println("Resetting Score");
-        enemyManager.getEnemiesToRemove().add(enemy);
         gameStateVariables.resetGame(true);
     }
 
@@ -58,13 +56,9 @@ public class ContactManager {
 
     private boolean checkEnemyNull(Enemy enemy){
         if (enemy == null) {
-            System.out.println("Enemy Null: ContactManager");
-            return true;
+            throw new RuntimeException("ContactManager checkEnemyNull");
         }
         return false;
     }
 
-    private void reset(){
-        gameStateVariables.reset(enemyManager);
-    }
 }
