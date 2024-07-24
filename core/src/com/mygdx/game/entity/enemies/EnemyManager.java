@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameStateVariables;
-import com.mygdx.game.entity.DefineTexture;
 
 
 import java.util.Iterator;
@@ -18,6 +17,7 @@ import java.util.Iterator;
  * manages difficulty
  */
 public class EnemyManager {
+
 
     //For easy management of all enemies in the world
     private final Array<Enemy> enemiesToAdd;
@@ -45,6 +45,11 @@ public class EnemyManager {
      */
     public void update(float delta, Vector2 playerPosition, String playerColor) {
 
+        if(gameStateVariables.getReset()){
+            gameStateVariables.reset(this);
+            return;
+        }
+
         //Dispose of enemies
         for (Iterator<Enemy> iterator = enemiesToRemove.iterator(); iterator.hasNext();) {
             System.out.println("Removing Enemy");
@@ -55,7 +60,8 @@ public class EnemyManager {
         }
 
         //Update enemies
-        for (Enemy enemy : currentEnemies) {
+        for(int i=0; i<currentEnemies.size; i++){
+            Enemy enemy=currentEnemies.get(i);
             enemy.update(delta);
         }
 
@@ -64,7 +70,8 @@ public class EnemyManager {
         enemyGenerator.increaseDifficulty();
 
         //Update the enemies timer
-        for(Enemy enemy: enemiesToAdd){
+        for(int i=0; i<enemiesToAdd.size; i++){
+            Enemy enemy=enemiesToAdd.get(i);
             enemy.update(delta);
         }
 

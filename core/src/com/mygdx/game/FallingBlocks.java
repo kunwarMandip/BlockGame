@@ -7,13 +7,12 @@ import com.mygdx.game.screens.MainMenuScreen;
 
 public class FallingBlocks extends Game {
 
-	public SpriteBatch spriteBatch;
+
 
 	@Override
 	public void create() {
-		spriteBatch= new SpriteBatch();
-		setScreen(new MainMenuScreen(spriteBatch));
-//		setScreen(new MainDisplay());
+//		setScreen(new MainMenuScreen(spriteBatch));
+		setScreen(new MainDisplay());
 	}
 
 	@Override

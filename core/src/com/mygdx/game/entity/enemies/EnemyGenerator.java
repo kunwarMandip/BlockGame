@@ -138,6 +138,7 @@ public class EnemyGenerator {
         String enemyColor= chooseEnemyTexture(playerColor);
         spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
         System.out.println("Player Color: "+ playerColor + " .Enemy Color: "+ enemyColor);
+
         enemyManager.getEnemiesToAdd().add(new Enemy(enemyManager, world, enemyColor, spawnLocation, enemyFallSpeed, waitTime));
         enemyManager.getEnemySpawnDirection().setDirection(spawnArea.getSpawnDirection());
     }
@@ -184,10 +185,4 @@ public class EnemyGenerator {
         }
     }
 
-    /**
-     * To reset difficulty when the game ends
-     */
-    public void resetDifficulty(){
-       gameStateVariables.reset();
-    }
 }

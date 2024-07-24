@@ -35,7 +35,7 @@ public class ContactManager {
 
         System.out.println("Resetting Score");
         enemyManager.getEnemiesToRemove().add(enemy);
-        enemyManager.getEnemyGenerator().resetDifficulty();
+        gameStateVariables.resetGame(true);
     }
 
 
@@ -62,5 +62,9 @@ public class ContactManager {
             return true;
         }
         return false;
+    }
+
+    private void reset(){
+        gameStateVariables.reset(enemyManager);
     }
 }

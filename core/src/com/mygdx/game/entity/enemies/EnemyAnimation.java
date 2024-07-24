@@ -8,25 +8,18 @@ import com.mygdx.game.entity.DefineTexture;
 public class EnemyAnimation {
 
     private final String textureName;
-    private Texture enemyTexture;
+    private final Texture enemyTexture;
 
     public EnemyAnimation(String textureColor){
-//        StringTexturePair stringTexturePair= DefineTexture.getTexturePair(textureColor);
-//        textureName=stringTexturePair.textureName;
-//        enemyTexture= stringTexturePair.texture;
-
         Texture tempTexture=DefineTexture.getTexture(textureColor);
-        if(tempTexture==null){
-            this.textureName="yellow";
-            this.enemyTexture=new Texture("characters/yellow.png");
-            throw new RuntimeException("yhhh");
-        }
-        else{
+        if(tempTexture!=null){
             this.textureName=textureColor;
             this.enemyTexture= DefineTexture.getTexture(textureColor);
+            System.out.println("Enemy Texture: " + textureName);
+        }else {
+            throw new RuntimeException("Error. Can't find EnemyAnimation");
         }
 
-        System.out.println("Enemy Texture: " + textureName);
     }
 
     public void draw(Vector2 enemyPosition, SpriteBatch spriteBatch){
@@ -40,7 +33,5 @@ public class EnemyAnimation {
         return textureName;
     }
 
-    public void dispose(){
-//        enemyTexture.dispose();
-    }
+
 }

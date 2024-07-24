@@ -27,5 +27,9 @@ public class DefineTexture {
         return textureHashMap.get(color);
     }
 
+    public void dispose(){
+        textureHashMap.clear();
+    }
+
 
 }

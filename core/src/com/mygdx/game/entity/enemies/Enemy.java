@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-
 import static com.mygdx.game.StaticVariables.*;
 
 
 public class Enemy {
 
     private Body body;
+    private BodyDef bodyDef;
+
     private final World world;
     private final EnemyManager enemyManager;
     private final EnemyAnimation enemyAnimation;
@@ -24,12 +25,12 @@ public class Enemy {
         this.enemyManager=enemyManager;
         this.world=world;
         this.movementSpeed=speed;
-        this.waitTime=0;
+        this.waitTime=waitTime;
         this.timeCounter=0;
         this.spawnLocation=spawnLocation;
         this.hasEnemySpawned=false;
+        defineEnemy(spawnLocation);
         enemyAnimation= new EnemyAnimation(textureColor);
-
     }
 
     /**
@@ -43,7 +44,6 @@ public class Enemy {
             return;
         }
         body.setLinearVelocity(movementSpeed);
-
     }
 
     private void updateTimer(float delta){
@@ -55,7 +55,6 @@ public class Enemy {
         }
         timeCounter+=delta;
     }
-
 
     public void draw(SpriteBatch spriteBatch) {
         Vector2 bodyPosition=body.getPosition();
@@ -89,8 +88,8 @@ public class Enemy {
         rectangleShape.dispose();
     }
 
+
     public void dispose() {
         world.destroyBody(body);
-        enemyAnimation.dispose();
     }
 }
