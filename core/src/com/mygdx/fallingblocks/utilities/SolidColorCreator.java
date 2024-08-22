@@ -16,11 +16,13 @@ public class SolidColorCreator {
     private final Map<Integer, Texture> colors= new HashMap<>();
 
     public SolidColorCreator(){
-        String[] colorArray={"#FF0000", "#FF5733", "#33FF57", "#FF33A6", "#33FFF3", "#FFDB33",
-                            "#8A33FF", "#FF8633 ", "#33FF8A"};
+        String[] colorArray={"#FF0000", "#FF5733", "#33FF57", "#FF33A6",
+                "#33FFF3", "#FFDB33", "#8A33FF", "#FF8633", "#33FF8A"};
         for(int i =0; i<colorArray.length; i++){
             defineColors(i, colorArray[i]);
+            System.out.println("Colors: "+ i + " : " + colorArray[i]);
         }
+        System.out.println(colors.size());
     }
 
     public void defineColors(int colorNumber, String color){
@@ -41,7 +43,7 @@ public class SolidColorCreator {
 
     public int getPlayerColorID(){return playerColorID;}
 
-    public int getSize(){return colors.size();}
+    public int getSize(){return colors.size()-1;}
 
     public void dispose(){
         for(Texture texture: colors.values()){

@@ -19,10 +19,10 @@ import static com.mygdx.fallingblocks.StaticVariables.PLAYER_COLOR_CHANGE_INTERV
  */
 public class Player {
 
-    private final World world;
     private Body body;
+    private final World world;
 
-    private GameStateVariables gameStateVariables;
+    private final GameStateVariables gameStateVariables;
     private final PlayerAnimation playerAnimation;
 
     private int colorChangeCounter;

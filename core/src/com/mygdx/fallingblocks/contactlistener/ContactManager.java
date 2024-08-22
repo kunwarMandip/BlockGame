@@ -31,7 +31,11 @@ public class ContactManager {
         System.out.println("Player and Enemy Touching.");
 
         Enemy enemy= (Enemy) b.getUserData();
+        if(enemy.isFriendly){
+            return;
+        }
         gameStateVariables.resetGame(true);
+
     }
 
 
@@ -48,7 +52,6 @@ public class ContactManager {
         gameStateVariables.incrementScore();
         enemyManager.getEnemiesToRemove().add(enemy);
     }
-
 
 
     private boolean checkEnemyNull(Enemy enemy){

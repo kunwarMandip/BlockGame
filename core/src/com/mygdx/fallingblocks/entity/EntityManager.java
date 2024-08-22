@@ -18,7 +18,7 @@ public class EntityManager {
 
     private final Player player;
     private final EnemyManager enemyManager;
-    private final SolidColorCreator solidColorCreator;
+    public SolidColorCreator solidColorCreator;
 
     /**
      * Sets the player, enemies, and the contact listener
@@ -55,4 +55,5 @@ public class EntityManager {
     public EnemyManager getEnemyManager() {
         return enemyManager;
     }
+
 }

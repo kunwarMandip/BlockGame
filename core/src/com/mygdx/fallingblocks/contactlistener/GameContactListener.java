@@ -6,6 +6,7 @@ import com.mygdx.fallingblocks.entity.EntityManager;
 import com.mygdx.fallingblocks.entity.enemies.Enemy;
 import com.mygdx.fallingblocks.entity.player.Player;
 import com.mygdx.fallingblocks.map.objects.OuterBound;
+import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 /**
  * Responsible for handling when two box2D bodies collide or touch
@@ -13,9 +14,10 @@ import com.mygdx.fallingblocks.map.objects.OuterBound;
 public class GameContactListener implements ContactListener {
 
     private final ContactManager contactManager;
-
+    private final SolidColorCreator solidColorCreator;
     public GameContactListener(EntityManager entityManager, GameStateVariables gameStateVariables){
         contactManager= new ContactManager(entityManager, gameStateVariables);
+        this.solidColorCreator=entityManager.solidColorCreator;
     }
 
     @Override
@@ -28,11 +30,8 @@ public class GameContactListener implements ContactListener {
         if (a.getUserData() == null|| b.getUserData() == null){return;}
 
         //JUST KEEP ADDING ELSE IF
-        if(checkPlayerEnemyContact(a, b)){
-            return;
-        }else if(checkEnemyBoundContact(a, b)){
-            return;
-        }
+        if(checkPlayerEnemyContact(a, b)){return;}
+        if(checkEnemyBoundContact(a, b)){return;}
 
     }
 
@@ -43,6 +42,31 @@ public class GameContactListener implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
+
+        Fixture a = contact.getFixtureA();
+        Fixture b = contact.getFixtureB();
+
+        if (a == null || b == null){return;}
+        if (a.getUserData() == null|| b.getUserData() == null){return;}
+
+        if (a.getUserData() instanceof Player && b.getUserData() instanceof Enemy){
+            Enemy enemy= (Enemy) b.getUserData();
+            Integer playerID= solidColorCreator.getPlayerColorID();
+            if (playerID.equals(enemy.getColorID())) {
+                enemy.isFriendly=true;
+                contact.setEnabled(false);
+            }
+        }
+
+        if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Player){
+            Enemy enemy= (Enemy) a.getUserData();
+            Integer playerID= solidColorCreator.getPlayerColorID();
+            if (playerID.equals(enemy.getColorID())) {
+                enemy.isFriendly=true;
+                contact.setEnabled(false);
+            }
+        }
+
 
     }
 

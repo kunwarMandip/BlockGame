@@ -20,7 +20,7 @@ public class GesturePlayerController implements GestureDetector.GestureListener 
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
-        System.out.println("User touched at: "+ x + "  : "+ y);
+//        System.out.println("User touched at: "+ x + "  : "+ y);
         return false;
     }
 

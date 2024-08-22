@@ -7,7 +7,6 @@ import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 import static com.mygdx.fallingblocks.StaticVariables.*;
 
-
 public class Enemy {
 
     private Body body;
@@ -20,6 +19,7 @@ public class Enemy {
     private boolean hasEnemySpawned=false;
     private final int colorID;
 
+    public boolean isFriendly =false;
     public Enemy(World world,
                  SolidColorCreator solidColorCreator,
                  int colorID,

@@ -20,9 +20,6 @@ public class PlayerAnimation {
         this.texture=solidColorCreator.getColor(colorNumber, true);
     }
 
-    public void update(){
-
-    }
 
     public void draw(Vector2 playerPosition, SpriteBatch spriteBatch){
         float textureWidth=4, textureHeight=4;
