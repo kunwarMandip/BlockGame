@@ -13,10 +13,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-<<<<<<<< HEAD:core/src/com/mygdx/fallingblocks/screens/GameScreen.java
 import com.mygdx.fallingblocks.FallingBlocks;
-========
->>>>>>>> c42b771d2ddf191fdae047fe46a2ab503c45428a:core/src/com/mygdx/fallingblocks/screens/MainDisplay.java
 import com.mygdx.fallingblocks.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
 import com.mygdx.fallingblocks.map.MapManager;

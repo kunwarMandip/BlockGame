@@ -13,7 +13,6 @@ public class EnemyAnimation {
         this.texture=texture;
     }
 
-
     public void draw(Vector2 enemyPosition, SpriteBatch spriteBatch){
         float textureWidth=6, textureHeight=6;
         float x=enemyPosition.x - textureWidth /2;
@@ -37,4 +36,5 @@ public class EnemyAnimation {
 //        } while (enemyColor.equals(playerColor));
 //        return  enemyColor;
 //    }
+
 }
