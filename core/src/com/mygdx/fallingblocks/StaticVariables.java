@@ -33,7 +33,7 @@ public class StaticVariables {
     //Choose if enemy and player should have the same color
     public static final int TEXTURE_CHOOSER_BOUNDS=101;
     public static final int MIN_LUCKY_REWARD_THRESHOLD=10;
-    public static final int MAX_LUCKY_REWARD_THRESHOLD= 15;
+    public static final int MAX_LUCKY_REWARD_THRESHOLD= 0;
 
     public static final int PLAYER_COLOR_CHANGE_INTERVAL=5;
 

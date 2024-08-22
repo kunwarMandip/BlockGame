@@ -1,24 +1,26 @@
 package com.mygdx.fallingblocks.contactlistener;
 
+import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.mygdx.fallingblocks.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
 import com.mygdx.fallingblocks.entity.enemies.Enemy;
 import com.mygdx.fallingblocks.entity.enemies.EnemyManager;
+import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 /**
  * Same as GameContactListener.java but just with advanced handling
  */
 public class ContactManager {
 
-    private final EntityManager entityManager;
     private final EnemyManager enemyManager;
     private final GameStateVariables gameStateVariables;
+    private final SolidColorCreator solidColorCreator;
 
     public ContactManager(EntityManager entityManager, GameStateVariables gameStateVariables){
-        this.entityManager= entityManager;
         this.enemyManager=entityManager.getEnemyManager();
         this.gameStateVariables=gameStateVariables;
+        this.solidColorCreator=entityManager.solidColorCreator;
     }
 
 
@@ -27,15 +29,17 @@ public class ContactManager {
      * @param a the player instance class
      * @param b the enemy instance class
      */
-    public void EnemyPlayerContact(Fixture a, Fixture b){
+    public void EnemyPlayerContact(Contact contact, Fixture a, Fixture b){
         System.out.println("Player and Enemy Touching.");
-
         Enemy enemy= (Enemy) b.getUserData();
-        if(enemy.isFriendly){
+
+        Integer playerID= solidColorCreator.getPlayerColorID();
+        if (playerID.equals(enemy.getColorID())) {
+            contact.setEnabled(false);
             return;
         }
-        gameStateVariables.resetGame(true);
 
+        gameStateVariables.resetGame(true);
     }
 
 
