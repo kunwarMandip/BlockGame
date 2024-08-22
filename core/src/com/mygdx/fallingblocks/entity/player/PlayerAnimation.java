@@ -9,7 +9,6 @@ import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 public class PlayerAnimation {
 
     private Texture texture;
-
     private final SolidColorCreator solidColorCreator;
 
     public PlayerAnimation(SolidColorCreator solidColorCreator){
