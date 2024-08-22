@@ -20,6 +20,7 @@ public class Enemy {
     private final int colorID;
 
     public boolean isFriendly =false;
+
     public Enemy(World world,
                  SolidColorCreator solidColorCreator,
                  int colorID,
@@ -88,7 +89,6 @@ public class Enemy {
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
     }
-
 
     public int getColorID(){return this.colorID;}
     public void dispose() {

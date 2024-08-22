@@ -11,7 +11,7 @@ import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 /**
  * Responsible for handling when two box2D bodies collide or touch
  */
-public class GameContactListener implements ContactListener {
+public class GameContactListener  implements ContactListener{
 
     private final ContactManager contactManager;
     private final SolidColorCreator solidColorCreator;
@@ -29,8 +29,9 @@ public class GameContactListener implements ContactListener {
         if (a == null || b == null){return;}
         if (a.getUserData() == null|| b.getUserData() == null){return;}
 
+
         //JUST KEEP ADDING ELSE IF
-        if(checkPlayerEnemyContact(a, b)){return;}
+        if(checkPlayerEnemyContact(contact)){return;}
         if(checkEnemyBoundContact(a, b)){return;}
 
     }
@@ -46,27 +47,16 @@ public class GameContactListener implements ContactListener {
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
 
-        if (a == null || b == null){return;}
-        if (a.getUserData() == null|| b.getUserData() == null){return;}
+        if ((a.getUserData() instanceof Player && b.getUserData() instanceof Enemy) ||
+                (b.getUserData() instanceof Player && a.getUserData() instanceof Enemy)) {
 
-        if (a.getUserData() instanceof Player && b.getUserData() instanceof Enemy){
-            Enemy enemy= (Enemy) b.getUserData();
-            Integer playerID= solidColorCreator.getPlayerColorID();
+            Enemy enemy = (Enemy) (a.getUserData() instanceof Enemy ? a.getUserData() : b.getUserData());
+
+            Integer playerID = solidColorCreator.getPlayerColorID();
             if (playerID.equals(enemy.getColorID())) {
-                enemy.isFriendly=true;
                 contact.setEnabled(false);
             }
         }
-
-        if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Player){
-            Enemy enemy= (Enemy) a.getUserData();
-            Integer playerID= solidColorCreator.getPlayerColorID();
-            if (playerID.equals(enemy.getColorID())) {
-                enemy.isFriendly=true;
-                contact.setEnabled(false);
-            }
-        }
-
 
     }
 
@@ -76,15 +66,18 @@ public class GameContactListener implements ContactListener {
     }
 
 
-    private boolean checkPlayerEnemyContact(Fixture a, Fixture b){
+    private boolean checkPlayerEnemyContact(Contact contact){
+        Fixture a = contact.getFixtureA();
+        Fixture b = contact.getFixtureB();
+
         System.out.println("Checking Player and Enemy");
         if (a.getUserData() instanceof Player && b.getUserData() instanceof Enemy){
-            contactManager.EnemyPlayerContact(a, b);
+            contactManager.EnemyPlayerContact(contact, a, b);
             return true;
         }
 
         if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Player){
-            contactManager.EnemyPlayerContact(b, a);
+            contactManager.EnemyPlayerContact(contact, b, a);
             return true;
         }
         System.out.println("Not Matched: Player and Enemy");
