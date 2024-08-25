@@ -1,0 +1,15 @@
+pack.png
+	size: 1024, 64
+	filter: Linear, Linear
+2bit-demichrome-32x
+	bounds: 647, 4, 128, 32
+ammo-8-32x
+	bounds: 1, 4, 256, 32
+ayy4-32x
+	bounds: 777, 4, 128, 32
+midnight-ablaze-32x
+	bounds: 259, 4, 224, 32
+twilight-5-32x
+	bounds: 485, 4, 160, 32
+white-pixel
+	bounds: 1, 1, 1, 1

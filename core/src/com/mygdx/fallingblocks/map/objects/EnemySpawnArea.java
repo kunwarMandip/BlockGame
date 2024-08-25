@@ -5,7 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.fallingblocks.StaticVariables;
+import com.mygdx.fallingblocks.GlobalStaticVariables;
 
 public class EnemySpawnArea extends TileObjects {
 
@@ -16,12 +16,12 @@ public class EnemySpawnArea extends TileObjects {
         super(world, tiledMap, object);
         fixture.setSensor(true);
         fixture.setUserData(this);
-        setCategoryFilter(StaticVariables.CATEGORY_ENEMY_SPAWN_AREA);
+        setCategoryFilter(GlobalStaticVariables.CATEGORY_ENEMY_SPAWN_AREA);
         this.spawnDirection=mapObject.getProperties().get("name", String.class);
         System.out.println("Rectangle Created. Direction: " + spawnDirection);
 
-        float x= bounds.getWidth() / 2 / StaticVariables.PPM;
-        float y=bounds.getHeight() / 2 / StaticVariables.PPM;
+        float x= bounds.getWidth() / 2 / GlobalStaticVariables.PPM;
+        float y=bounds.getHeight() / 2 / GlobalStaticVariables.PPM;
         rectangleDimension=new Vector2(x, y);
         System.out.println("Position"+  bounds);
     }
@@ -32,13 +32,5 @@ public class EnemySpawnArea extends TileObjects {
 
     public String getSpawnDirection(){
         return spawnDirection;
-    }
-
-    public Body getBody(){
-        return body;
-    }
-
-    public Vector2 getRectangleDimension(){
-        return rectangleDimension;
     }
 }

@@ -8,8 +8,6 @@ public class FallingBlocks extends Game {
 
 	@Override
 	public void create() {
-//		setScreen(new MainMenuScreen(spriteBatch));
-//		setScreen(new GameScreen(this));
 		setScreen(new MainMenuScreen(this));
 	}
 

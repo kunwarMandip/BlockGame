@@ -1,7 +1,10 @@
 package com.mygdx.fallingblocks.entity.player;
 
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -11,8 +14,8 @@ import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 import java.util.Random;
 
-import static com.mygdx.fallingblocks.StaticVariables.CATEGORY_PLAYER;
-import static com.mygdx.fallingblocks.StaticVariables.PLAYER_COLOR_CHANGE_INTERVAL;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.CATEGORY_PLAYER;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.PLAYER_COLOR_CHANGE_INTERVAL;
 
 /**
  * PLayer Entity Class. Contains everything about the player class
@@ -30,11 +33,12 @@ public class Player {
 
     public Player(World world,
                   GameStateVariables gameStateVariables,
-                  SolidColorCreator solidColorCreator) {
+                  SolidColorCreator solidColorCreator,
+                  RayHandler rayHandler) {
         this.world=world;
         this.gameStateVariables=gameStateVariables;
         this.colorListSize=solidColorCreator.getSize();
-        this.createBox2DBody(new Vector2(100, 100));
+        this.createBox2DBody(new Vector2(100, 100), rayHandler);
         this.playerAnimation = new PlayerAnimation(solidColorCreator);;
         this.setController();
     }
@@ -51,7 +55,7 @@ public class Player {
      * Check if we have to change player color or not
      */
     public void update(int playerColorID){
-        if(gameStateVariables.score == gameStateVariables.lastScore){
+        if(gameStateVariables.getScore() == gameStateVariables.getLastScore()){
             return;
         }
 
@@ -73,7 +77,7 @@ public class Player {
 
 
 
-    private void createBox2DBody(Vector2 bodyDimension){
+    private void createBox2DBody(Vector2 bodyDimension, RayHandler rayHandler){
         //Defining BoyDef with zero Restitution and No friction
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -95,6 +99,10 @@ public class Player {
         fixtureDef.filter.categoryBits=CATEGORY_PLAYER;
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
+
+        PointLight pointLight = new PointLight(rayHandler, 500, new Color(1, 1, 1, 1), 5, 0, 0);
+        pointLight.attachToBody(body);
+
         System.out.println("Players Body Location: " + body.getPosition().x +" :...: "+ body.getPosition().y );
     }
 

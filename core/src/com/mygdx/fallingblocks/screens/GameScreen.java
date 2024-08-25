@@ -1,5 +1,6 @@
 package com.mygdx.fallingblocks.screens;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,7 +19,7 @@ import com.mygdx.fallingblocks.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
 import com.mygdx.fallingblocks.map.MapManager;
 
-import static com.mygdx.fallingblocks.StaticVariables.*;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
 /**
  * This class is the main class which holds
@@ -26,36 +27,44 @@ import static com.mygdx.fallingblocks.StaticVariables.*;
  */
 public class GameScreen implements Screen {
 
-    //Need this to be public to manage how much the playerMoves
+
+    private World world;
+    private TiledMap tiledMap;
     private Viewport viewport;
-    public OrthographicCamera gameCamera;
+    private RayHandler rayHandler;
+    private SpriteBatch spriteBatch;
+    private OrthographicCamera gameCamera;
+    private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    //To retain Aspect ratio
-    private World world;
-    private Box2DDebugRenderer box2DDebugRenderer; //Render Box2D bodies. Not to be used on production
-
-    private TiledMap tiledMap;
-    private MapManager mapManager;
-
-    private SpriteBatch spriteBatch;
-    private EntityManager entityManager;
-
     private Hud hudScene;
-    public GameStateVariables gameStateVariables;
-
-    public FallingBlocks fallingBlocks;
-
+    private MapManager mapManager;
+    private final FallingBlocks fallingBlocks;
+    private EntityManager entityManager;
+    private GameStateVariables gameStateVariables;
+    private NewHud newHud;
     public GameScreen(FallingBlocks fallingBlocks){
         this.fallingBlocks= fallingBlocks;
     }
 
+    /**
+     * Set Aspect ratio, Set world, TiledMap, EntityManager, hudScene
+     */
+    @Override
+    public void show() {
+        this.spriteBatch= new SpriteBatch();
+        this.gameStateVariables= new GameStateVariables();
+        setCamera();
+        setWorld();
+        entityManager = new EntityManager(world, tiledMap, gameStateVariables, rayHandler);
+        hudScene= new Hud(gameStateVariables, spriteBatch, tiledMap);
+        newHud= new NewHud(gameStateVariables, spriteBatch);
+    }
 
     /**
-     * Sets the screen to allow the game to retain aspect ratio
-     * on various sizes of screens
+     * Sets the screen to allow the game to retain aspect ratio on various sizes of screens
      */
-    private void setAspectRatio(){
+    private void setCamera(){
         gameCamera= new OrthographicCamera();
         viewport= new FitViewport(VIRTUAL_WIDTH/ PPM, VIRTUAL_HEIGHT/PPM, gameCamera);
         viewport.apply();
@@ -64,10 +73,9 @@ public class GameScreen implements Screen {
     }
 
     /**
-     * Creates a world, sets the renderer and tiledMap.
-     * Tells the renderer to render the tileMap
+     * Creates world, init renderer and tiledMap
      */
-    private void createWorld(){
+    private void setWorld(){
         world= new World(new Vector2(0f, 0f), true);
 
         //Init Box2DDebugRenderer and add no colors to objects
@@ -76,34 +84,24 @@ public class GameScreen implements Screen {
         box2DDebugRenderer.SHAPE_STATIC.set(0, 0, 0, 1);
         box2DDebugRenderer.setDrawBodies(true);
 
+        RayHandler.useDiffuseLight(true); // Enables realistic light scattering
+        rayHandler = new RayHandler(world);
+        rayHandler.setAmbientLight(0.2f); // Sets the ambient light level
+        rayHandler.setBlurNum(3); // Amount of blur for soft shadows
+
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
-        tiledMap = new TmxMapLoader().load("map/map1.tmx");
+        tiledMap = new TmxMapLoader().load("map/images.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
-        mapManager = new MapManager(world, tiledMap, gameStateVariables);
+        mapManager = new MapManager(world, tiledMap);
     }
 
-    /**
-     * Set the aspect ratio for the screen
-     * create the world and load the tiledMap.
-     * Set the entityManager to create and updateEntities
-     */
-    @Override
-    public void show() {
-        spriteBatch= new SpriteBatch();
-        gameStateVariables= new GameStateVariables();
-        setAspectRatio();
-        createWorld();
 
-        entityManager = new EntityManager(world, tiledMap, gameStateVariables);
-        hudScene= new Hud(gameStateVariables, spriteBatch, tiledMap);
-    }
 
     /**
      * Updates all entities inside world
      * @param delta time in seconds since last render
      */
     public void update(float delta){
-        // 1/60f: 60 frames per second
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
         hudScene.update();
@@ -117,24 +115,30 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0,0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        rayHandler.setCombinedMatrix(gameCamera);
+        rayHandler.updateAndRender();
+
         //need to change this to allow dynamic tier loading
         orthogonalTiledMapRenderer.setView(gameCamera);
         orthogonalTiledMapRenderer.render(mapManager.getLowerTiles());
         box2DDebugRenderer.render(world, gameCamera.combined);
-        mapManager.update();
+        mapManager.update(gameStateVariables.getScore(), gameStateVariables.getLastScore());
+
+
 
         //Render the spriteBatch
         spriteBatch.setProjectionMatrix(gameCamera.combined);
         spriteBatch.begin();
         entityManager.drawEntities(spriteBatch);
-
-        //Set our batch to now draw what the Hud camera sees.
+        newHud.draw(spriteBatch);
         spriteBatch.end();
         //last layer ensures that enemies not inside place to be shown aren't shown
         orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
-
         spriteBatch.setProjectionMatrix(hudScene.getStage().getCamera().combined);
         hudScene.getStage().draw();
+
+
+
     }
 
     @Override
@@ -150,10 +154,10 @@ public class GameScreen implements Screen {
     public void resume() {
     }
 
-
     @Override
     public void hide() {
     }
+
 
     @Override
     public void dispose() {

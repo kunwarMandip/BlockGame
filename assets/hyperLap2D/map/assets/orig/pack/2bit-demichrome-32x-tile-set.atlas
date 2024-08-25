@@ -1,0 +1,11 @@
+2bit-demichrome-32x-tile-set.png
+	size: 256, 64
+	filter: Linear, Linear
+2bit-demichrome-32x0
+	bounds: 1, 1, 32, 32
+2bit-demichrome-32x1
+	bounds: 35, 1, 32, 32
+2bit-demichrome-32x2
+	bounds: 69, 1, 32, 32
+2bit-demichrome-32x3
+	bounds: 103, 1, 32, 32

@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.fallingblocks.GameStateVariables;
 import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
+import java.util.Iterator;
+
 
 /**
  * Responsible for managing enemies:
@@ -19,7 +21,6 @@ public class EnemyManager {
 
     //For easy management of all enemies in the world
     private final Array<Enemy> currentEnemies= new Array<>();
-    private final Array<Enemy> enemiesToRemove= new Array<>();
 
     private final EnemyGenerator enemyGenerator;
     public final GameStateVariables gameStateVariables;
@@ -31,7 +32,7 @@ public class EnemyManager {
                         SolidColorCreator solidColorCreator){
         this.gameStateVariables=gameStateVariables;
         this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this, solidColorCreator);
-        this.enemySpawnDirection=new EnemyIncomingDirection(tiledMap);
+        this.enemySpawnDirection=new EnemyIncomingDirection();
     }
 
 
@@ -46,40 +47,34 @@ public class EnemyManager {
             return;
         }
 
-        for (int i=0; i<enemiesToRemove.size; i++){
-            System.out.println("Removing Enemy");
-            Enemy enemy=enemiesToRemove.get(i);
-            enemy.dispose();
-            currentEnemies.removeValue(enemy, true);
-        }
-        enemiesToRemove.clear();
-
-        //Update enemies
-        for(int i=0; i<currentEnemies.size; i++){
-            Enemy enemy=currentEnemies.get(i);
-            enemy.update(delta);
-        }
+        updateEnemies(delta);
 
         //Check if new enemies can be created
         enemyGenerator.spawnEnemies(playerPosition);
-        gameStateVariables.increaseDifficulty();
-
+        gameStateVariables.increaseGameDifficulty();
     }
 
     /**
-     * Draws TEXTURES to the BOX2D body
-     * @param spriteBatch faster way to draw sprites
+     * Remove Enemy set to be removed. U
+     * @param delta
      */
-    public void draw(SpriteBatch spriteBatch){
-        enemySpawnDirection.draw(spriteBatch);
-        for(int i=0; i<currentEnemies.size; i++){
-            currentEnemies.get(i).draw(spriteBatch);
+    private void updateEnemies(float delta) {
+        for (Enemy enemy : currentEnemies) {
+            if (enemy.isEnemyToBeRemoved) {
+                enemy.dispose();
+                currentEnemies.removeValue(enemy, true);
+                continue;
+            }
+            enemy.update(delta);
         }
     }
 
 
-    public Array<Enemy> getEnemiesToRemove(){
-        return enemiesToRemove;
+    public void draw(SpriteBatch spriteBatch){
+        enemySpawnDirection.draw(spriteBatch);
+        for(Enemy enemy: currentEnemies){
+            enemy.draw(spriteBatch);
+        }
     }
 
     public Array<Enemy> getCurrentEnemies(){

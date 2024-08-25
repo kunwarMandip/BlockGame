@@ -1,5 +1,6 @@
 package com.mygdx.fallingblocks.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -15,23 +16,24 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.GameStateVariables;
-import com.mygdx.fallingblocks.StaticVariables;
+import com.mygdx.fallingblocks.GlobalStaticVariables;
 
-import static com.mygdx.fallingblocks.StaticVariables.PPM;
-
+import static com.mygdx.fallingblocks.GlobalStaticVariables.PPM;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 public class Hud implements Disposable {
 
-    private final Stage stage;
+    private Stage stage;
     private Rectangle rectangleArea;
-    private final Label scoreLabel;
-    private final GameStateVariables gameStateVariables;
+    private  Label scoreLabel;
+    private  GameStateVariables gameStateVariables;
+
+    private BitmapFont font;
 
     public Hud(GameStateVariables gameStateVariables, SpriteBatch spriteBatch, TiledMap tiledMap){
-
         this.gameStateVariables = gameStateVariables;
 
-        float width = StaticVariables.VIRTUAL_WIDTH / PPM;  // Swapped width and height
-        float height = StaticVariables.VIRTUAL_HEIGHT / PPM;
+        float width = GlobalStaticVariables.VIRTUAL_WIDTH / PPM;  // Swapped width and height
+        float height = GlobalStaticVariables.VIRTUAL_HEIGHT / PPM;
         Viewport viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
 
@@ -41,6 +43,8 @@ public class Hud implements Disposable {
             this.rectangleArea = object.getRectangle();
         }
 
+        create();
+
         // Create a table and set its position and size based on the rectangle
         Table table = new Table();
         table.setFillParent(false);
@@ -49,8 +53,12 @@ public class Hud implements Disposable {
         table.setPosition(rectangleArea.x / PPM, rectangleArea.y / PPM);
         table.setSize(rectangleArea.width / PPM, rectangleArea.height / PPM);
 
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.BLUE);
+        scoreLabel = new Label(String.format("%d", 0), labelStyle);
+
         // Create a score label
-        scoreLabel = new Label(String.format("%d", 0), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+//        scoreLabel = new Label(String.format("%d", 0), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
 
         // Add the score label to the table
         table.add(scoreLabel).expand().center();
@@ -59,15 +67,24 @@ public class Hud implements Disposable {
         stage.addActor(table);
     }
 
+    public void create(){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/light-pixel-7/light_pixel-7.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 16; // Specify the font size
+        font = generator.generateFont(parameter);
+        generator.dispose();
 
+    }
     public Stage getStage(){
         return stage;
     }
 
     public void update(){
-        scoreLabel.setText(String.format("%d", gameStateVariables.score));
+        scoreLabel.setText(String.format("%d", gameStateVariables.getScore()));
     }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+        stage.dispose();
+    }
 }

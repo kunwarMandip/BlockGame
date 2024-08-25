@@ -1,10 +1,10 @@
 package com.mygdx.fallingblocks.map.objects;
 
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 
 public class ScoreArea{
 

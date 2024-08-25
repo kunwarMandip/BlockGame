@@ -1,5 +1,6 @@
 package com.mygdx.fallingblocks.entity;
 
+import box2dLight.RayHandler;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
@@ -11,8 +12,7 @@ import com.mygdx.fallingblocks.entity.player.Player;
 import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 /**
- * Responsible for managing all entities that are supposed to be loaded
- * in the current Map including Players, enemies, objects i.e. Bullets
+ * Manage all dynamic box2D entities. Player, Enemies
  */
 public class EntityManager {
 
@@ -24,14 +24,13 @@ public class EntityManager {
      * Sets the player, enemies, and the contact listener
      * @param world box2D world to deploy body in
      */
-    public EntityManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables){
+    public EntityManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, RayHandler rayHandler){
         this.solidColorCreator = new SolidColorCreator();
-        player= new Player(world, gameStateVariables, solidColorCreator);
+        player= new Player(world, gameStateVariables, solidColorCreator, rayHandler);
         enemyManager= new EnemyManager(world, tiledMap, gameStateVariables, solidColorCreator);
         GameContactListener gameContactListener = new GameContactListener(this, gameStateVariables);
         world.setContactListener(gameContactListener);
     }
-
 
     public void update(float delta){
         Vector2 playerPosition=player.getBody().getPosition();
@@ -51,9 +50,6 @@ public class EntityManager {
 
     public Player getPlayer() {
         return player;
-    }
-    public EnemyManager getEnemyManager() {
-        return enemyManager;
     }
 
 }

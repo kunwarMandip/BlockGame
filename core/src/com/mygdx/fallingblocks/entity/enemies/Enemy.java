@@ -1,11 +1,13 @@
 package com.mygdx.fallingblocks.entity.enemies;
 
+import box2dLight.PointLight;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
-import static com.mygdx.fallingblocks.StaticVariables.*;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
 public class Enemy {
 
@@ -13,13 +15,12 @@ public class Enemy {
     private final World world;
     private final EnemyAnimation enemyAnimation;
 
-    private final Vector2 movementSpeed, spawnLocation;
+    private final int colorID;
     private final float waitTimer;
     private float waitTimeCounter=0;
-    private boolean hasEnemySpawned=false;
-    private final int colorID;
+    private final Vector2 movementSpeed, spawnLocation;
 
-    public boolean isFriendly =false;
+    public boolean hasEnemySpawned, isEnemyToBeRemoved, isFriendly;
 
     public Enemy(World world,
                  SolidColorCreator solidColorCreator,
@@ -54,7 +55,6 @@ public class Enemy {
             return;
         }
         waitTimeCounter +=deltaTime;
-
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -88,10 +88,15 @@ public class Enemy {
         fixtureDef.filter.maskBits =~(CATEGORY_WALL | CATEGORY_ENEMY);
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
+
+
+
     }
 
     public int getColorID(){return this.colorID;}
+
     public void dispose() {
+//        enemyAnimation.dispose();
         if(body!=null){
             world.destroyBody(body);
         }
