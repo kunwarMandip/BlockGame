@@ -11,8 +11,7 @@ import com.mygdx.fallingblocks.entity.player.Player;
 import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 /**
- * Responsible for managing all entities that are supposed to be loaded
- * in the current Map including Players, enemies, objects i.e. Bullets
+ * Manage all dynamic box2D entities. Player, Enemies
  */
 public class EntityManager {
 
@@ -32,7 +31,6 @@ public class EntityManager {
         world.setContactListener(gameContactListener);
     }
 
-
     public void update(float delta){
         Vector2 playerPosition=player.getBody().getPosition();
         player.update(solidColorCreator.getPlayerColorID());
@@ -51,9 +49,6 @@ public class EntityManager {
 
     public Player getPlayer() {
         return player;
-    }
-    public EnemyManager getEnemyManager() {
-        return enemyManager;
     }
 
 }

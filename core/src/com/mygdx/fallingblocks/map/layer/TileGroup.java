@@ -1,4 +1,4 @@
-package com.mygdx.fallingblocks.map.objects;
+package com.mygdx.fallingblocks.map.layer;
 
 import java.util.ArrayList;
 

@@ -13,26 +13,26 @@ import com.mygdx.fallingblocks.utilities.SolidColorCreator;
  */
 public class GameContactListener  implements ContactListener{
 
-    private final ContactManager contactManager;
-    private final SolidColorCreator solidColorCreator;
+    private final BeginContactManager beginContactManager;
+    private final PreSolveContactManager preSolveContactManager;
+
     public GameContactListener(EntityManager entityManager, GameStateVariables gameStateVariables){
-        contactManager= new ContactManager(entityManager, gameStateVariables);
-        this.solidColorCreator=entityManager.solidColorCreator;
+        this.beginContactManager= new BeginContactManager(gameStateVariables, entityManager.solidColorCreator);
+        this.preSolveContactManager=new PreSolveContactManager(entityManager.solidColorCreator);
     }
 
     @Override
     public void beginContact(Contact contact) {
+
+        //Checking for null values
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
-
-        // Just checking for missing error aka Random errors or bug
         if (a == null || b == null){return;}
         if (a.getUserData() == null|| b.getUserData() == null){return;}
 
-
         //JUST KEEP ADDING ELSE IF
-        if(checkPlayerEnemyContact(contact)){return;}
-        if(checkEnemyBoundContact(a, b)){return;}
+        if(beginContactManager.handleEnemyPlayerContact(a,b)){return;}
+        if(beginContactManager.handleEnemyOuterBoundContact(a,b)){return;}
 
     }
 
@@ -44,20 +44,13 @@ public class GameContactListener  implements ContactListener{
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
 
+        //Checking for null values
         Fixture a = contact.getFixtureA();
         Fixture b = contact.getFixtureB();
+        if (a == null || b == null){return;}
+        if (a.getUserData() == null|| b.getUserData() == null){return;}
 
-        if ((a.getUserData() instanceof Player && b.getUserData() instanceof Enemy) ||
-                (b.getUserData() instanceof Player && a.getUserData() instanceof Enemy)) {
-
-            Enemy enemy = (Enemy) (a.getUserData() instanceof Enemy ? a.getUserData() : b.getUserData());
-
-            Integer playerID = solidColorCreator.getPlayerColorID();
-            if (playerID.equals(enemy.getColorID())) {
-                contact.setEnabled(false);
-            }
-        }
-
+        if(preSolveContactManager.sameColorEnemyPlayer(contact)){return;}
     }
 
     @Override
@@ -66,39 +59,6 @@ public class GameContactListener  implements ContactListener{
     }
 
 
-    private boolean checkPlayerEnemyContact(Contact contact){
-        Fixture a = contact.getFixtureA();
-        Fixture b = contact.getFixtureB();
-
-        System.out.println("Checking Player and Enemy");
-        if (a.getUserData() instanceof Player && b.getUserData() instanceof Enemy){
-            contactManager.EnemyPlayerContact(contact, a, b);
-            return true;
-        }
-
-        if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Player){
-            contactManager.EnemyPlayerContact(contact, b, a);
-            return true;
-        }
-        System.out.println("Not Matched: Player and Enemy");
-        return false;
-    }
-
-    private boolean checkEnemyBoundContact(Fixture a, Fixture b){
-        System.out.println("Checking Enemy and OuterBound");
-        if (a.getUserData() instanceof Enemy && b.getUserData() instanceof OuterBound){
-            contactManager.handleEnemyOuterBoundContact(a, b);
-            return true;
-        }
-
-        if (a.getUserData() instanceof OuterBound && b.getUserData() instanceof Enemy){
-            contactManager.handleEnemyOuterBoundContact(b, a);
-            return true;
-        }
-        System.out.println("Not Matched: Enemy and OuterBound");
-        return false;
-
-    }
 
 
 }

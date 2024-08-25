@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
-import com.mygdx.fallingblocks.StaticVariables;
+import com.mygdx.fallingblocks.GlobalStaticVariables;
 
 public class MainMenuScreen implements Screen {
 
@@ -38,8 +38,8 @@ public class MainMenuScreen implements Screen {
     }
 
     private void setViewport(){
-        float width = StaticVariables.VIRTUAL_WIDTH;
-        float height = StaticVariables.VIRTUAL_HEIGHT;
+        float width = GlobalStaticVariables.VIRTUAL_WIDTH;
+        float height = GlobalStaticVariables.VIRTUAL_HEIGHT;
         this.viewport = new FitViewport(width, height, new OrthographicCamera());
     }
 

@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 
-import static com.mygdx.fallingblocks.StaticVariables.PPM;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.PPM;
 
 /**
  * Responsible for showing which four Cardinal direction
@@ -17,17 +17,24 @@ public class EnemyIncomingDirection {
 
     public Rectangle bound;
     private final Texture texture;
-    private float textureRotation;
+    private float textureRotation=0;
 
     public EnemyIncomingDirection(TiledMap tiledMap){
-        //Create the bound
+        setEnemyPointerObject(tiledMap);
+        this.texture= new Texture("badlogic.jpg");
+    }
+
+    public EnemyIncomingDirection(TiledMap tiledMap, Texture texture){
+        setEnemyPointerObject(tiledMap);
+        this.texture=texture;
+    }
+
+    private void setEnemyPointerObject(TiledMap tiledMap){
         MapLayer targetLayer= tiledMap.getLayers().get("EnemyDirection");
         for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
             this.bound = object.getRectangle();
             break;
         }
-        this.texture= new Texture("badlogic.jpg");
-        this.textureRotation=0;
     }
 
     public void draw(SpriteBatch spriteBatch){
@@ -44,6 +51,10 @@ public class EnemyIncomingDirection {
 
     }
 
+    /**
+     * Set strings to show which direction to draw the texture towards
+     * @param direction the angle to set the texture towards
+     */
     public void setDirection(String direction){
         switch (direction){
             case "right":

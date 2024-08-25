@@ -4,7 +4,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
-import static com.mygdx.fallingblocks.StaticVariables.*;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
 
 /**
@@ -40,19 +40,15 @@ public class GesturePlayerController implements GestureDetector.GestureListener 
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
             if (velocityX > 0) {
                 playerBody.setLinearVelocity(new Vector2(PLAYER_SPEED, 0));
-                System.out.println("Fling Right");
             } else {
                 playerBody.setLinearVelocity(new Vector2(-PLAYER_SPEED, 0));
-                System.out.println("Fling Left");
             }
 
         } else {
             if (velocityY > 0) {
                 playerBody.setLinearVelocity(new Vector2(0f, -PLAYER_SPEED));
-                System.out.println("Fling Down");
             } else {
                 playerBody.setLinearVelocity(new Vector2(0f, PLAYER_SPEED));
-                System.out.println("Fling Up");
             }
 
         }

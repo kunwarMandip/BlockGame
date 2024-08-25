@@ -11,8 +11,8 @@ import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 import java.util.Random;
 
-import static com.mygdx.fallingblocks.StaticVariables.CATEGORY_PLAYER;
-import static com.mygdx.fallingblocks.StaticVariables.PLAYER_COLOR_CHANGE_INTERVAL;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.CATEGORY_PLAYER;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.PLAYER_COLOR_CHANGE_INTERVAL;
 
 /**
  * PLayer Entity Class. Contains everything about the player class
@@ -51,7 +51,7 @@ public class Player {
      * Check if we have to change player color or not
      */
     public void update(int playerColorID){
-        if(gameStateVariables.score == gameStateVariables.lastScore){
+        if(gameStateVariables.getScore() == gameStateVariables.getLastScore()){
             return;
         }
 

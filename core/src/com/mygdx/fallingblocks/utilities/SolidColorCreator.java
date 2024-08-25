@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.mygdx.fallingblocks.GlobalStaticVariables.COLOR_ARRAY;
+
 /**
  * Define set of colors to create solid textures with
  */
@@ -16,11 +18,10 @@ public class SolidColorCreator {
     private final Map<Integer, Texture> colors= new HashMap<>();
 
     public SolidColorCreator(){
-        String[] colorArray={"#FF0000", "#FF5733", "#33FF57", "#FF33A6",
-                "#33FFF3", "#FFDB33", "#8A33FF", "#FF8633", "#33FF8A"};
-        for(int i =0; i<colorArray.length; i++){
-            defineColors(i, colorArray[i]);
-            System.out.println("Colors: "+ i + " : " + colorArray[i]);
+
+        for(int i =0; i<COLOR_ARRAY.length; i++){
+            defineColors(i, COLOR_ARRAY[i]);
+            System.out.println("Colors: "+ i + " : " + COLOR_ARRAY[i]);
         }
         System.out.println(colors.size());
     }
@@ -33,6 +34,7 @@ public class SolidColorCreator {
         colors.put(colorNumber, texture);
         pixmap.dispose();
     }
+
 
     public Texture getColor(int colorNumber, boolean isPlayer){
         if(isPlayer){

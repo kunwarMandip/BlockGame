@@ -15,9 +15,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.GameStateVariables;
-import com.mygdx.fallingblocks.StaticVariables;
+import com.mygdx.fallingblocks.GlobalStaticVariables;
 
-import static com.mygdx.fallingblocks.StaticVariables.PPM;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.PPM;
 
 public class Hud implements Disposable {
 
@@ -30,8 +30,8 @@ public class Hud implements Disposable {
 
         this.gameStateVariables = gameStateVariables;
 
-        float width = StaticVariables.VIRTUAL_WIDTH / PPM;  // Swapped width and height
-        float height = StaticVariables.VIRTUAL_HEIGHT / PPM;
+        float width = GlobalStaticVariables.VIRTUAL_WIDTH / PPM;  // Swapped width and height
+        float height = GlobalStaticVariables.VIRTUAL_HEIGHT / PPM;
         Viewport viewport = new FitViewport(width, height, new OrthographicCamera());
         stage = new Stage(viewport, spriteBatch);
 
@@ -65,7 +65,7 @@ public class Hud implements Disposable {
     }
 
     public void update(){
-        scoreLabel.setText(String.format("%d", gameStateVariables.score));
+        scoreLabel.setText(String.format("%d", gameStateVariables.getScore()));
     }
 
     @Override
