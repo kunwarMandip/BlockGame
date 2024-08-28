@@ -13,12 +13,11 @@ import java.util.Random;
  */
 public class MapManager {
 
-    private final GameStateVariables gameStateVariables;
-    private final TileLayersManager tileLayersManager;
     private int[] upperTiles;
     private int[] lowerTiles;
+    private final TileLayersManager tileLayersManager;
 
-    private int lastChangeScore;
+    Random random=new Random();
 
     /**
      * Enables dynamic loading of tile layers to allow for different layers
@@ -26,40 +25,38 @@ public class MapManager {
      * @param world box2D world
      * @param tiledMap TiledMap
      */
-    public MapManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables){
+    public MapManager(World world, TiledMap tiledMap){
         System.out.println("INIT MapManager...");
-        this.gameStateVariables= gameStateVariables;
-
         tileLayersManager = new TileLayersManager(tiledMap);
-        tileLayersManager.setNewTiles("CyanLightBlue");
         upperTiles= tileLayersManager.getCurrentUpperTile();
         lowerTiles= tileLayersManager.getCurrentLowerTiles();
-
-        LoadMapObjects loadMapObjects = new LoadMapObjects(world, tiledMap);
+        new LoadMapObjects(world, tiledMap);
     }
 
     /**
      * If current score is divisible by 2, Changes the map to a new map
      * and gets its upper and lower tiles. Else, doesn't do anything at all
      */
-    public void update(){
-        int tempScore= gameStateVariables.score;
-        String newPrimaryColors;
-        if(tempScore%2==0 && tempScore!=0 && lastChangeScore!=tempScore){
-            Random random=new Random();
-            do{
-                int randomIndex= random.nextInt(tileLayersManager.getTileGroups().size);
-                newPrimaryColors=tileLayersManager.getTileGroups().get(randomIndex).getPrimaryColorName();
-
-            }while(newPrimaryColors.equals(tileLayersManager.getCurrentPrimaryColorsName()));
-
-            tileLayersManager.setNewTiles(newPrimaryColors);
-            upperTiles= tileLayersManager.getCurrentUpperTile();
-            lowerTiles= tileLayersManager.getCurrentLowerTiles();
-            lastChangeScore=tempScore;
+    public void update(int score, int lastScore){
+        if (score % 2 != 0 || score == 0 || lastScore == score) {
+            return;
         }
+
+        String newPrimaryColors=getRandomPrimaryColor();
+        tileLayersManager.setNewTiles(newPrimaryColors);
+        upperTiles= tileLayersManager.getCurrentUpperTile();
+        lowerTiles= tileLayersManager.getCurrentLowerTiles();
     }
 
+    private String getRandomPrimaryColor(){
+        String newPrimaryColors;
+        do{
+            int randomIndex= random.nextInt(tileLayersManager.getTileGroups().size);
+            newPrimaryColors=tileLayersManager.getTileGroups().get(randomIndex).getPrimaryColorName();
+
+        }while(newPrimaryColors.equals(tileLayersManager.getCurrentPrimaryColorsName()));
+        return newPrimaryColors;
+    }
 
     public int[] getUpperTiles(){
         return upperTiles;

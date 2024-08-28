@@ -1,9 +1,8 @@
 package com.mygdx.fallingblocks.entity.player;
 
-
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 public class PlayerAnimation {

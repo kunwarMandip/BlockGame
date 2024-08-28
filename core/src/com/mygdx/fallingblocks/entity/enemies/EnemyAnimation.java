@@ -1,9 +1,9 @@
 package com.mygdx.fallingblocks.entity.enemies;
 
+
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.fallingblocks.utilities.SolidColorCreator;
 
 public class EnemyAnimation {
 
@@ -20,6 +20,9 @@ public class EnemyAnimation {
         spriteBatch.draw(texture, x, y, textureWidth, textureHeight);
     }
 
+    public void dispose(){
+        texture.dispose();
+    }
 
 //    private String chooseEnemyTexture(String playerColor){
 //        //Enemy and Player match color

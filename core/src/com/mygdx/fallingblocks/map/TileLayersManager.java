@@ -3,7 +3,7 @@ package com.mygdx.fallingblocks.map;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.fallingblocks.map.objects.TileGroup;
+import com.mygdx.fallingblocks.map.layer.TileGroup;
 
 /**
  * Manages TileGroup Array to allow the upper and lower tiles
@@ -12,22 +12,19 @@ import com.mygdx.fallingblocks.map.objects.TileGroup;
 public class TileLayersManager {
 
     private final MapLayers mapLayers;
-    private final Array<TileGroup> tileGroups;
+    private final Array<TileGroup> tileGroups= new Array<>();
 
     private String currentPrimaryColorsName;
-    private final Array<Integer> currentUpperTiles;
-    private final Array<Integer> currentLowerTiles;
+    private final Array<Integer> currentUpperTiles= new Array<>();
+    private final Array<Integer> currentLowerTiles= new Array<>();
 
 
     public TileLayersManager(TiledMap tiledMap){
         System.out.println("New TileLayerManager");
 
         this.mapLayers=tiledMap.getLayers();
-        currentUpperTiles= new Array<>();
-        currentLowerTiles=new Array<>();
-        tileGroups= new Array<>();
-
         setTiles();
+        setNewTiles("CyanLightBlue");
     }
 
 
@@ -67,8 +64,7 @@ public class TileLayersManager {
         tileGroup.addToUpperTile(mapLayers.getIndex(outsideLayer));
         tileGroup.addToLowerTiles(mapLayers.getIndex(insideLayer));
         tileGroups.add(tileGroup);
-        System.out.println("Added Tile-Group: "+ groupName );
-        System.out.println("Tiles Index: " +mapLayers.getIndex(outsideLayer) + mapLayers.getIndex(insideLayer));
+        System.out.print("Added Tile-Group: "+ groupName);
     }
 
     /**

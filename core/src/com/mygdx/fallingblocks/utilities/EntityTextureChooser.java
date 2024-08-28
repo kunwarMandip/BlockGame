@@ -1,14 +1,12 @@
 package com.mygdx.fallingblocks.utilities;
 
-import java.util.Random;
-
-import static com.mygdx.fallingblocks.StaticVariables.*;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.GET_RANDOM_INTEGER;
 
 public class EntityTextureChooser {
 
     private final int colorListSize;
     private int rewardThresholdCounter=0;
-    private final Random random= new Random();
 
     public EntityTextureChooser(int colorListSize){
         this.colorListSize=colorListSize;
@@ -25,11 +23,10 @@ public class EntityTextureChooser {
         }
 
         if(rewardThresholdCounter >= MIN_LUCKY_REWARD_THRESHOLD){
-            int randomNum=random.nextInt(TEXTURE_CHOOSER_BOUNDS);
-
-            if(randomNum==TEXTURE_CHOOSER_BOUNDS/2){
+            int randomNumber=GET_RANDOM_INTEGER(TEXTURE_CHOOSER_LUCK_PROBABILITY);
+            if(randomNumber==1){
                 rewardThresholdCounter=0;
-                return playerColorNumber;
+                return randomNumber;
             }
         }
 
@@ -41,9 +38,8 @@ public class EntityTextureChooser {
     public int differentRandomColor(int playerColorNumber){
         int randomColor;
         do{
-            randomColor = random.nextInt(colorListSize); // Gen
+            randomColor=GET_RANDOM_INTEGER(colorListSize);
         }while(playerColorNumber==randomColor);
-        System.out.println("COLOR:: "+ randomColor + " . " + colorListSize);
         return randomColor;
     }
 
