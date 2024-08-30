@@ -64,7 +64,7 @@ public class HudOverlayScreen implements Disposable {
         score.setFontScale(5.0f);
 
         setPauseButton();
-        topTable.add(pauseButton).expandX();
+        topTable.add(pauseButton).expandX().width(100);
         topTable.add(score).expandX();
 
         fpsLabel = new Label("FPS: 60", skin);
