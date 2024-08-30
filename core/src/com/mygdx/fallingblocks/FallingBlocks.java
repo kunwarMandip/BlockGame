@@ -1,14 +1,17 @@
 package com.mygdx.fallingblocks;
 
 import com.badlogic.gdx.Game;
-import com.mygdx.fallingblocks.screens.GameScreen;
-import com.mygdx.fallingblocks.screens.MainMenuScreen;
+import com.mygdx.fallingblocks.screens.*;
+import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 
 public class FallingBlocks extends Game {
 
+	private GameScreen gameScreen;
+	private GameMenuScreen gameMenuScreen;
+
 	@Override
 	public void create() {
-		setScreen(new MainMenuScreen(this));
+		setScreen(new LoadingScreen(this));
 	}
 
 	@Override

@@ -34,36 +34,15 @@ WHAT'S NEEDED TO SPAWN ENEMY
 Color doesn't need to be in entity constructor btw
 
 
-ASPECT RATIO
-18:9 (mobile devices)- double width compared to height
-For TiledMap to properly be scaled properly, it should be same ratio as VIRTUAL_WIDTH AND VIRTUAL_HEIGHT
+## TODO List
+Here are the tasks that need to be completed:
 
-PIXEL PER METRE: PPM
-PPM: Pixel for Metre to Map how many pixels should be 1 metre in game 
-which makes scaling things dynamically better.
-If 100 ppm, more pixels are needed for 1 metre, meaning if scaled, the objects looks better since more resolution used
-If higher ppm: 200 ppm, when scaled, the objects look even better but takes more performance
-Conversely, if lower ppm: 50ppm, lets pixels so lets performance time but will not scale as well
-
-
-For enemies to spawn
-Width of screen in world is 7.2 max -> starting from 0
-height of where they spawn from is 14.4 
-
-
-Simple difficulty spawning
-
-After 2 seconds of game starting, spawn one enemy. Score=0
-After enemy dodged. Score=1
-keep on doing this 
-
-As the games goes on, make the polygons smaller and quicker --> as time goes on
-different shapes
-
-WE SPAWN ENEMIES INSIDE THE MAP
-
-FALLING BLOCKS
-GAME BETWEEN :-> "Avoider" and "Don't touch the spikes"
-
-Need to add Asap
-//Scoreboard -Top of the screen
+- [x] Implement the collision detection feature
+- [x] Add a main menu screen
+- [x] Integrate the game with a physics engine
+- [x] Create sound effects for game events
+- [x] Add a pause effect
+- [ ] Optimize the rendering performance
+- [ ] Write unit tests for critical components
+- [ ] Improve player character animations
+- [ ] Add multiplayer functionality

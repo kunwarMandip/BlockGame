@@ -2,7 +2,6 @@ package com.mygdx.fallingblocks.map;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.fallingblocks.GameStateVariables;
 
 import java.util.Random;
 
