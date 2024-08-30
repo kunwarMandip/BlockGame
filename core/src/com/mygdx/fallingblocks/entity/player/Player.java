@@ -2,15 +2,14 @@ package com.mygdx.fallingblocks.entity.player;
 
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.fallingblocks.GameStateVariables;
-import com.mygdx.fallingblocks.utilities.SolidColorCreator;
+import com.mygdx.fallingblocks.utilities.GameStateVariables;
+import com.mygdx.fallingblocks.utilities.InputListenersManager;
+import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
 
 import java.util.Random;
 
@@ -33,14 +32,15 @@ public class Player {
 
     public Player(World world,
                   GameStateVariables gameStateVariables,
-                  SolidColorCreator solidColorCreator,
-                  RayHandler rayHandler) {
+                  DynamicTextureCreator solidColorCreator,
+                  RayHandler rayHandler,
+                  InputListenersManager inputListenersManager) {
         this.world=world;
         this.gameStateVariables=gameStateVariables;
         this.colorListSize=solidColorCreator.getSize();
         this.createBox2DBody(new Vector2(100, 100), rayHandler);
         this.playerAnimation = new PlayerAnimation(solidColorCreator);;
-        this.setController();
+        this.setController(inputListenersManager);
     }
 
     public Body getBody(){
@@ -109,10 +109,8 @@ public class Player {
     /**
      * Set Player Controller
      */
-    public void setController(){
+    public void setController(InputListenersManager inputListenersManager){
         GestureDetector gestureDetector= new GestureDetector(new GesturePlayerController(body));
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(gestureDetector);
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        inputListenersManager.setInputProcessor(gestureDetector);
     }
 }

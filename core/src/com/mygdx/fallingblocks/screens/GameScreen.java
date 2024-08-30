@@ -15,9 +15,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
-import com.mygdx.fallingblocks.GameStateVariables;
+import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
+import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
 import com.mygdx.fallingblocks.map.MapManager;
+import com.mygdx.fallingblocks.utilities.InputListenersManager;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
@@ -27,25 +29,33 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
  */
 public class GameScreen implements Screen {
 
-
     private World world;
     private TiledMap tiledMap;
-    private Viewport viewport;
+    private Viewport gameViewport;
     private RayHandler rayHandler;
     private SpriteBatch spriteBatch;
     private OrthographicCamera gameCamera;
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    private Hud hudScene;
     private MapManager mapManager;
-    private final FallingBlocks fallingBlocks;
     private EntityManager entityManager;
     private GameStateVariables gameStateVariables;
-    private NewHud newHud;
-    public GameScreen(FallingBlocks fallingBlocks){
+    private HudOverlayScreen gameHud;
+
+    private final FallingBlocks fallingBlocks;
+
+    private InputListenersManager inputListenersManager;
+    private AssetManagerWrapper assetManagerWrapper;
+
+    public GameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper){
         this.fallingBlocks= fallingBlocks;
+        this.assetManagerWrapper=assetManagerWrapper;
     }
+    public GameScreen(FallingBlocks fallingBlocks){
+        this.fallingBlocks=fallingBlocks;
+    }
+
 
     /**
      * Set Aspect ratio, Set world, TiledMap, EntityManager, hudScene
@@ -56,9 +66,11 @@ public class GameScreen implements Screen {
         this.gameStateVariables= new GameStateVariables();
         setCamera();
         setWorld();
-        entityManager = new EntityManager(world, tiledMap, gameStateVariables, rayHandler);
-        hudScene= new Hud(gameStateVariables, spriteBatch, tiledMap);
-        newHud= new NewHud(gameStateVariables, spriteBatch);
+        inputListenersManager= new InputListenersManager();
+        entityManager= new EntityManager(this);
+
+        gameHud = new HudOverlayScreen(spriteBatch);
+        inputListenersManager.addInputListener(gameHud.getStage());
     }
 
     /**
@@ -66,9 +78,9 @@ public class GameScreen implements Screen {
      */
     private void setCamera(){
         gameCamera= new OrthographicCamera();
-        viewport= new FitViewport(VIRTUAL_WIDTH/ PPM, VIRTUAL_HEIGHT/PPM, gameCamera);
-        viewport.apply();
-        gameCamera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
+        gameViewport = new FitViewport(VIRTUAL_WIDTH/ PPM, VIRTUAL_HEIGHT/PPM, gameCamera);
+        gameViewport.apply();
+        gameCamera.position.set(gameViewport.getWorldWidth() / 2f, gameViewport.getWorldHeight() / 2f, 0);
         gameCamera.update();
     }
 
@@ -102,9 +114,13 @@ public class GameScreen implements Screen {
      * @param delta time in seconds since last render
      */
     public void update(float delta){
+        if(gameHud.getGamePaused()){
+            return;
+        }
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
-        hudScene.update();
+        gameHud.update(gameStateVariables.getScore());
+        mapManager.update(gameStateVariables.getScore(), gameStateVariables.getLastScore());
     }
 
     @Override
@@ -115,35 +131,35 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0,0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        rayHandler.setCombinedMatrix(gameCamera);
-        rayHandler.updateAndRender();
+        gameCamera.update();
 
-        //need to change this to allow dynamic tier loading
+        //Render tiled map
         orthogonalTiledMapRenderer.setView(gameCamera);
+
+        //Render lower tiled
         orthogonalTiledMapRenderer.render(mapManager.getLowerTiles());
+
+        //render box2d world
         box2DDebugRenderer.render(world, gameCamera.combined);
-        mapManager.update(gameStateVariables.getScore(), gameStateVariables.getLastScore());
-
-
 
         //Render the spriteBatch
         spriteBatch.setProjectionMatrix(gameCamera.combined);
         spriteBatch.begin();
         entityManager.drawEntities(spriteBatch);
-        newHud.draw(spriteBatch);
         spriteBatch.end();
-        //last layer ensures that enemies not inside place to be shown aren't shown
+
+        //Render Upper Tiled
         orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
-        spriteBatch.setProjectionMatrix(hudScene.getStage().getCamera().combined);
-        hudScene.getStage().draw();
 
-
+        //draw hud
+        gameHud.render();
 
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        gameViewport.update(width, height);
+        gameHud.resize(width, height);
     }
 
     @Override
@@ -164,13 +180,18 @@ public class GameScreen implements Screen {
         tiledMap.dispose();
         orthogonalTiledMapRenderer.dispose();
         world.dispose();
+        gameHud.dispose();
     }
 
     public World getWorld() {
         return world;
     }
 
-    public TiledMap getMap() {
+    public TiledMap getTiledMap() {
         return tiledMap;
     }
+    public GameStateVariables getGameStateVariables(){return  gameStateVariables;}
+    public RayHandler getRayHandler(){return rayHandler;}
+    public AssetManagerWrapper getAssetManagerWrapper(){return assetManagerWrapper;}
+    public InputListenersManager getInputListenersManager(){return inputListenersManager;}
 }

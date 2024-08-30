@@ -1,11 +1,9 @@
 package com.mygdx.fallingblocks.entity.enemies;
 
-import box2dLight.PointLight;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.fallingblocks.utilities.SolidColorCreator;
+import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
@@ -23,7 +21,7 @@ public class Enemy {
     public boolean hasEnemySpawned, isEnemyToBeRemoved, isFriendly;
 
     public Enemy(World world,
-                 SolidColorCreator solidColorCreator,
+                 DynamicTextureCreator solidColorCreator,
                  int colorID,
                  Vector2 spawnLocation,
                  Vector2 movementSpeed,

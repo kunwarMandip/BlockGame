@@ -5,10 +5,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.fallingblocks.GameStateVariables;
-import com.mygdx.fallingblocks.utilities.SolidColorCreator;
-
-import java.util.Iterator;
+import com.mygdx.fallingblocks.utilities.GameStateVariables;
+import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
 
 
 /**
@@ -29,7 +27,7 @@ public class EnemyManager {
 
     public EnemyManager(World world, TiledMap tiledMap,
                         GameStateVariables gameStateVariables,
-                        SolidColorCreator solidColorCreator){
+                        DynamicTextureCreator solidColorCreator){
         this.gameStateVariables=gameStateVariables;
         this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this, solidColorCreator);
         this.enemySpawnDirection=new EnemyIncomingDirection();

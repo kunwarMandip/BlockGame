@@ -5,11 +5,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.fallingblocks.GameStateVariables;
+import com.mygdx.fallingblocks.screens.GameScreen;
+import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
+import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.contactlistener.GameContactListener;
 import com.mygdx.fallingblocks.entity.enemies.EnemyManager;
 import com.mygdx.fallingblocks.entity.player.Player;
-import com.mygdx.fallingblocks.utilities.SolidColorCreator;
+import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
 
 /**
  * Manage all dynamic box2D entities. Player, Enemies
@@ -18,17 +20,21 @@ public class EntityManager {
 
     private final Player player;
     private final EnemyManager enemyManager;
-    public SolidColorCreator solidColorCreator;
+    private final AssetManagerWrapper assetManagerWrapper;
+    public DynamicTextureCreator solidColorCreator;
 
-    /**
-     * Sets the player, enemies, and the contact listener
-     * @param world box2D world to deploy body in
-     */
-    public EntityManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, RayHandler rayHandler){
-        this.solidColorCreator = new SolidColorCreator();
-        player= new Player(world, gameStateVariables, solidColorCreator, rayHandler);
-        enemyManager= new EnemyManager(world, tiledMap, gameStateVariables, solidColorCreator);
-        GameContactListener gameContactListener = new GameContactListener(this, gameStateVariables);
+    public EntityManager(GameScreen gameScreen){
+        World world=gameScreen.getWorld();
+        TiledMap tiledMap= gameScreen.getTiledMap();
+        GameStateVariables gameStateVariables=gameScreen.getGameStateVariables();
+        RayHandler rayHandler= gameScreen.getRayHandler();
+
+        this.solidColorCreator= new DynamicTextureCreator();
+        this.assetManagerWrapper=gameScreen.getAssetManagerWrapper();
+        this.player= new Player(gameScreen.getWorld(), gameStateVariables, solidColorCreator, rayHandler, gameScreen.getInputListenersManager());
+        this.enemyManager= new EnemyManager(world, tiledMap, gameStateVariables, solidColorCreator);
+
+        GameContactListener gameContactListener= new GameContactListener(this, gameStateVariables);
         world.setContactListener(gameContactListener);
     }
 

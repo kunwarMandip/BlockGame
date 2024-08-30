@@ -4,21 +4,21 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.mygdx.fallingblocks.entity.enemies.Enemy;
 import com.mygdx.fallingblocks.entity.player.Player;
-import com.mygdx.fallingblocks.utilities.SolidColorCreator;
+import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
 
 public class PreSolveContactManager {
 
-    private final SolidColorCreator solidColorCreator;
+    private final DynamicTextureCreator solidColorCreator;
 
-    public PreSolveContactManager(SolidColorCreator solidColorCreator){
+    public PreSolveContactManager(DynamicTextureCreator solidColorCreator){
         this.solidColorCreator=solidColorCreator;
     }
 
 
     /**
-     *
-     * @param contact
-     * @return
+     * If two contact are Player and Enemy && the same color: Disable contact between them
+     * @param contact bodies that just collided
+     * @return true if matched
      */
     public boolean sameColorEnemyPlayer(Contact contact){
         Fixture a = contact.getFixtureA();

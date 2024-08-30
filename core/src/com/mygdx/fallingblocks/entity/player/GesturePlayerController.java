@@ -1,5 +1,7 @@
 package com.mygdx.fallingblocks.entity.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -13,9 +15,11 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 public class GesturePlayerController implements GestureDetector.GestureListener {
 
     private final Body playerBody;
+    private final Sound tapSound;
 
     public GesturePlayerController(Body playerBody){
         this.playerBody=playerBody;
+        this.tapSound= Gdx.audio.newSound(Gdx.files.internal("sound/tap.wav"));
     }
 
     @Override
@@ -37,18 +41,19 @@ public class GesturePlayerController implements GestureDetector.GestureListener 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
 
+        tapSound.play();
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
             if (velocityX > 0) {
-                playerBody.setLinearVelocity(new Vector2(PLAYER_SPEED, 0));
+                playerBody.setLinearVelocity(new Vector2(PLAYER_MOVEMENT_SPEED, 0));
             } else {
-                playerBody.setLinearVelocity(new Vector2(-PLAYER_SPEED, 0));
+                playerBody.setLinearVelocity(new Vector2(-PLAYER_MOVEMENT_SPEED, 0));
             }
 
         } else {
             if (velocityY > 0) {
-                playerBody.setLinearVelocity(new Vector2(0f, -PLAYER_SPEED));
+                playerBody.setLinearVelocity(new Vector2(0f, -PLAYER_MOVEMENT_SPEED));
             } else {
-                playerBody.setLinearVelocity(new Vector2(0f, PLAYER_SPEED));
+                playerBody.setLinearVelocity(new Vector2(0f, PLAYER_MOVEMENT_SPEED));
             }
 
         }
