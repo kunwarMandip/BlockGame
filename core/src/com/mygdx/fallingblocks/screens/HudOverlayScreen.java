@@ -11,12 +11,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.fallingblocks.utilities.GameStateVariables;
 
 import java.util.Locale;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
 public class HudOverlayScreen implements Disposable {
+
+    private final GameStateVariables gameStateVariables;
 
     private final Viewport viewport;
     private final SpriteBatch spriteBatch;
@@ -26,12 +29,14 @@ public class HudOverlayScreen implements Disposable {
     private Skin skin;
     private Table topTable, bottomTable;
 
+    private Window onDeathWindow;
     private Label score, fpsLabel;
     private TextButton pauseButton;
-    private Boolean isGamePaused=false;
 
-    public HudOverlayScreen(SpriteBatch spriteBatch){
+
+    public HudOverlayScreen(SpriteBatch spriteBatch, GameStateVariables gameStateVariables){
         this.spriteBatch=spriteBatch;
+        this.gameStateVariables=gameStateVariables;
         this.hudCamera= new OrthographicCamera();
         this.viewport= new FitViewport(VIRTUAL_WIDTH/2f, VIRTUAL_HEIGHT/2f, hudCamera);
         this.stage= new Stage(viewport, spriteBatch);
@@ -39,6 +44,7 @@ public class HudOverlayScreen implements Disposable {
         setSkin();
         setTable();
         addWidgetsToTable();
+        onDeathPopUpWindow();
     }
 
     private void setSkin(){
@@ -64,7 +70,7 @@ public class HudOverlayScreen implements Disposable {
         score.setFontScale(5.0f);
 
         setPauseButton();
-        topTable.add(pauseButton).expandX();
+        topTable.add(pauseButton).expandX().width(100);
         topTable.add(score).expandX();
 
         fpsLabel = new Label("FPS: 60", skin);
@@ -72,17 +78,15 @@ public class HudOverlayScreen implements Disposable {
         bottomTable.add(fpsLabel);
     }
 
-    /**
-     * Init the pause button and its function
-     */
+
     private void setPauseButton(){
         this.pauseButton= new TextButton("Pause", skin);
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
             System.out.println("Clicked");
-            isGamePaused = !isGamePaused;
-            if (isGamePaused) {
+            gameStateVariables.invertGamePause();
+            if (gameStateVariables.isGamePaused()) {
                 pauseButton.setText("Resume");
             } else {
                 pauseButton.setText("Pause");
@@ -91,12 +95,45 @@ public class HudOverlayScreen implements Disposable {
         });
     }
 
+    private void onDeathPopUpWindow() {
+        onDeathWindow = new Window("Game Over", skin);
+        onDeathWindow.setSize(200, 200);
+        onDeathWindow.setPosition(
+                (viewport.getWorldWidth() - onDeathWindow.getWidth()) / 2,
+                (viewport.getWorldHeight() - onDeathWindow.getHeight()) / 2
+        );
+
+        // Create a label to show a message
+        Label messageLabel = new Label("You Died! Try Again?", skin);
+        onDeathWindow.add(messageLabel).center().pad(10);
+        onDeathWindow.row();
+
+        // Create a button to restart the game
+        TextButton restartButton = new TextButton("Restart", skin);
+        restartButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Restart Clicked");
+                gameStateVariables.setPlayerDead(false);
+                onDeathWindow.setVisible(false);
+            }
+        });
+
+        onDeathWindow.add(restartButton).center().pad(10);
+        onDeathWindow.setVisible(false);
+        stage.addActor(onDeathWindow);
+    }
 
     public void update(int score){
         this.score.setText(score);
-        fpsLabel.setText("FPS: " + Gdx.graphics.getFramesPerSecond());
+        this.fpsLabel.setText("FPS: " + Gdx.graphics.getFramesPerSecond());
+        onDeathWindow.setVisible(gameStateVariables.isPlayerDead());
     }
 
+    //Can be used to set input processor
+    public Stage getStage(){
+        return stage;
+    }
 
     public void render(){
         spriteBatch.setProjectionMatrix(hudCamera.combined);
@@ -105,18 +142,6 @@ public class HudOverlayScreen implements Disposable {
 
     public void resize(int width, int height) {
         viewport.update(width, height);
-    }
-
-    /**
-     * Used to set InputProcessor for hud
-     * @return
-     */
-    public Stage getStage(){
-        return stage;
-    }
-
-    public Boolean getGamePaused() {
-        return isGamePaused;
     }
 
     @Override

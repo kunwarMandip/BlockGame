@@ -42,7 +42,4 @@ Here are the tasks that need to be completed:
 - [x] Integrate the game with a physics engine
 - [x] Create sound effects for game events
 - [x] Add a pause effect
-- [ ] Optimize the rendering performance
-- [ ] Write unit tests for critical components
-- [ ] Improve player character animations
-- [ ] Add multiplayer functionality
+- [x] mini menu on death 

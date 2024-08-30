@@ -22,9 +22,11 @@ public class BeginContactManager {
 
 
     /**
-     *
-     * @param contact
-     * @return if handled, return true
+     * Handle Collision between Player and Enemy Only.
+     * If player and Enemy are different color, reset the game
+     * Else, change the player to friendly so there will be no contact
+     * @param contact the objects that just collided
+     * @return true if collision was handled
      */
     public boolean handleEnemyPlayerContact(Contact contact) {
         Fixture a = contact.getFixtureA();
@@ -42,14 +44,16 @@ public class BeginContactManager {
             enemy.isFriendly = true;
             return true;
         }
-        gameStateVariables.resetGameVariables(true);
+        gameStateVariables.setPlayerDead(true);
+//        gameStateVariables.resetGameVariables(true);
         return true;
     }
 
     /**
-     *
-     * @param contact
-     * @return if handled, return true
+     * Handle Collision between Enemy and OuterBound Only
+     * Set to remove the colliding enemy from the currentEnemyArray when contact with outerBound object
+     * @param contact the objects that just collided
+     * @return true if collision was handled
      */
     public boolean handleEnemyOuterBoundContact(Contact contact){
         Fixture a = contact.getFixtureA();

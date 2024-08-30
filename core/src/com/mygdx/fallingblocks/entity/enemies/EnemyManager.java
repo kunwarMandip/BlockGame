@@ -40,11 +40,11 @@ public class EnemyManager {
      */
     public void update(float delta, Vector2 playerPosition) {
 
-        if(gameStateVariables.getReset()){
+
+        if(gameStateVariables.isPlayerDead()){
             gameStateVariables.reset(this);
             return;
         }
-
         updateEnemies(delta);
 
         //Check if new enemies can be created
