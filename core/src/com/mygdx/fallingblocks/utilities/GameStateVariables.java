@@ -13,13 +13,14 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
  */
 public class GameStateVariables {
 
-    private boolean isReset, isResetRequested, isResetReady;
     private float enemySpeedX, enemySpeedY, waitTime;
     private int score, lastScore, currentMaxEnemyAllowed;
+    private boolean isPlayerDead, isGamePaused= false;
 
     public GameStateVariables(){
         resetGameVariables();
     }
+
 
     private void resetGameVariables(){
         this.score=0;
@@ -28,7 +29,6 @@ public class GameStateVariables {
         this.enemySpeedX= ENEMY_BASE_MOVEMENT_SPEED.x;
         this.enemySpeedY= ENEMY_BASE_MOVEMENT_SPEED.y;
         this.waitTime=3f;
-        this.isReset =false;
     }
 
 
@@ -96,17 +96,23 @@ public class GameStateVariables {
         }
     }
 
+    public boolean isPlayerDead() {
+        return isPlayerDead;
+    }
+    public boolean isGamePaused() {
+        return isGamePaused;
+    }
+    public void setPlayerDead(boolean playerDead) {
+        isPlayerDead = playerDead;
+    }
+    public void invertGamePause(){
+        this.isGamePaused=!isGamePaused;
+    }
     public int getScore(){return this.score;}
     public int getLastScore(){return  this.lastScore;}
     public float getWaitTimer(){return this.waitTime;}
-    public Boolean getReset(){
-        return this.isReset;
-    }
     public int getCurrentMaxEnemyAllowed(){return this.currentMaxEnemyAllowed;}
     public Vector2 getEnemyMovementSpeed(){return new Vector2(enemySpeedX, enemySpeedY);}
-    public void resetGameVariables(Boolean reset){
-        this.isReset =reset;
-    }
     public void incrementScore() {
         this.score++;
 

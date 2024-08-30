@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
         inputListenersManager= new InputListenersManager();
         entityManager= new EntityManager(this);
 
-        gameHud = new HudOverlayScreen(spriteBatch);
+        gameHud = new HudOverlayScreen(spriteBatch, gameStateVariables);
         inputListenersManager.addInputListener(gameHud.getStage());
     }
 
@@ -114,9 +114,16 @@ public class GameScreen implements Screen {
      * @param delta time in seconds since last render
      */
     public void update(float delta){
-        if(gameHud.getGamePaused()){
+        if(gameStateVariables.isGamePaused() || gameStateVariables.isPlayerDead()){
+            if(gameStateVariables.isGamePaused()){
+                System.out.println("Game Paused");
+            }else{
+                System.out.println("PlayerDead");
+            }
+
             return;
         }
+
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
         gameHud.update(gameStateVariables.getScore());
