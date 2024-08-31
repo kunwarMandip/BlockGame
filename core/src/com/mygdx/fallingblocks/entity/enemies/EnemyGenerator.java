@@ -91,6 +91,7 @@ public class EnemyGenerator {
                 break;
         }
 
+        System.out.println("Enemy speed: "+  enemySpeedX + " : "+ enemySpeedY);
         float waitTime=gameStateVariables.getWaitTimer();
         Vector2 spawnLocation = new Vector2(spawnLocationX, spawnLocationY);
         int colorId=enemyTextureChooser.getColorNumber(solidColorCreator.getPlayerColorID());

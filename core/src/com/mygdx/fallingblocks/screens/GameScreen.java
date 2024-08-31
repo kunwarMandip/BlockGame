@@ -119,6 +119,7 @@ public class GameScreen implements Screen {
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
         gameHud.update(gameStateVariables.getScore());
+
 //        mapManager.update(gameStateVariables.getScore(), gameStateVariables.getLastScore());
     }
 

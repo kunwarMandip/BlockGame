@@ -70,12 +70,12 @@ public class GameStateVariables {
 
         // Increase Enemy Movement Speed. Lower wait time for new enemy to drop
         if(score % 10==0){
-            enemySpeedX= ENEMY_BASE_MOVEMENT_SPEED.x + ENEMY_MOVEMENT_SPEED_HUGE_INCREASE;
-            enemySpeedY= ENEMY_BASE_MOVEMENT_SPEED.x + ENEMY_MOVEMENT_SPEED_HUGE_INCREASE;
+            enemySpeedX+=  ENEMY_MOVEMENT_SPEED_HUGE_INCREASE;
+            enemySpeedY+=  ENEMY_MOVEMENT_SPEED_HUGE_INCREASE;
             waitTime= waitTime-0.1f;
         } else{
-            enemySpeedX= ENEMY_BASE_MOVEMENT_SPEED.x + ENEMY_MOVEMENT_SPEED_TINY_INCREASE;
-            enemySpeedY= ENEMY_BASE_MOVEMENT_SPEED.y+ ENEMY_MOVEMENT_SPEED_TINY_INCREASE;
+            enemySpeedX+= ENEMY_MOVEMENT_SPEED_TINY_INCREASE;
+            enemySpeedY+= ENEMY_MOVEMENT_SPEED_TINY_INCREASE;
             waitTime= waitTime-0.5f;
         }
 
