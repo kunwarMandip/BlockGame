@@ -62,7 +62,7 @@ public class MainMenuScreen implements Screen {
         start.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                fallingBlocks.setScreen(new GameScreen(fallingBlocks));
+                fallingBlocks.setScreen(fallingBlocks.getGameScreen());
             }
         });
 
@@ -110,5 +110,6 @@ public class MainMenuScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+
     }
 }

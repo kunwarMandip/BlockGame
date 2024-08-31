@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="45" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="26" nextobjectid="61">
+ <editorsettings>
+  <export target="../../../TropeFighter/assets/map/tiledMap.tmx" format="tmx"/>
+ </editorsettings>
+ <imagelayer id="24" name="background" locked="1">
+  <image source="images/background.png" width="720" height="1440"/>
+ </imagelayer>
+ <imagelayer id="22" name="foreground" locked="1">
+  <image source="images/topLayer.png" width="720" height="1440"/>
+ </imagelayer>
+ <objectgroup id="11" name="Wall" locked="1">
+  <object id="53" x="717.003" y="196.003" width="16" height="1048.99"/>
+  <object id="56" x="4.00058" y="1245" width="713.003" height="16"/>
+  <object id="59" x="-12.0084" y="196.001" width="16.0039" height="1049" rotation="4.55451e-05"/>
+  <object id="60" x="3.9985" y="179.997" width="713.003" height="16"/>
+ </objectgroup>
+ <objectgroup id="12" name="EnemySpawn" locked="1">
+  <object id="26" x="48" y="112" width="624" height="16">
+   <properties>
+    <property name="name" value="top"/>
+   </properties>
+  </object>
+  <object id="29" x="48" y="1360" width="624" height="16">
+   <properties>
+    <property name="name" value="bottom"/>
+   </properties>
+  </object>
+  <object id="47" x="-64" y="208" width="31.0986" height="1104">
+   <properties>
+    <property name="name" value="left"/>
+   </properties>
+  </object>
+  <object id="48" x="752" y="192" width="31.1174" height="1104.67">
+   <properties>
+    <property name="name" value="right"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="13" name="OuterBound" locked="1">
+  <object id="33" x="-144.014" y="-97.5" width="32.0286" height="1681.5"/>
+  <object id="37" x="832.01" y="-96" width="32.0096" height="1680.5"/>
+  <object id="38" x="-112" y="1552" width="944" height="32"/>
+  <object id="39" x="-112" y="-96" width="944" height="32"/>
+ </objectgroup>
+ <objectgroup id="17" name="EnemyDirection" locked="1">
+  <object id="41" x="304" y="640" width="111.75" height="127.714"/>
+ </objectgroup>
+</map>

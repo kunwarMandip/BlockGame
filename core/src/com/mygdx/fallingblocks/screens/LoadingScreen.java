@@ -7,22 +7,22 @@ import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 public class LoadingScreen implements Screen {
 
     private final FallingBlocks fallingBlocks;
-    private AssetManagerWrapper assetManagerWrapper;
+    private final AssetManagerWrapper assetManagerWrapper;
 
-    public LoadingScreen(FallingBlocks fallingBlocks){
+    public LoadingScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper){
         this.fallingBlocks=fallingBlocks;
+        this.assetManagerWrapper=assetManagerWrapper;
     }
 
     @Override
     public void show() {
-        assetManagerWrapper= new AssetManagerWrapper();
         assetManagerWrapper.loadAssets();
     }
 
     @Override
     public void render(float delta) {
         if(assetManagerWrapper.getAssetManager().update()) {
-            fallingBlocks.setScreen(new GameScreen(fallingBlocks, assetManagerWrapper));
+            fallingBlocks.setScreen(fallingBlocks.getGameScreen());
         }
 
         float progress = assetManagerWrapper.getAssetManager().getProgress();

@@ -15,10 +15,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
+import com.mygdx.fallingblocks.map.TiledMapManager;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
-import com.mygdx.fallingblocks.map.MapManager;
 import com.mygdx.fallingblocks.utilities.InputListenersManager;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
@@ -30,7 +30,6 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 public class GameScreen implements Screen {
 
     private World world;
-    private TiledMap tiledMap;
     private Viewport gameViewport;
     private RayHandler rayHandler;
     private SpriteBatch spriteBatch;
@@ -38,22 +37,21 @@ public class GameScreen implements Screen {
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    private MapManager mapManager;
     private EntityManager entityManager;
     private GameStateVariables gameStateVariables;
     private HudOverlayScreen gameHud;
 
-    private final FallingBlocks fallingBlocks;
-
     private InputListenersManager inputListenersManager;
-    private AssetManagerWrapper assetManagerWrapper;
+
+    private TiledMap tiledMap;
+    private TiledMapManager tiledMapManager;
+
+    private final FallingBlocks fallingBlocks;
+    private final AssetManagerWrapper assetManagerWrapper;
 
     public GameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper){
         this.fallingBlocks= fallingBlocks;
         this.assetManagerWrapper=assetManagerWrapper;
-    }
-    public GameScreen(FallingBlocks fallingBlocks){
-        this.fallingBlocks=fallingBlocks;
     }
 
 
@@ -102,9 +100,9 @@ public class GameScreen implements Screen {
         rayHandler.setBlurNum(3); // Amount of blur for soft shadows
 
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
-        tiledMap = new TmxMapLoader().load("map/images.tmx");
+        tiledMap= new TmxMapLoader().load("map/tiledMap.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
-        mapManager = new MapManager(world, tiledMap);
+        tiledMapManager= new TiledMapManager(world, tiledMap);
     }
 
 
@@ -127,7 +125,7 @@ public class GameScreen implements Screen {
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
         gameHud.update(gameStateVariables.getScore());
-        mapManager.update(gameStateVariables.getScore(), gameStateVariables.getLastScore());
+//        mapManager.update(gameStateVariables.getScore(), gameStateVariables.getLastScore());
     }
 
     @Override
@@ -144,7 +142,7 @@ public class GameScreen implements Screen {
         orthogonalTiledMapRenderer.setView(gameCamera);
 
         //Render lower tiled
-        orthogonalTiledMapRenderer.render(mapManager.getLowerTiles());
+        orthogonalTiledMapRenderer.render( new int[]{0});
 
         //render box2d world
         box2DDebugRenderer.render(world, gameCamera.combined);
@@ -156,11 +154,10 @@ public class GameScreen implements Screen {
         spriteBatch.end();
 
         //Render Upper Tiled
-        orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
+        orthogonalTiledMapRenderer.render( new int[]{1});
 
         //draw hud
         gameHud.render();
-
     }
 
     @Override
