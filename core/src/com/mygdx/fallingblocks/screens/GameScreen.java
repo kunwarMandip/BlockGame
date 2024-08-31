@@ -113,12 +113,6 @@ public class GameScreen implements Screen {
      */
     public void update(float delta){
         if(gameStateVariables.isGamePaused() || gameStateVariables.isPlayerDead()){
-            if(gameStateVariables.isGamePaused()){
-                System.out.println("Game Paused");
-            }else{
-                System.out.println("PlayerDead");
-            }
-
             return;
         }
 

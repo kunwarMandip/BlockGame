@@ -21,11 +21,11 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if(assetManagerWrapper.getAssetManager().update()) {
+        if(assetManagerWrapper.getAssetManagerUpdate()) {
             fallingBlocks.setScreen(fallingBlocks.getGameScreen());
         }
 
-        float progress = assetManagerWrapper.getAssetManager().getProgress();
+        float progress = assetManagerWrapper.getAssetManagerProgress();
         System.out.println("Loading progress: " + (progress * 100) + "% | Delta: " + delta);
     }
 
