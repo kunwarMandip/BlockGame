@@ -36,10 +36,10 @@ public class TiledMapManager {
      * Change image in the TiledMap to different images
      */
     private void setImages(){
-        Texture background = new Texture(Gdx.files.internal("map/images/background.png"));
+        Texture background = new Texture(Gdx.files.internal("map/images/map2/background.png"));
         backGroundTiledLayer.setTextureRegion(new TextureRegion(background));
 
-        Texture foreGround = new Texture(Gdx.files.internal("map/images/topLayer.png"));
+        Texture foreGround = new Texture(Gdx.files.internal("map/images/map2/upper.png"));
         foreGroundTiledLayer.setTextureRegion(new TextureRegion(foreGround));
     }
 

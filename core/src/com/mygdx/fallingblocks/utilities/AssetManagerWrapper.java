@@ -25,11 +25,11 @@ public class AssetManagerWrapper {
     private final AssetDescriptor<Music> gameMusicDescriptor;
     private final AssetDescriptor<Sound> notificationSoundDescriptor;
 
-    private final AssetDescriptor<TiledMap> imagesMapDescriptor;
-    private final AssetDescriptor<TiledMap> map1Descriptor;
-    private final AssetDescriptor<TiledMap> map3Descriptor;
-
-    private final AssetDescriptor<Pixmap> largeImageDescriptor;
+//    private final AssetDescriptor<TiledMap> imagesMapDescriptor;
+//    private final AssetDescriptor<TiledMap> map1Descriptor;
+//    private final AssetDescriptor<TiledMap> map3Descriptor;
+//
+//    private final AssetDescriptor<Pixmap> largeImageDescriptor;
 
     public AssetManagerWrapper(){
         this.assetManager= new AssetManager();
@@ -40,11 +40,12 @@ public class AssetManagerWrapper {
         this.gameMusicDescriptor = new AssetDescriptor<>("sound/gameMusic.wav", Music.class);
         this.notificationSoundDescriptor = new AssetDescriptor<>("sound/notification.wav", Sound.class);
 
-        this.imagesMapDescriptor = new AssetDescriptor<>("map/images.tmx", TiledMap.class);
-        this.map1Descriptor = new AssetDescriptor<>("map/map1.tmx", TiledMap.class);
-        this.map3Descriptor = new AssetDescriptor<>("map/map3.tmx", TiledMap.class);
 
-        this.largeImageDescriptor = new AssetDescriptor<>("map/images/largeImage.png", Pixmap.class);
+//        this.imagesMapDescriptor = new AssetDescriptor<>("map/images.tmx", TiledMap.class);
+//        this.map1Descriptor = new AssetDescriptor<>("map/map1.tmx", TiledMap.class);
+//        this.map3Descriptor = new AssetDescriptor<>("map/map3.tmx", TiledMap.class);
+
+//        this.largeImageDescriptor = new AssetDescriptor<>("map/images/largeImage.png", Pixmap.class);
     }
 
     public void loadAssets(){
@@ -53,11 +54,11 @@ public class AssetManagerWrapper {
         assetManager.load(gameMusicDescriptor);
         assetManager.load(notificationSoundDescriptor);
 
-        assetManager.load(imagesMapDescriptor);
-        assetManager.load(map1Descriptor);
-        assetManager.load(map3Descriptor);
+//        assetManager.load(imagesMapDescriptor);
+//        assetManager.load(map1Descriptor);
+//        assetManager.load(map3Descriptor);
 
-        assetManager.load(largeImageDescriptor);
+//        assetManager.load(largeImageDescriptor);
     }
 
 
@@ -83,7 +84,6 @@ public class AssetManagerWrapper {
     public <T> T get(String fileName, Class<T> type) {
         return assetManager.get(fileName, type);
     }
-
 
     public float getAssetManagerProgress(){
         return assetManager.getProgress();
