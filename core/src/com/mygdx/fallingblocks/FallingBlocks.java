@@ -1,31 +1,48 @@
 package com.mygdx.fallingblocks;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.fallingblocks.screens.*;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
+import com.mygdx.fallingblocks.utilities.InputListenersManager;
+
 
 public class FallingBlocks extends Game {
 
-	private final AssetManagerWrapper assetManagerWrapper;
+	private SpriteBatch spriteBatch;
+	private AssetManagerWrapper assetManagerWrapper;
+	private InputListenersManager inputListenersManager;
 
-	private final GameScreen gameScreen;
-	private final LoadingScreen loadingScreen;
-	private final MainMenuScreen mainMenuScreen;
+	private LoadingScreen loadingScreen;
+	private MainMenuScreen mainMenuScreen;
+	private GameScreen gameScreen;
 
-	public FallingBlocks(){
-		assetManagerWrapper= new AssetManagerWrapper();
-		gameScreen = new GameScreen(this, assetManagerWrapper);
-		loadingScreen= new LoadingScreen(this, assetManagerWrapper);
-		mainMenuScreen = new MainMenuScreen(this);
-	}
+	public FallingBlocks(){}
 
 	@Override
 	public void create() {
-		setScreen(loadingScreen);
+		this.spriteBatch= new SpriteBatch();
+		this.assetManagerWrapper= new AssetManagerWrapper();
+		this.inputListenersManager= new InputListenersManager();
+
+		this.loadingScreen= new LoadingScreen(this, assetManagerWrapper);
+		this.mainMenuScreen = new MainMenuScreen(this, spriteBatch);
+		this.gameScreen = new GameScreen(this, assetManagerWrapper, spriteBatch);
+		setScreen(mainMenuScreen);
 	}
+
+
 
 	@Override
 	public void render() {
+
+//		assetManagerWrapper.loadLoadingArrow();
+//
+//		if(assetManagerWrapper.getAssetManagerUpdate()) {
+//            setScreen(loadingScreen);
+//        }
+
+
 		super.render();
 	}
 
@@ -34,10 +51,13 @@ public class FallingBlocks extends Game {
 		super.dispose();
 	}
 
+	public SpriteBatch getSpriteBatch(){return spriteBatch;}
 
 	public AssetManagerWrapper getAssetManagerWrapper() {
 		return assetManagerWrapper;
 	}
+
+	public InputListenersManager getInputListenersManager(){return  inputListenersManager;}
 
 	public LoadingScreen getLoadingScreen() {
 		return loadingScreen;

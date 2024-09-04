@@ -16,7 +16,7 @@ public class EnemyIncomingDirection {
     private float textureRotation=0;
 
     public EnemyIncomingDirection(){
-        this.texture= new Texture("map/images/arrow.png");
+        this.texture= new Texture("map/images/arrows/arrow.png");
     }
 
 

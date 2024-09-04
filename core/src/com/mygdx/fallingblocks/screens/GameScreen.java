@@ -2,6 +2,7 @@ package com.mygdx.fallingblocks.screens;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,7 +33,7 @@ public class GameScreen implements Screen {
     private World world;
     private Viewport gameViewport;
     private RayHandler rayHandler;
-    private SpriteBatch spriteBatch;
+    private final SpriteBatch spriteBatch;
     private OrthographicCamera gameCamera;
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
@@ -49,9 +50,11 @@ public class GameScreen implements Screen {
     private final FallingBlocks fallingBlocks;
     private final AssetManagerWrapper assetManagerWrapper;
 
-    public GameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper){
+    public GameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper, SpriteBatch spriteBatch){
         this.fallingBlocks= fallingBlocks;
         this.assetManagerWrapper=assetManagerWrapper;
+        this.spriteBatch=spriteBatch;
+//        this.inputListenersManager=fallingBlocks.getInputListenersManager();
     }
 
 
@@ -60,15 +63,18 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
-        this.spriteBatch= new SpriteBatch();
-        this.gameStateVariables= new GameStateVariables();
+        inputListenersManager= new InputListenersManager();
+
+        gameStateVariables= new GameStateVariables();
         setCamera();
         setWorld();
-        inputListenersManager= new InputListenersManager();
         entityManager= new EntityManager(this);
 
         gameHud = new HudOverlayScreen(spriteBatch, gameStateVariables);
         inputListenersManager.addInputListener(gameHud.getStage());
+        inputListenersManager.logActiveProcessors();
+        Gdx.input.setInputProcessor(inputListenersManager.getInputMultiplexer());
+
     }
 
     /**
@@ -152,7 +158,7 @@ public class GameScreen implements Screen {
         orthogonalTiledMapRenderer.render( new int[]{1});
 
         //draw hud
-        gameHud.render();
+        gameHud.render(delta);
     }
 
     @Override

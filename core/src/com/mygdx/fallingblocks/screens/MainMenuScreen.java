@@ -10,73 +10,86 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
-import com.mygdx.fallingblocks.GlobalStaticVariables;
+
+import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_HEIGHT;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_WIDTH;
+
 
 public class MainMenuScreen implements Screen {
 
     private final FallingBlocks fallingBlocks;
+    private final SpriteBatch spriteBatch;
 
-    private Stage stage;
     private Viewport viewport;
-
+    private Stage stage;
     private Skin skin;
+    private Table table;
 
-    public MainMenuScreen(FallingBlocks fallingBlocks){
+    private TextButton startButton;
+    private TextButton leaderBoardButton;
+
+    public MainMenuScreen(FallingBlocks fallingBlocks, SpriteBatch spriteBatch){
         this.fallingBlocks=fallingBlocks;
+        this.spriteBatch=spriteBatch;
     }
 
     @Override
     public void show() {
-        setViewport();
-        setStage();
+        OrthographicCamera orthographicCamera = new OrthographicCamera();
+        this.viewport= new FitViewport(VIRTUAL_WIDTH/2f, VIRTUAL_HEIGHT/2f, orthographicCamera);
+        this.stage= new Stage(viewport, spriteBatch);
+        this.fallingBlocks.getInputListenersManager().addInputListener(stage);
+
         setSkin();
         setLayout();
     }
 
-    private void setViewport(){
-        float width = GlobalStaticVariables.VIRTUAL_WIDTH;
-        float height = GlobalStaticVariables.VIRTUAL_HEIGHT;
-        this.viewport = new FitViewport(width, height, new OrthographicCamera());
-    }
-
-    private void setStage(){
-        SpriteBatch spriteBatch = new SpriteBatch();
-        this.stage = new Stage(viewport, spriteBatch);
-        Gdx.input.setInputProcessor(stage);
-    }
-
     private void setSkin(){
-        this.skin = new Skin();
-        skin.addRegions(new TextureAtlas(Gdx.files.internal("uiskin.atlas")));
-        skin.load(Gdx.files.internal("uiskin.json"));
+        skin = new Skin();
+        skin.addRegions(new TextureAtlas(Gdx.files.internal("flat-earth/skin/flat-earth-ui.atlas")));
+        skin.load(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     }
 
     private void setLayout(){
-        TextButton start = new TextButton("Start Game", skin);
-        TextButton leave = new TextButton("LeaderBoards", skin);
+        setTable();
+        setStartButton();
+        setLeaderBoardButton();
 
-        start.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                fallingBlocks.setScreen(fallingBlocks.getGameScreen());
-            }
-        });
-
-
-        Table table= new Table();
-        table.setFillParent(true);
-        table.align(Align.center);
-        table.setDebug(true);
-
-        table.add(start).width(500).height(200).fill().padBottom(50).row();
-        table.add(leave).width(500).height(200).fill().row();
+        table.add(startButton).width(200).padBottom(20);
+        table.row();
+        table.add(leaderBoardButton).width(200);
         stage.addActor(table);
     }
 
+    private void setTable(){
+        table= new Table();
+        table.setFillParent(true);
+        table.setDebug(true);
+    }
+
+    private void setStartButton(){
+        startButton= new TextButton("Start Game", skin);
+        startButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                dispose();
+                fallingBlocks.setScreen(fallingBlocks.getGameScreen());
+            }
+        });
+    }
+
+    private void setLeaderBoardButton(){
+        leaderBoardButton= new TextButton("LeaderBoards", skin);
+        leaderBoardButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                System.out.println("Functionality Not available yet");
+            }
+        });
+    }
 
 
     @Override
@@ -89,7 +102,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+        viewport.update(width, height, true);
     }
 
     @Override
@@ -104,12 +117,12 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
+        fallingBlocks.getInputListenersManager().removeInputProcessor(stage);
         stage.dispose();
-
+        skin.dispose();
     }
 }
