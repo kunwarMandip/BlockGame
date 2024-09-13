@@ -42,19 +42,18 @@ public class GameScreen implements Screen {
     private GameStateVariables gameStateVariables;
     private HudOverlayScreen gameHud;
 
-    private InputListenersManager inputListenersManager;
-
     private TiledMap tiledMap;
     private TiledMapManager tiledMapManager;
 
     private final FallingBlocks fallingBlocks;
     private final AssetManagerWrapper assetManagerWrapper;
+    private final InputListenersManager inputListenersManager;
 
     public GameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper, SpriteBatch spriteBatch){
         this.fallingBlocks= fallingBlocks;
         this.assetManagerWrapper=assetManagerWrapper;
         this.spriteBatch=spriteBatch;
-//        this.inputListenersManager=fallingBlocks.getInputListenersManager();
+        this.inputListenersManager=fallingBlocks.getInputListenersManager();
     }
 
 
@@ -63,8 +62,6 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
-        inputListenersManager= new InputListenersManager();
-
         gameStateVariables= new GameStateVariables();
         setCamera();
         setWorld();
@@ -125,8 +122,6 @@ public class GameScreen implements Screen {
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
         gameHud.update(gameStateVariables.getScore());
-
-//        mapManager.update(gameStateVariables.getScore(), gameStateVariables.getLastScore());
     }
 
     @Override
