@@ -43,3 +43,4 @@ Here are the tasks that need to be completed:
 - [x] Create sound effects for game events
 - [x] Add a pause effect
 - [x] mini menu on death 
+- [] Add levels (1-20)

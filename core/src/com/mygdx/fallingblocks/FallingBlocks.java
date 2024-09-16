@@ -2,6 +2,8 @@ package com.mygdx.fallingblocks;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.fallingblocks.game.EndlessGameScreen;
+import com.mygdx.fallingblocks.game.LevelWrapper;
 import com.mygdx.fallingblocks.screens.*;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 import com.mygdx.fallingblocks.utilities.InputListenersManager;
@@ -13,9 +15,12 @@ public class FallingBlocks extends Game {
 	private AssetManagerWrapper assetManagerWrapper;
 	private InputListenersManager inputListenersManager;
 
+	public LevelWrapper levelWrapper;
+	public LevelChooserScreen levelChooserScreen;
+
 	private LoadingScreen loadingScreen;
 	private MainMenuScreen mainMenuScreen;
-	private GameScreen gameScreen;
+	private EndlessGameScreen endlessGameScreen;
 
 	public FallingBlocks(){}
 
@@ -25,9 +30,12 @@ public class FallingBlocks extends Game {
 		this.assetManagerWrapper= new AssetManagerWrapper();
 		this.inputListenersManager= new InputListenersManager();
 
+		this.levelWrapper= new LevelWrapper();
+		this.levelChooserScreen = new LevelChooserScreen(this, spriteBatch);
+
 		this.loadingScreen= new LoadingScreen(this, assetManagerWrapper);
 		this.mainMenuScreen = new MainMenuScreen(this, spriteBatch);
-		this.gameScreen = new GameScreen(this, assetManagerWrapper, spriteBatch);
+		this.endlessGameScreen = new EndlessGameScreen(this, assetManagerWrapper, spriteBatch);
 		setScreen(mainMenuScreen);
 	}
 
@@ -35,14 +43,6 @@ public class FallingBlocks extends Game {
 
 	@Override
 	public void render() {
-
-//		assetManagerWrapper.loadLoadingArrow();
-//
-//		if(assetManagerWrapper.getAssetManagerUpdate()) {
-//            setScreen(loadingScreen);
-//        }
-
-
 		super.render();
 	}
 
@@ -57,7 +57,7 @@ public class FallingBlocks extends Game {
 		return assetManagerWrapper;
 	}
 
-	public InputListenersManager getInputListenersManager(){return  inputListenersManager;}
+	public InputListenersManager getInputListenersManager(){return inputListenersManager;}
 
 	public LoadingScreen getLoadingScreen() {
 		return loadingScreen;
@@ -67,8 +67,10 @@ public class FallingBlocks extends Game {
 		return mainMenuScreen;
 	}
 
-	public GameScreen getGameScreen() {
-		return gameScreen;
+	public EndlessGameScreen getGameScreen() {
+		return endlessGameScreen;
 	}
+
+	public LevelChooserScreen getLevelChooserScreen(){return levelChooserScreen;}
 }
 

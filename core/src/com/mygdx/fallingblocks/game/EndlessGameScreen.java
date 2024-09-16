@@ -1,8 +1,7 @@
-package com.mygdx.fallingblocks.screens;
+package com.mygdx.fallingblocks.game;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
 import com.mygdx.fallingblocks.map.TiledMapManager;
+import com.mygdx.fallingblocks.screens.HudOverlayScreen;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
@@ -28,7 +28,7 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
  * This class is the main class which holds
  * everything aka the view the user will see.
  */
-public class GameScreen implements Screen {
+public class EndlessGameScreen implements Screen {
 
     private World world;
     private Viewport gameViewport;
@@ -43,13 +43,12 @@ public class GameScreen implements Screen {
     private HudOverlayScreen gameHud;
 
     private TiledMap tiledMap;
-    private TiledMapManager tiledMapManager;
 
     private final FallingBlocks fallingBlocks;
     private final AssetManagerWrapper assetManagerWrapper;
     private final InputListenersManager inputListenersManager;
 
-    public GameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper, SpriteBatch spriteBatch){
+    public EndlessGameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper, SpriteBatch spriteBatch){
         this.fallingBlocks= fallingBlocks;
         this.assetManagerWrapper=assetManagerWrapper;
         this.spriteBatch=spriteBatch;
@@ -105,7 +104,7 @@ public class GameScreen implements Screen {
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
         tiledMap= new TmxMapLoader().load("map/tiledMap.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
-        tiledMapManager= new TiledMapManager(world, tiledMap);
+        TiledMapManager tiledMapManager = new TiledMapManager(world, tiledMap);
     }
 
 
@@ -186,7 +185,6 @@ public class GameScreen implements Screen {
     public World getWorld() {
         return world;
     }
-
     public TiledMap getTiledMap() {
         return tiledMap;
     }

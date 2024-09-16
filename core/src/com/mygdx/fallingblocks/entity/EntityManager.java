@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.fallingblocks.screens.GameScreen;
+import com.mygdx.fallingblocks.game.EndlessGameScreen;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.contactlistener.GameContactListener;
@@ -23,15 +23,15 @@ public class EntityManager {
     private final AssetManagerWrapper assetManagerWrapper;
     public DynamicTextureCreator solidColorCreator;
 
-    public EntityManager(GameScreen gameScreen){
-        World world=gameScreen.getWorld();
-        TiledMap tiledMap= gameScreen.getTiledMap();
-        GameStateVariables gameStateVariables=gameScreen.getGameStateVariables();
-        RayHandler rayHandler= gameScreen.getRayHandler();
+    public EntityManager(EndlessGameScreen endlessGameScreen){
+        World world= endlessGameScreen.getWorld();
+        TiledMap tiledMap= endlessGameScreen.getTiledMap();
+        GameStateVariables gameStateVariables= endlessGameScreen.getGameStateVariables();
+        RayHandler rayHandler= endlessGameScreen.getRayHandler();
 
         this.solidColorCreator= new DynamicTextureCreator();
-        this.assetManagerWrapper=gameScreen.getAssetManagerWrapper();
-        this.player= new Player(gameScreen.getWorld(), gameStateVariables, solidColorCreator, rayHandler, gameScreen.getInputListenersManager());
+        this.assetManagerWrapper= endlessGameScreen.getAssetManagerWrapper();
+        this.player= new Player(endlessGameScreen.getWorld(), gameStateVariables, solidColorCreator, rayHandler, endlessGameScreen.getInputListenersManager());
         this.enemyManager= new EnemyManager(world, tiledMap, gameStateVariables, solidColorCreator);
 
         GameContactListener gameContactListener= new GameContactListener(this, gameStateVariables);

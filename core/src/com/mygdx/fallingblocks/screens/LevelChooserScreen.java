@@ -17,8 +17,7 @@ import com.mygdx.fallingblocks.FallingBlocks;
 import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_HEIGHT;
 import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_WIDTH;
 
-
-public class MainMenuScreen implements Screen {
+public class LevelChooserScreen implements Screen {
 
     private final FallingBlocks fallingBlocks;
     private final SpriteBatch spriteBatch;
@@ -28,9 +27,7 @@ public class MainMenuScreen implements Screen {
     private Skin skin;
     private Table table;
 
-    private TextButton startButton, levelSelectButton, leaderBoardButton;
-
-    public MainMenuScreen(FallingBlocks fallingBlocks, SpriteBatch spriteBatch){
+    public LevelChooserScreen(FallingBlocks fallingBlocks, SpriteBatch spriteBatch){
         this.fallingBlocks=fallingBlocks;
         this.spriteBatch=spriteBatch;
     }
@@ -52,60 +49,36 @@ public class MainMenuScreen implements Screen {
         skin.load(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     }
 
-
     private void setTable(){
         table= new Table();
+        table.center();
         table.setFillParent(true);
         table.setDebug(true);
     }
 
-    private void setStartButton(){
-        startButton= new TextButton("Endless Mode", skin);
-        startButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                fallingBlocks.setScreen(fallingBlocks.getGameScreen());
-                dispose();
-            }
-        });
-    }
-
-    private void setLevelSelectButton(){
-        levelSelectButton= new TextButton("Level Mode", skin);
-        levelSelectButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                fallingBlocks.setScreen(fallingBlocks.getLevelChooserScreen());
-                dispose();
-            }
-        });
-    }
-
-    private void setLeaderBoardButton(){
-        leaderBoardButton= new TextButton("LeaderBoards", skin);
-        leaderBoardButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y){
-                System.out.println("Functionality Not available yet");
-            }
-        });
-    }
-
     private void setLayout(){
         setTable();
-        setStartButton();
-        setLeaderBoardButton();
-        setLevelSelectButton();
-
-        table.add(startButton).width(200).padBottom(20);
-        table.row();
-        table.add(levelSelectButton).width(200).padBottom(20);
-        table.row();
-        table.add(leaderBoardButton).width(200);
+        for(int i =1; i<20; i++){
+            makeButton(i);
+        }
 
         stage.addActor(table);
     }
 
+    private void makeButton(int i){
+        TextButton button= new TextButton("Level: "+ i, skin);
+        button.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                System.out.println("Button: "+ i);
+            }
+        });
+
+        table.add(button).width(150).padRight(10).padBottom(20);
+        if(i%2==0){
+            table.row();
+        }
+    }
 
     @Override
     public void render(float delta) {
@@ -118,6 +91,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
+        viewport.apply();
     }
 
     @Override
@@ -132,12 +106,11 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
+
     }
 
     @Override
     public void dispose() {
-        fallingBlocks.getInputListenersManager().removeInputProcessor(stage);
-        stage.dispose();
-        skin.dispose();
+
     }
 }
