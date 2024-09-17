@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
+import com.mygdx.fallingblocks.game.levels.Level1;
+import com.mygdx.fallingblocks.game.levels.Level2;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_HEIGHT;
 import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_WIDTH;
@@ -51,9 +53,8 @@ public class LevelChooserScreen implements Screen {
 
     private void setTable(){
         table= new Table();
-        table.center();
         table.setFillParent(true);
-        table.setDebug(true);
+//        table.setDebug(true);
     }
 
     private void setLayout(){
@@ -71,6 +72,7 @@ public class LevelChooserScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 System.out.println("Button: "+ i);
+                changeLevel(i);
             }
         });
 
@@ -111,6 +113,23 @@ public class LevelChooserScreen implements Screen {
 
     @Override
     public void dispose() {
+        fallingBlocks.getInputListenersManager().removeInputProcessor(stage);
+        stage.dispose();
+    }
 
+
+    public void changeLevel(int i ){
+        switch (i){
+            case 1:
+                fallingBlocks.setScreen(new Level1(fallingBlocks, fallingBlocks.levelWrapper));
+                break;
+            case 2:
+                fallingBlocks.setScreen(new Level2(fallingBlocks, fallingBlocks.levelWrapper));
+                break;
+            default:
+                fallingBlocks.setScreen(fallingBlocks.getMainMenuScreen());
+                break;
+        }
+        dispose();
     }
 }

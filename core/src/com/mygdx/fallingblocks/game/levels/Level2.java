@@ -1,9 +1,14 @@
 package com.mygdx.fallingblocks.game.levels;
 
 import com.badlogic.gdx.Screen;
+import com.mygdx.fallingblocks.FallingBlocks;
+import com.mygdx.fallingblocks.game.LevelWrapper;
 
 public class Level2 implements Screen {
 
+
+    public Level2(FallingBlocks fallingBlocks, LevelWrapper levelWrapper) {
+    }
 
     @Override
     public void show() {
