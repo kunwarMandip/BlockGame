@@ -2,7 +2,6 @@ package com.mygdx.fallingblocks.screens;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,10 +15,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
-import com.mygdx.fallingblocks.map.TiledMapManager;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
+import com.mygdx.fallingblocks.map.MapManager;
 import com.mygdx.fallingblocks.utilities.InputListenersManager;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
@@ -31,29 +30,30 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 public class GameScreen implements Screen {
 
     private World world;
+    private TiledMap tiledMap;
     private Viewport gameViewport;
     private RayHandler rayHandler;
-    private final SpriteBatch spriteBatch;
+    private SpriteBatch spriteBatch;
     private OrthographicCamera gameCamera;
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
+    private MapManager mapManager;
     private EntityManager entityManager;
     private GameStateVariables gameStateVariables;
     private HudOverlayScreen gameHud;
 
-    private TiledMap tiledMap;
-    private TiledMapManager tiledMapManager;
-
     private final FallingBlocks fallingBlocks;
-    private final AssetManagerWrapper assetManagerWrapper;
-    private final InputListenersManager inputListenersManager;
 
-    public GameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper, SpriteBatch spriteBatch){
+    private InputListenersManager inputListenersManager;
+    private AssetManagerWrapper assetManagerWrapper;
+
+    public GameScreen(FallingBlocks fallingBlocks, AssetManagerWrapper assetManagerWrapper){
         this.fallingBlocks= fallingBlocks;
         this.assetManagerWrapper=assetManagerWrapper;
-        this.spriteBatch=spriteBatch;
-        this.inputListenersManager=fallingBlocks.getInputListenersManager();
+    }
+    public GameScreen(FallingBlocks fallingBlocks){
+        this.fallingBlocks=fallingBlocks;
     }
 
 
@@ -62,16 +62,15 @@ public class GameScreen implements Screen {
      */
     @Override
     public void show() {
-        gameStateVariables= new GameStateVariables();
+        this.spriteBatch= new SpriteBatch();
+        this.gameStateVariables= new GameStateVariables();
         setCamera();
         setWorld();
+        inputListenersManager= new InputListenersManager();
         entityManager= new EntityManager(this);
 
         gameHud = new HudOverlayScreen(spriteBatch, gameStateVariables);
         inputListenersManager.addInputListener(gameHud.getStage());
-        inputListenersManager.logActiveProcessors();
-        Gdx.input.setInputProcessor(inputListenersManager.getInputMultiplexer());
-
     }
 
     /**
@@ -103,9 +102,9 @@ public class GameScreen implements Screen {
         rayHandler.setBlurNum(3); // Amount of blur for soft shadows
 
         //load the very first TileMap into orthogonalTiledMapRenderer renderer
-        tiledMap= new TmxMapLoader().load("map/tiledMap.tmx");
+        tiledMap = new TmxMapLoader().load("map/images.tmx");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
-        tiledMapManager= new TiledMapManager(world, tiledMap);
+        mapManager = new MapManager(world, tiledMap);
     }
 
 
@@ -116,12 +115,19 @@ public class GameScreen implements Screen {
      */
     public void update(float delta){
         if(gameStateVariables.isGamePaused() || gameStateVariables.isPlayerDead()){
+            if(gameStateVariables.isGamePaused()){
+                System.out.println("Game Paused");
+            }else{
+                System.out.println("PlayerDead");
+            }
+
             return;
         }
 
         world.step(1/60f, 6, 2);
         entityManager.update(delta);
         gameHud.update(gameStateVariables.getScore());
+        mapManager.update(gameStateVariables.getScore(), gameStateVariables.getLastScore());
     }
 
     @Override
@@ -138,7 +144,7 @@ public class GameScreen implements Screen {
         orthogonalTiledMapRenderer.setView(gameCamera);
 
         //Render lower tiled
-        orthogonalTiledMapRenderer.render( new int[]{0});
+        orthogonalTiledMapRenderer.render(mapManager.getLowerTiles());
 
         //render box2d world
         box2DDebugRenderer.render(world, gameCamera.combined);
@@ -150,10 +156,11 @@ public class GameScreen implements Screen {
         spriteBatch.end();
 
         //Render Upper Tiled
-        orthogonalTiledMapRenderer.render( new int[]{1});
+        orthogonalTiledMapRenderer.render(mapManager.getUpperTiles());
 
         //draw hud
-        gameHud.render(delta);
+        gameHud.render();
+
     }
 
     @Override

@@ -25,13 +25,14 @@ public class HudOverlayScreen implements Disposable {
     private final SpriteBatch spriteBatch;
     private final OrthographicCamera hudCamera;
 
-    private Skin skin;
     private final Stage stage;
+    private Skin skin;
     private Table topTable, bottomTable;
 
     private Window onDeathWindow;
     private Label score, fpsLabel;
     private TextButton pauseButton;
+
 
     public HudOverlayScreen(SpriteBatch spriteBatch, GameStateVariables gameStateVariables){
         this.spriteBatch=spriteBatch;
@@ -72,9 +73,8 @@ public class HudOverlayScreen implements Disposable {
         topTable.add(pauseButton).expandX().width(100);
         topTable.add(score).expandX();
 
-        //Lower hud
         fpsLabel = new Label("FPS: 60", skin);
-        fpsLabel.setFontScale(2);
+        fpsLabel.setFontScale(1.5f);
         bottomTable.add(fpsLabel);
     }
 
@@ -126,7 +126,7 @@ public class HudOverlayScreen implements Disposable {
 
     public void update(int score){
         this.score.setText(score);
-        fpsLabel.setText("FPS: " + Gdx.graphics.getFramesPerSecond());
+        this.fpsLabel.setText("FPS: " + Gdx.graphics.getFramesPerSecond());
         onDeathWindow.setVisible(gameStateVariables.isPlayerDead());
     }
 
@@ -135,9 +135,8 @@ public class HudOverlayScreen implements Disposable {
         return stage;
     }
 
-    public void render(float delta){
+    public void render(){
         spriteBatch.setProjectionMatrix(hudCamera.combined);
-        stage.act(delta);
         stage.draw();
     }
 
