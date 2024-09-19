@@ -24,8 +24,8 @@ public class GlobalStaticVariables {
     public static final int PLAYER_COLOR_CHANGE_INTERVAL    = 5;
 
     //Enemy Info...Increasing difficulty
-    public static final float ENEMY_MOVEMENT_SPEED_TINY_INCREASE = 0.1f;
-    public static final float ENEMY_MOVEMENT_SPEED_HUGE_INCREASE = 2.5f;
+    public static final float ENEMY_MOVEMENT_SPEED_TINY_INCREASE = 0.5f;
+    public static final float ENEMY_MOVEMENT_SPEED_HUGE_INCREASE = 3f;
     public static final Vector2 ENEMY_BASE_MOVEMENT_SPEED = new Vector2(0.5f, 0.5f);
 
     //Most enemies that can be in the map at the same time

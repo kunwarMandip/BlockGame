@@ -1,76 +1,67 @@
 package com.mygdx.fallingblocks.utilities;
 
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import java.awt.*;
-
+/**
+ *  Sound tapSound = assetManagerWrapper.get(assetManagerWrapper.tapSoundDescriptor)
+ */
 public class AssetManagerWrapper {
 
     private final AssetManager assetManager;
 
+    private final AssetDescriptor<Sound> tapSoundDescriptor;
+    private final AssetDescriptor<Sound> levelUpSoundDescriptor;
+    private final AssetDescriptor<Music> gameMusicDescriptor;
+    private final AssetDescriptor<Sound> notificationSoundDescriptor;
+
+    private final AssetDescriptor<Texture> loadingArrow;
+
     public AssetManagerWrapper(){
-        this.assetManager= new AssetManager();
-        this.assetManager.setLoader(TiledMap.class, new TmxMapLoader());
-    }
+        assetManager= new AssetManager();
+        assetManager.setLoader(TiledMap.class, new TmxMapLoader());
+//        assetManager.setLoader(Texture.class, new );
 
-    public void loadAssets(){
-        assetManager.load("sound/tap.wav", Sound.class);
-        assetManager.load("sound/levelUp.wav", Sound.class);
-        assetManager.load("sound/gameMusic.wav", Music.class);
-        assetManager.load("sound/notification.wav", Sound.class);
+        loadingArrow= new AssetDescriptor<>("movingArrow/movingArrow.png", Texture.class);
 
-        assetManager.load("map/images.tmx", TiledMap.class);
-        assetManager.load("map/map1.tmx", TiledMap.class);
-        assetManager.load("map/map3.tmx", TiledMap.class);
-
-        assetManager.load("map/images/largeImage.png", Pixmap.class);
+        this.tapSoundDescriptor = new AssetDescriptor<>("sound/tap.wav", Sound.class);
+        this.levelUpSoundDescriptor = new AssetDescriptor<>("sound/levelUp.wav", Sound.class);
+        this.gameMusicDescriptor = new AssetDescriptor<>("sound/gameMusic.wav", Music.class);
+        this.notificationSoundDescriptor = new AssetDescriptor<>("sound/notification.wav", Sound.class);
 
     }
 
-    public AssetManager getAssetManager(){
-        return assetManager;
+    public void loadLoadingArrow(){
+        assetManager.load(loadingArrow);
     }
 
-    public boolean getUpdate() {
-        return assetManager.update(); // Returns true if all assets are loaded
+    public void loadSounds(){
+        assetManager.load(tapSoundDescriptor);
+        assetManager.load(levelUpSoundDescriptor);
+        assetManager.load(gameMusicDescriptor);
+        assetManager.load(notificationSoundDescriptor);
     }
 
-    public Pixmap getImage(){return assetManager.get("map/images/largeImage.png", Pixmap.class);}
 
-    public TiledMap getMap1() {
-        return assetManager.get("map/images.tmx", TiledMap.class);
+    public <T> T get(AssetDescriptor<T> descriptor) {
+        return assetManager.get(descriptor);
     }
 
-    public TiledMap getMap2() {
-        return assetManager.get("map/map1.tmx", TiledMap.class);
+    public <T> T get(String fileName, Class<T> type) {
+        return assetManager.get(fileName, type);
     }
 
-    public TiledMap getMap3() {
-        return assetManager.get("map/map3.tmx", TiledMap.class);
+    public float getAssetManagerProgress(){
+        return assetManager.getProgress();
     }
 
-    public Sound getTapSound() {
-        return assetManager.get("sound/tap.wav", Sound.class);
-    }
-
-    public Sound getLevelUpSound() {
-        return assetManager.get("sound/levelUp.wav", Sound.class);
-    }
-
-    public Music getGameMusic() {
-        return assetManager.get("sound/gameMusic.wav", Music.class);
-    }
-
-    public Sound getNotificationSound() {
-        return assetManager.get("sound/notification.wav", Sound.class);
+    public boolean getAssetManagerUpdate(){
+        return assetManager.update();
     }
 
     public void dispose() {
