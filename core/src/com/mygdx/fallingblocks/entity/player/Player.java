@@ -111,6 +111,6 @@ public class Player {
      */
     public void setController(InputListenersManager inputListenersManager){
         GestureDetector gestureDetector= new GestureDetector(new GesturePlayerController(body));
-        inputListenersManager.addInputProcessor(gestureDetector);
+        inputListenersManager.setInputProcessor(gestureDetector);
     }
 }
