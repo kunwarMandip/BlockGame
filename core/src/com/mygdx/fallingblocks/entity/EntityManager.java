@@ -24,7 +24,6 @@ public class EntityManager {
     private EnemyManager enemyManager;
     public SolidTextureCreator solidColorCreator;
 
-
     private AssetManagerWrapper assetManagerWrapper;
 
     public EntityManager(EndlessGameScreen endlessGameScreen){
@@ -57,6 +56,9 @@ public class EntityManager {
         this.enemyManager= new EnemyManager(world, solidColorCreator);
     }
 
+    public void update(flaot delta, int numEnemiesToSpawn){
+        enemyManager.update();
+    }
 
     public void update(float delta){
         player.update(solidColorCreator.getPlayerColorID());

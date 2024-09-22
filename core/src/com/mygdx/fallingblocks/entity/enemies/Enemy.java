@@ -22,12 +22,7 @@ public class Enemy {
 
     public boolean hasEnemySpawned, isEnemyToBeRemoved, isFriendly;
 
-    public Enemy(World world,
-                 SolidTextureCreator solidColorCreator,
-                 int colorID,
-                 Vector2 spawnLocation,
-                 Vector2 movementSpeed,
-                 float waitTimer){
+    public Enemy(World world, SolidTextureCreator solidColorCreator, int colorID, Vector2 spawnLocation, Vector2 movementSpeed, float waitTimer){
         this.world=world;
         this.colorID=colorID;
         this.spawnLocation=spawnLocation;
@@ -37,21 +32,38 @@ public class Enemy {
     }
 
 
-    public Enemy(World world, int colorID, SolidTextureCreator solidTextureCreator, Vector4 enemySpawnAndSpeedInfo, Vector2 bodyDimension){
+    public Enemy(World world, int colorID, SolidTextureCreator solidTextureCreator, Vector4 enemySpawnAndSpeedInfo){
         this.colorID=colorID;
-
-        Vector2 enemySpeed= new Vector2(enemySpawnAndSpeedInfo.z, enemySpawnAndSpeedInfo.w);
-        Vector2 spawnLocation= new Vector2(enemySpawnAndSpeedInfo.x, enemySpawnAndSpeedInfo.y);
-        Vector2 finalBodyDimension = (bodyDimension != null) ? bodyDimension : new Vector2(3, 3);
-
-        defaultBody(world, spawnLocation, finalBodyDimension);
+        defaultBody(world, new Vector2(enemySpawnAndSpeedInfo.x, enemySpawnAndSpeedInfo.y), null);
         enemyAnimation= new EnemyAnimation(solidTextureCreator.getColor(colorID, false));
-        body.setLinearVelocity(enemySpeed);
+        body.setLinearVelocity(new Vector2(enemySpawnAndSpeedInfo.z, enemySpawnAndSpeedInfo.w));
     }
 
 
+    public Enemy(World world, int colorID, SolidTextureCreator solidTextureCreator, Vector4 enemySpawnAndSpeedInfo, Vector2 bodyDimension){
+        this.colorID=colorID;
+        defaultBody(world, new Vector2(enemySpawnAndSpeedInfo.x, enemySpawnAndSpeedInfo.y), bodyDimension);
+        enemyAnimation= new EnemyAnimation(solidTextureCreator.getColor(colorID, false));
+        body.setLinearVelocity(new Vector2(enemySpawnAndSpeedInfo.z, enemySpawnAndSpeedInfo.w));
+    }
+
+    public void update(){
+    }
+
+    public void draw(SpriteBatch spriteBatch, Vector2 bodyLocation){
+        enemyAnimation.draw(spriteBatch, bodyLocation);
+    }
+
+
+    public void dispose(World world){
+        if(body!=null){
+            world.destroyBody(body);
+        }
+    }
 
     public void defaultBody(World world, Vector2 spawnLocation, Vector2 bodyDimensions) {
+        Vector2 finalBodyDimension = (bodyDimensions != null) ? bodyDimensions : new Vector2(3, 3);
+
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
 
@@ -61,7 +73,7 @@ public class Enemy {
 
         //Creates shape for the body
         PolygonShape rectangleShape = new PolygonShape();
-        rectangleShape.setAsBox(bodyDimensions.x, bodyDimensions.y);
+        rectangleShape.setAsBox(finalBodyDimension.x, finalBodyDimension.y);
 
         //Creates fixture definition and applies to body
         FixtureDef fixtureDef = new FixtureDef();
@@ -137,11 +149,5 @@ public class Enemy {
         if(body!=null){
             world.destroyBody(body);
         }
-
-    }
-
-    public void dispose(World world){
-        if(body==null){return;}
-        world.destroyBody(body);
     }
 }

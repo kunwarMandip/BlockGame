@@ -27,7 +27,7 @@ public class EnemyManager {
 
     public EnemyManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, SolidTextureCreator solidColorCreator){
         this.gameStateVariables=gameStateVariables;
-        this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this, solidColorCreator);
+//        this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this, solidColorCreator);
         this.enemySpawnDirection=new EnemyIncomingDirection();
     }
 
@@ -36,6 +36,14 @@ public class EnemyManager {
     }
 
 
+    public void update(int numEnemiesToSpawn, Vector2 playerPosition){
+
+    }
+
+
+    public void update(int numEnemiesToSpawn, Vector2 player, Vector2 enemySize){
+
+    }
 
     /**
      * Removes Enemies. Updates Enemies. Increases Difficulty
