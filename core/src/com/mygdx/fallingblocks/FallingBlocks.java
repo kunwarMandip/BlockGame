@@ -6,7 +6,7 @@ import com.mygdx.fallingblocks.game.EndlessGameScreen;
 import com.mygdx.fallingblocks.game.LevelWrapper;
 import com.mygdx.fallingblocks.screens.*;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
-import com.mygdx.fallingblocks.utilities.InputListenersManager;
+import com.mygdx.fallingblocks.input.InputListenersManager;
 
 
 public class FallingBlocks extends Game {
@@ -16,11 +16,11 @@ public class FallingBlocks extends Game {
 	private InputListenersManager inputListenersManager;
 
 	public LevelWrapper levelWrapper;
-	public LevelChooserScreen levelChooserScreen;
 
 	private LoadingScreen loadingScreen;
 	private MainMenuScreen mainMenuScreen;
 	private EndlessGameScreen endlessGameScreen;
+	public LevelChooserScreen levelChooserScreen;
 
 	public FallingBlocks(){}
 
@@ -30,7 +30,7 @@ public class FallingBlocks extends Game {
 		this.assetManagerWrapper= new AssetManagerWrapper();
 		this.inputListenersManager= new InputListenersManager();
 
-		this.levelWrapper= new LevelWrapper();
+		this.levelWrapper= new LevelWrapper(this);
 		this.levelChooserScreen = new LevelChooserScreen(this, spriteBatch);
 
 		this.loadingScreen= new LoadingScreen(this, assetManagerWrapper);
@@ -38,7 +38,6 @@ public class FallingBlocks extends Game {
 		this.endlessGameScreen = new EndlessGameScreen(this, assetManagerWrapper, spriteBatch);
 		setScreen(mainMenuScreen);
 	}
-
 
 
 	@Override

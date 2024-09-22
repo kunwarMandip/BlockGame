@@ -6,20 +6,19 @@ import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.entity.enemies.Enemy;
 import com.mygdx.fallingblocks.entity.player.Player;
 import com.mygdx.fallingblocks.map.objects.OuterBound;
-import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
+import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 /**
  * Handle all methods for Begin Contact in contact manager
  */
 public class BeginContactManager {
 
-    private final DynamicTextureCreator solidColorCreator;
-    private final GameStateVariables gameStateVariables;
-    public BeginContactManager(GameStateVariables gameStateVariables, DynamicTextureCreator solidColorCreator){
+    private SolidTextureCreator solidTextureCreator;
+    private GameStateVariables gameStateVariables;
+    public BeginContactManager(GameStateVariables gameStateVariables, SolidTextureCreator solidTextureCreator){
         this.gameStateVariables=gameStateVariables;
-        this.solidColorCreator=solidColorCreator;
+        this.solidTextureCreator = solidTextureCreator;
     }
-
 
     /**
      * Handle Collision between Player and Enemy Only.
@@ -39,7 +38,7 @@ public class BeginContactManager {
 
         System.out.println("Enemy Player Contact Handled");
         Enemy enemy = (Enemy) (a.getUserData() instanceof Enemy ? a.getUserData() : b.getUserData());
-        Integer playerID = solidColorCreator.getPlayerColorID();
+        Integer playerID = solidTextureCreator.getPlayerColorID();
         if (playerID.equals(enemy.getColorID())) {
             enemy.isFriendly = true;
             return true;

@@ -4,13 +4,13 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.mygdx.fallingblocks.entity.enemies.Enemy;
 import com.mygdx.fallingblocks.entity.player.Player;
-import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
+import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 public class PreSolveContactManager {
 
-    private final DynamicTextureCreator solidColorCreator;
+    private final SolidTextureCreator solidColorCreator;
 
-    public PreSolveContactManager(DynamicTextureCreator solidColorCreator){
+    public PreSolveContactManager(SolidTextureCreator solidColorCreator){
         this.solidColorCreator=solidColorCreator;
     }
 

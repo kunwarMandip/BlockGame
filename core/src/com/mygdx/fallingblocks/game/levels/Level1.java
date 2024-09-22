@@ -1,30 +1,45 @@
 package com.mygdx.fallingblocks.game.levels;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.fallingblocks.FallingBlocks;
+import com.mygdx.fallingblocks.entity.EntityManager;
+import com.mygdx.fallingblocks.game.GameVariables;
 import com.mygdx.fallingblocks.game.LevelWrapper;
+import com.mygdx.fallingblocks.map.TiledMapManager;
+import com.mygdx.fallingblocks.utilities.GameStateVariables;
 
 public class Level1 implements Screen {
 
-    private final FallingBlocks fallingBlocks;
+    private final SpriteBatch spriteBatch;
     private final LevelWrapper levelWrapper;
+    private final FallingBlocks fallingBlocks;
+
+    private EntityManager entityManager;
+    private GameVariables gameVariables;
 
     public Level1(FallingBlocks fallingBlocks, LevelWrapper levelWrapper) {
-      this.fallingBlocks=fallingBlocks;
-      this.levelWrapper=levelWrapper;
+        this.levelWrapper=levelWrapper;
+        this.fallingBlocks=fallingBlocks;
+        this.spriteBatch=fallingBlocks.getSpriteBatch();
     }
 
     @Override
     public void show() {
-        levelWrapper.resetWorld();
-        levelWrapper.setCamera();
-        levelWrapper.setWorld("map/tiledMap.tmx");
+        levelWrapper.initCameraAndViewport();
+        levelWrapper.initWorld();
+        levelWrapper.initTiledMapAndRenderer("map/tiledMap.tmx");
+        GameStateVariables gameStateVariables= new GameStateVariables();
+        new TiledMapManager(levelWrapper.world, fallingBlocks.levelWrapper.tiledMap);
+        entityManager= new EntityManager(levelWrapper.world, levelWrapper.tiledMap, gameStateVariables, fallingBlocks.getInputListenersManager());
     }
 
     public void update(float delta){
         if(levelWrapper.isLevelCompleted){
             fallingBlocks.setScreen(fallingBlocks.getMainMenuScreen());
         }
+
+        entityManager.update(delta);
         levelWrapper.world.step(1/60f, 6, 2);
     }
 
@@ -32,8 +47,18 @@ public class Level1 implements Screen {
     public void render(float delta) {
         update(delta);
         levelWrapper.clearScreen();
-        levelWrapper.orthogonalTiledMapRenderer.render();
-        levelWrapper.box2DDebugRenderer.render(levelWrapper.world, levelWrapper.orthographicCamera.combined);
+
+        levelWrapper.orthographicCamera.update();
+        levelWrapper.orthogonalTiledMapRenderer.setView(levelWrapper.orthographicCamera);
+        levelWrapper.orthogonalTiledMapRenderer.render(new int[]{0});
+        levelWrapper.renderBox2DDebugRenderer();
+
+        levelWrapper.setProjectionMatrix(spriteBatch);
+        spriteBatch.begin();
+        entityManager.drawEntities(spriteBatch);
+        spriteBatch.end();
+
+        levelWrapper.orthogonalTiledMapRenderer.render(new int[]{1});
     }
 
     @Override

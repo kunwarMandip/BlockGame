@@ -12,12 +12,12 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.COLOR_ARRAY;
 /**
  * Creates a list of solid dynamic textures which can be accessed via a hashMap
  */
-public class DynamicTextureCreator {
+public class SolidTextureCreator {
 
     private int playerColorID=0;
     private final Map<Integer, Texture> colors= new HashMap<>();
 
-    public DynamicTextureCreator(){
+    public SolidTextureCreator(){
         for(int i =0; i<COLOR_ARRAY.length; i++){
             defineColors(i, COLOR_ARRAY[i]);
             System.out.println("Colors: "+ i + " : " + COLOR_ARRAY[i]);

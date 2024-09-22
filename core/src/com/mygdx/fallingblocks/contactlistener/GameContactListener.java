@@ -1,6 +1,7 @@
 package com.mygdx.fallingblocks.contactlistener;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.fallingblocks.game.GameVariables;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
 
@@ -9,12 +10,17 @@ import com.mygdx.fallingblocks.entity.EntityManager;
  */
 public class GameContactListener  implements ContactListener{
 
-    private final BeginContactManager beginContactManager;
-    private final PreSolveContactManager preSolveContactManager;
+    private BeginContactManager beginContactManager;
+    private PreSolveContactManager preSolveContactManager;
+
 
     public GameContactListener(EntityManager entityManager, GameStateVariables gameStateVariables){
         this.beginContactManager= new BeginContactManager(gameStateVariables, entityManager.solidColorCreator);
         this.preSolveContactManager=new PreSolveContactManager(entityManager.solidColorCreator);
+    }
+
+    public GameContactListener(EntityManager entityManager, GameVariables gameVariables){
+
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.map.objects.EnemySpawnArea;
 import com.mygdx.fallingblocks.utilities.EntityTextureChooser;
-import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
+import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 
 /**
@@ -19,7 +19,7 @@ public class EnemyGenerator {
     private final World world;
     private final EnemyManager enemyManager;
     private final GameStateVariables gameStateVariables;
-    private final DynamicTextureCreator solidColorCreator;
+    private final SolidTextureCreator solidColorCreator;
 
     private final EnemySpawner enemySpawner;
     private final EntityTextureChooser enemyTextureChooser;
@@ -28,7 +28,7 @@ public class EnemyGenerator {
                           TiledMap tiledMap,
                           GameStateVariables gameStateVariables,
                           EnemyManager enemyManager,
-                          DynamicTextureCreator solidColorCreator) {
+                          SolidTextureCreator solidColorCreator) {
 
         this.world = world;
         this.enemyManager = enemyManager;

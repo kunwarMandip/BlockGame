@@ -20,7 +20,7 @@ import com.mygdx.fallingblocks.screens.HudOverlayScreen;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
-import com.mygdx.fallingblocks.utilities.InputListenersManager;
+import com.mygdx.fallingblocks.input.InputListenersManager;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
@@ -66,7 +66,7 @@ public class EndlessGameScreen implements Screen {
         setWorld();
         entityManager= new EntityManager(this);
 
-        gameHud = new HudOverlayScreen(spriteBatch, gameStateVariables);
+        gameHud = new HudOverlayScreen( fallingBlocks, spriteBatch, gameStateVariables);
         inputListenersManager.addInputListener(gameHud.getStage());
         inputListenersManager.logActiveProcessors();
         Gdx.input.setInputProcessor(inputListenersManager.getInputMultiplexer());
@@ -181,6 +181,7 @@ public class EndlessGameScreen implements Screen {
         world.dispose();
         gameHud.dispose();
     }
+
 
     public World getWorld() {
         return world;

@@ -27,10 +27,7 @@ public class EnemySpawner {
         this.spawnAreasCount=spawnAreas.size;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public EnemySpawnArea getRandomSpawnArea() {
         return spawnAreas.get(chooseRectangleToSpawn());
     }

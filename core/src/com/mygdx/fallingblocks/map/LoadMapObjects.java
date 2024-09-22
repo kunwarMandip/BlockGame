@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.fallingblocks.map.objects.EnemySpawnArea;
 import com.mygdx.fallingblocks.map.objects.OuterBound;
 import com.mygdx.fallingblocks.map.objects.PlayerWall;
 
@@ -31,6 +32,13 @@ public class LoadMapObjects {
         MapLayer targetLayer= tiledMap.getLayers().get("OuterBound");
         for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
             new OuterBound(world, tiledMap, object);
+        }
+    }
+
+    private void loadEnemySpawnArea(){
+        MapLayer targetLayer = tiledMap.getLayers().get("EnemySpawn");
+        for (RectangleMapObject object : targetLayer.getObjects().getByType(RectangleMapObject.class)) {
+            new EnemySpawnArea(world, tiledMap, object);
         }
     }
 

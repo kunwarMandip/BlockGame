@@ -3,14 +3,14 @@ package com.mygdx.fallingblocks.entity.player;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
+import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 public class PlayerAnimation {
 
     private Texture texture;
-    private final DynamicTextureCreator solidColorCreator;
+    private final SolidTextureCreator solidColorCreator;
 
-    public PlayerAnimation(DynamicTextureCreator solidColorCreator){
+    public PlayerAnimation(SolidTextureCreator solidColorCreator){
         this.solidColorCreator=solidColorCreator;
         setTexture(0);
     }

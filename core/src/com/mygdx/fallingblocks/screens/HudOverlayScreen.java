@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.fallingblocks.FallingBlocks;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 
 import java.util.Locale;
@@ -19,10 +20,11 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
 public class HudOverlayScreen implements Disposable {
 
+    private final SpriteBatch spriteBatch;
+    private final FallingBlocks fallingBlocks;
     private final GameStateVariables gameStateVariables;
 
     private final Viewport viewport;
-    private final SpriteBatch spriteBatch;
     private final OrthographicCamera hudCamera;
 
     private Skin skin;
@@ -31,9 +33,10 @@ public class HudOverlayScreen implements Disposable {
 
     private Window onDeathWindow;
     private Label score, fpsLabel;
-    private TextButton pauseButton;
+    private TextButton pauseButton, mainMenuButton, restartGameButton;
 
-    public HudOverlayScreen(SpriteBatch spriteBatch, GameStateVariables gameStateVariables){
+    public HudOverlayScreen(FallingBlocks fallingBlocks, SpriteBatch spriteBatch, GameStateVariables gameStateVariables){
+        this.fallingBlocks=fallingBlocks;
         this.spriteBatch=spriteBatch;
         this.gameStateVariables=gameStateVariables;
         this.hudCamera= new OrthographicCamera();
@@ -46,12 +49,19 @@ public class HudOverlayScreen implements Disposable {
         onDeathPopUpWindow();
     }
 
+    /**
+     * Set skin to be used
+     * todo remove this and use asset manager to load the skin
+     */
     private void setSkin(){
         this.skin = new Skin();
         skin.addRegions(new TextureAtlas(Gdx.files.internal("flat-earth/skin/flat-earth-ui.atlas")));
         skin.load(Gdx.files.internal("flat-earth/skin/flat-earth-ui.json"));
     }
 
+    /**
+     * Init All Scene2D Tables and Tables layout
+     */
     private void setTable(){
         topTable = new Table();
         topTable.top();
@@ -64,6 +74,9 @@ public class HudOverlayScreen implements Disposable {
         stage.addActor(bottomTable);
     }
 
+    /**
+     * Define the layout of Variables such as buttons and labels inside the table
+     */
     private void addWidgetsToTable(){
         score = new Label(String.format(Locale.US, "%d", 0), skin);
         score.setFontScale(5.0f);
@@ -72,6 +85,9 @@ public class HudOverlayScreen implements Disposable {
         topTable.add(pauseButton).expandX().width(100);
         topTable.add(score).expandX();
 
+        setReturnToMainMenuButton();
+        topTable.add(mainMenuButton).expandX().width(100);
+
         //Lower hud
         fpsLabel = new Label("FPS: 60", skin);
         fpsLabel.setFontScale(2);
@@ -79,22 +95,53 @@ public class HudOverlayScreen implements Disposable {
     }
 
 
+    /**
+     * Create functionality of the PauseButton
+     */
     private void setPauseButton(){
         this.pauseButton= new TextButton("Pause", skin);
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            System.out.println("Clicked");
-            gameStateVariables.invertGamePause();
-            if (gameStateVariables.isGamePaused()) {
-                pauseButton.setText("Resume");
-            } else {
-                pauseButton.setText("Pause");
-            }
+                System.out.println("Clicked");
+                gameStateVariables.invertGamePause();
+                if (gameStateVariables.isGamePaused()) {
+                    pauseButton.setText("Resume");
+                } else {
+                    pauseButton.setText("Pause");
+                }
             }
         });
     }
 
+    /**
+     * Create functionality for the Return to MainMenuButton
+     */
+    private void setReturnToMainMenuButton(){
+        this.mainMenuButton= new TextButton("Main Menu", skin);
+        mainMenuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                fallingBlocks.setScreen(fallingBlocks.getMainMenuScreen());
+            }
+        });
+    }
+
+    private void setRestartButton(){
+        this.restartGameButton = new TextButton("Restart", skin);
+        restartGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gameStateVariables.setPlayerDead(false);
+                onDeathWindow.setVisible(false);
+            }
+        });
+    }
+
+
+    /**
+     * Create functionality to create a new Pop-up window on death
+     */
     private void onDeathPopUpWindow() {
         onDeathWindow = new Window("Game Over", skin);
         onDeathWindow.setSize(200, 200);
@@ -109,20 +156,14 @@ public class HudOverlayScreen implements Disposable {
         onDeathWindow.row();
 
         // Create a button to restart the game
-        TextButton restartButton = new TextButton("Restart", skin);
-        restartButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Restart Clicked");
-                gameStateVariables.setPlayerDead(false);
-                onDeathWindow.setVisible(false);
-            }
-        });
+        setRestartButton();
 
-        onDeathWindow.add(restartButton).center().pad(10);
+        onDeathWindow.add(restartGameButton).center().pad(10);
         onDeathWindow.setVisible(false);
         stage.addActor(onDeathWindow);
     }
+
+
 
     public void update(int score){
         this.score.setText(score);

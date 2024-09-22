@@ -1,4 +1,4 @@
-package com.mygdx.fallingblocks.utilities;
+package com.mygdx.fallingblocks.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -42,6 +42,6 @@ public class InputListenersManager {
     }
 
     public InputMultiplexer getInputMultiplexer(){
-        return  this.inputMultiplexer;
+        return this.inputMultiplexer;
     }
 }

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
-import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
+import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 
 /**
@@ -20,18 +20,24 @@ public class EnemyManager {
     //For easy management of all enemies in the world
     private final Array<Enemy> currentEnemies= new Array<>();
 
-    private final EnemyGenerator enemyGenerator;
-    public final GameStateVariables gameStateVariables;
-    private final EnemyIncomingDirection enemySpawnDirection;
+    private EnemyGenerator enemyGenerator;
+    public GameStateVariables gameStateVariables;
+    private EnemyIncomingDirection enemySpawnDirection;
 
 
-    public EnemyManager(World world, TiledMap tiledMap,
+    public EnemyManager(World world,
+                        TiledMap tiledMap,
                         GameStateVariables gameStateVariables,
-                        DynamicTextureCreator solidColorCreator){
+                        SolidTextureCreator solidColorCreator){
         this.gameStateVariables=gameStateVariables;
         this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this, solidColorCreator);
         this.enemySpawnDirection=new EnemyIncomingDirection();
     }
+
+    public EnemyManager(World world, SolidTextureCreator solidTextureCreator){
+
+    }
+
 
 
     /**
@@ -39,8 +45,6 @@ public class EnemyManager {
      * @param delta time since last render
      */
     public void update(float delta, Vector2 playerPosition) {
-
-
         if(gameStateVariables.isPlayerDead()){
             gameStateVariables.reset(this);
             return;
@@ -51,6 +55,8 @@ public class EnemyManager {
         enemyGenerator.spawnEnemies(playerPosition);
         gameStateVariables.increaseGameDifficulty();
     }
+
+
 
     /**
      * Remove Enemy set to be removed. U

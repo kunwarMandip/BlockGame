@@ -21,7 +21,6 @@ public class GameStateVariables {
         resetGameVariables();
     }
 
-
     private void resetGameVariables(){
         this.score=0;
         this.lastScore=0;

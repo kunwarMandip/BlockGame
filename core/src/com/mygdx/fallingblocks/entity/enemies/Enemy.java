@@ -3,7 +3,7 @@ package com.mygdx.fallingblocks.entity.enemies;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.fallingblocks.utilities.DynamicTextureCreator;
+import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 
@@ -21,7 +21,7 @@ public class Enemy {
     public boolean hasEnemySpawned, isEnemyToBeRemoved, isFriendly;
 
     public Enemy(World world,
-                 DynamicTextureCreator solidColorCreator,
+                 SolidTextureCreator solidColorCreator,
                  int colorID,
                  Vector2 spawnLocation,
                  Vector2 movementSpeed,
@@ -86,9 +86,6 @@ public class Enemy {
         fixtureDef.filter.maskBits =~(CATEGORY_WALL | CATEGORY_ENEMY);
         body.createFixture(fixtureDef).setUserData(this);
         rectangleShape.dispose();
-
-
-
     }
 
     public int getColorID(){return this.colorID;}

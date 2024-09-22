@@ -20,6 +20,13 @@ public class EnemyAnimation {
         spriteBatch.draw(texture, x, y, textureWidth, textureHeight);
     }
 
+    public void draw(SpriteBatch spriteBatch, Vector2 enemyPosition){
+        float textureWidth=6, textureHeight=6;
+        float x=enemyPosition.x - textureWidth /2;
+        float y=enemyPosition.y - textureHeight /2;
+        spriteBatch.draw(texture, x, y, textureWidth, textureHeight);
+    }
+
     public void dispose(){
         texture.dispose();
     }
