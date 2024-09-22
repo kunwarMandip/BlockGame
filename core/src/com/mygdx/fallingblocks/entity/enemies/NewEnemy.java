@@ -22,10 +22,8 @@ public class NewEnemy {
 
 
     public NewEnemy(World world, Texture texture, Vector2 spawnLocation, Vector2 bodyDimension, Vector2 movementSpeed){
-        if(bodyDimension== null){
-            bodyDimension= new Vector2(3, 3);
-        }
-        defaultBody(world, spawnLocation, bodyDimension);
+        Vector2 finalBodyDimension = (bodyDimension != null) ? bodyDimension : new Vector2(3, 3);
+        defaultBody(world, spawnLocation, finalBodyDimension);
         enemyAnimation= new EnemyAnimation(texture);
         body.setLinearVelocity(movementSpeed);
     }

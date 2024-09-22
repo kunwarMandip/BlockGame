@@ -54,7 +54,7 @@ public class EntityManager {
     public EntityManager(World world){
         this.solidColorCreator= new SolidTextureCreator();
         this.player= new Player(world, solidColorCreator);
-        this.enemyManager= new EnemyManager();
+        this.enemyManager= new EnemyManager(world, solidColorCreator);
     }
 
 

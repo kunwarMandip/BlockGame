@@ -35,6 +35,7 @@ public class GameVariables {
 
     }
 
+
     /**
      * Increase Enemy current speed by new Vector2 by adding them together
      * @param enemySpeed the speed to increase enemy Speed by
@@ -68,6 +69,11 @@ public class GameVariables {
     public void setScore(int points) {
         lastScore=score;
         score+=points;
+    }
+
+
+    public Vector2 getEnemyCurrentSpeed() {
+        return enemyCurrentSpeed;
     }
 
     public Vector2 getPlayerBaseSpeed() {

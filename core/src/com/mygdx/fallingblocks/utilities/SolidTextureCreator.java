@@ -14,7 +14,7 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.COLOR_ARRAY;
  */
 public class SolidTextureCreator {
 
-    private int playerColorID=0;
+    public static int playerColorID=0;
     private final Map<Integer, Texture> colors= new HashMap<>();
 
     public SolidTextureCreator(){

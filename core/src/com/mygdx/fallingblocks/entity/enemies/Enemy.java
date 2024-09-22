@@ -1,7 +1,9 @@
 package com.mygdx.fallingblocks.entity.enemies;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector4;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
@@ -10,13 +12,13 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 public class Enemy {
 
     private Body body;
-    private final World world;
+    private World world;
     private final EnemyAnimation enemyAnimation;
 
-    private final int colorID;
-    private final float waitTimer;
+    private int colorID;
+    private float waitTimer;
     private float waitTimeCounter=0;
-    private final Vector2 movementSpeed, spawnLocation;
+    private Vector2 movementSpeed, spawnLocation;
 
     public boolean hasEnemySpawned, isEnemyToBeRemoved, isFriendly;
 
@@ -32,6 +34,47 @@ public class Enemy {
         this.movementSpeed=movementSpeed;
         this.waitTimer=waitTimer;
         enemyAnimation= new EnemyAnimation(solidColorCreator.getColor(colorID, false));
+    }
+
+
+    public Enemy(World world, int colorID, SolidTextureCreator solidTextureCreator, Vector4 enemySpawnAndSpeedInfo, Vector2 bodyDimension){
+        this.colorID=colorID;
+
+        Vector2 enemySpeed= new Vector2(enemySpawnAndSpeedInfo.z, enemySpawnAndSpeedInfo.w);
+        Vector2 spawnLocation= new Vector2(enemySpawnAndSpeedInfo.x, enemySpawnAndSpeedInfo.y);
+        Vector2 finalBodyDimension = (bodyDimension != null) ? bodyDimension : new Vector2(3, 3);
+
+        defaultBody(world, spawnLocation, finalBodyDimension);
+        enemyAnimation= new EnemyAnimation(solidTextureCreator.getColor(colorID, false));
+        body.setLinearVelocity(enemySpeed);
+    }
+
+
+
+    public void defaultBody(World world, Vector2 spawnLocation, Vector2 bodyDimensions) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+
+        bodyDef.position.set(spawnLocation.x, spawnLocation.y);
+        bodyDef.fixedRotation = true;
+        body = world.createBody(bodyDef);
+
+        //Creates shape for the body
+        PolygonShape rectangleShape = new PolygonShape();
+        rectangleShape.setAsBox(bodyDimensions.x, bodyDimensions.y);
+
+        //Creates fixture definition and applies to body
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = rectangleShape;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.0f;
+        fixtureDef.restitution = 0.0f;
+
+        // Collides with everything except walls
+        fixtureDef.filter.categoryBits = CATEGORY_ENEMY;
+        fixtureDef.filter.maskBits =~(CATEGORY_WALL | CATEGORY_ENEMY);
+        body.createFixture(fixtureDef).setUserData(this);
+        rectangleShape.dispose();
     }
 
 
@@ -91,9 +134,14 @@ public class Enemy {
     public int getColorID(){return this.colorID;}
 
     public void dispose() {
-//        enemyAnimation.dispose();
         if(body!=null){
             world.destroyBody(body);
         }
+
+    }
+
+    public void dispose(World world){
+        if(body==null){return;}
+        world.destroyBody(body);
     }
 }

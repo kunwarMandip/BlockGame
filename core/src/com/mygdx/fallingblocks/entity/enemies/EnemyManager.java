@@ -25,17 +25,14 @@ public class EnemyManager {
     private EnemyIncomingDirection enemySpawnDirection;
 
 
-    public EnemyManager(World world,
-                        TiledMap tiledMap,
-                        GameStateVariables gameStateVariables,
-                        SolidTextureCreator solidColorCreator){
+    public EnemyManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, SolidTextureCreator solidColorCreator){
         this.gameStateVariables=gameStateVariables;
         this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this, solidColorCreator);
         this.enemySpawnDirection=new EnemyIncomingDirection();
     }
 
     public EnemyManager(World world, SolidTextureCreator solidTextureCreator){
-
+        this.enemyGenerator= new EnemyGenerator(world, solidTextureCreator);
     }
 
 
