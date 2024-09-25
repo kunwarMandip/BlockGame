@@ -22,6 +22,8 @@ public class Enemy {
 
     public boolean hasEnemySpawned, isEnemyToBeRemoved, isFriendly;
 
+
+
     public Enemy(World world, SolidTextureCreator solidColorCreator, int colorID, Vector2 spawnLocation, Vector2 movementSpeed, float waitTimer){
         this.world=world;
         this.colorID=colorID;

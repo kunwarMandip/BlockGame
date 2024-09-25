@@ -26,6 +26,9 @@ public class Player extends Entity {
     private int colorChangeCounter;
     private int colorListSize;
 
+    public boolean isPlayerDead=false;
+
+    GestureDetector gestureDetector;
     public Player(World world,
                   GameStateVariables gameStateVariables,
                   SolidTextureCreator solidColorCreator,
@@ -160,7 +163,7 @@ public class Player extends Entity {
     }
 
     public void setController(InputListenersManager inputListenersManager){
-        GestureDetector gestureDetector= new GestureDetector(new GesturePlayerController(body));
+        gestureDetector= new GestureDetector(new GesturePlayerController(body));
         inputListenersManager.addInputProcessor(gestureDetector);
     }
 }

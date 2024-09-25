@@ -16,23 +16,45 @@ public class GameVariables {
     private boolean isLevelFinished= false;
 
     private Vector2 enemyCurrentSpeed, playerCurrentSpeed;
-    private Vector2 enemyBaseSpeed, enemySpeedIncrease;
-    private Vector2 playerBaseSpeed, playerSpeedIncrease;
+    private final Vector2 enemyBaseSpeed, enemySpeedIncrease;
+    private final Vector2 playerBaseSpeed, playerSpeedIncrease;
 
-    public GameVariables(){};
+    /**
+     * Set Values to be default as inscribed in the code
+     */
+    public GameVariables(){
+        this.enemyBaseSpeed = new Vector2(0.5f, 0.5f);
+        this.playerBaseSpeed= new Vector2(30f, 30f);
+
+        this.enemyCurrentSpeed = new Vector2(30f, 30f);
+        this.playerCurrentSpeed = new Vector2(30f, 30f);
+
+        this.enemySpeedIncrease = new Vector2(0.5f, 0.5f);
+        this.playerSpeedIncrease = new Vector2(0.5f, 0.5f);
+    }
+
+    /**
+     * Initializes and controls enemy and player speeds.
+     *
+     * @param enemyInfo   A Vector4 containing enemy speed information:
+     *                    - x, y: Base speed of the enemy (enemyBaseSpeed)
+     *                    - z, w: Speed increment for the enemy (enemySpeedIncrease)
+     * @param playerInfo  A Vector4 containing player speed information:
+     *                    - x, y: Base speed of the player (playerBaseSpeed)
+     *                    - z, w: Speed increment for the player (playerSpeedIncrease)
+     */
     public GameVariables(Vector4 enemyInfo, Vector4 playerInfo){
         this.enemyBaseSpeed= new Vector2(enemyInfo.x, enemyInfo.y);
-        this.enemySpeedIncrease= new Vector2(enemyInfo.z, enemyInfo.w);
-
         this.playerBaseSpeed= new Vector2(playerInfo.x, playerInfo.y);
-        this.playerSpeedIncrease= new Vector2(playerInfo.z, playerInfo.w);
 
         this.enemyCurrentSpeed= new Vector2(enemyInfo.x, enemyInfo.y);
         this.playerCurrentSpeed= new Vector2(playerInfo.x, playerInfo.y);
+
+        this.enemySpeedIncrease= new Vector2(enemyInfo.z, enemyInfo.w);
+        this.playerSpeedIncrease= new Vector2(playerInfo.z, playerInfo.w);
     }
 
     public void update(float deltaTime){
-
     }
 
 

@@ -11,9 +11,9 @@ public abstract class Entity{
 
     /**
      * Create a Default box2D body in given world, location and size
-     * @param world world to load the box2D object/body in
-     * @param spawnLocation the location to set the spawnLocation in
-     * @param bodyDimensions the size of the box2D body
+     * @param world Pre-Defined box2D world to load the body in
+     * @param spawnLocation The location to set the body in
+     * @param bodyDimensions Set the size of the box2D body
      */
     public abstract void defaultBody(World world, Vector2 spawnLocation, Vector2 bodyDimensions);
 
@@ -33,6 +33,9 @@ public abstract class Entity{
 
 //    public abstract void dispose(World world);
 
+    public Vector2 getPosition(){
+        return body.getPosition();
+    }
 
     public void dispose(World world) {
         if(body==null){return;}

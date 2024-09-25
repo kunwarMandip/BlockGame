@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
 import com.mygdx.fallingblocks.game.levels.Level1;
 import com.mygdx.fallingblocks.game.levels.Level2;
+import com.mygdx.fallingblocks.game.levels.Level3;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_HEIGHT;
 import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_WIDTH;
@@ -54,7 +55,7 @@ public class LevelChooserScreen implements Screen {
     private void setTable(){
         table= new Table();
         table.setFillParent(true);
-//        table.setDebug(true);
+        table.setDebug(true);
     }
 
     private void setLayout(){
@@ -125,6 +126,9 @@ public class LevelChooserScreen implements Screen {
                 break;
             case 2:
                 fallingBlocks.setScreen(new Level2(fallingBlocks, fallingBlocks.levelWrapper));
+                break;
+            case 3:
+                fallingBlocks.setScreen(new Level3(fallingBlocks));
                 break;
             default:
                 fallingBlocks.setScreen(fallingBlocks.getMainMenuScreen());

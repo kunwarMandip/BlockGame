@@ -40,17 +40,11 @@ public class EnemyGenerator {
 
     public void spawnEnemy(Array<Enemy> currentEnemies, int spawnCount, Vector2 playerLocation, Vector2 enemySpeed){
         for(int i =0; i<spawnCount; i++){
-            int enemyColor= getEnemyColorID();
-            Vector2 enemySize= getEnemyDimensions();
+            int enemyColor= enemyTextureChooser.getColorNumber(SolidTextureCreator.playerColorID);
             Vector4 enemySpawnAndSpeedInfo= getEnemySpawnAndSpeedInfo(playerLocation, enemySpeed);
             currentEnemies.add(new Enemy(world, enemyColor, solidColorCreator, enemySpawnAndSpeedInfo, null));
         }
     }
-
-    private Vector2 getEnemyDimensions(){
-        return null;
-    }
-
 
     private Vector4 getEnemySpawnAndSpeedInfo(Vector2 playerLocation, Vector2 enemyCurrentSpeed){
 
@@ -80,9 +74,6 @@ public class EnemyGenerator {
         return new Vector4(enemyMovementSpeed.x, enemyMovementSpeed.y, enemySpawnLocation.x, enemySpawnLocation.y);
     }
 
-    private int getEnemyColorID(){
-        return enemyTextureChooser.getColorNumber(SolidTextureCreator.playerColorID);
-    }
 
 
 //    public EnemyGenerator(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, EnemyManager enemyManager, SolidTextureCreator solidColorCreator) {

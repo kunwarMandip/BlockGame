@@ -1,7 +1,8 @@
-package com.mygdx.fallingblocks.contactlistener;
+package com.mygdx.fallingblocks.contactlistener.listener;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.mygdx.fallingblocks.game.GameVariables;
+import com.mygdx.fallingblocks.contactlistener.handler.EnemyOuterBoundCollisionInterface;
+import com.mygdx.fallingblocks.contactlistener.handler.PlayerEnemyCollisionInterface;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.entity.EntityManager;
 
@@ -13,14 +14,16 @@ public class GameContactListener  implements ContactListener{
     private BeginContactManager beginContactManager;
     private PreSolveContactManager preSolveContactManager;
 
+    public GameContactListener(){}
 
     public GameContactListener(EntityManager entityManager, GameStateVariables gameStateVariables){
         this.beginContactManager= new BeginContactManager(gameStateVariables, entityManager.solidColorCreator);
         this.preSolveContactManager=new PreSolveContactManager(entityManager.solidColorCreator);
     }
 
-    public GameContactListener(EntityManager entityManager, GameVariables gameVariables){
-
+    private NewBeginContactManager newBeginContactManager;
+    public GameContactListener(PlayerEnemyCollisionInterface playerEnemyCollisionHandler, EnemyOuterBoundCollisionInterface enemyOuterBoundCollisionInterface){
+        this.newBeginContactManager= new NewBeginContactManager(playerEnemyCollisionHandler, enemyOuterBoundCollisionInterface);
     }
 
     @Override
@@ -31,6 +34,10 @@ public class GameContactListener  implements ContactListener{
         Fixture b = contact.getFixtureB();
         if (a == null || b == null){return;}
         if (a.getUserData() == null|| b.getUserData() == null){return;}
+
+
+        if(newBeginContactManager.handleEnemyPlayerContact(contact)){return;};
+        if(newBeginContactManager.handleEnemyOuterBoundContact(contact)){return;}
 
         //JUST KEEP ADDING ELSE IF
         if(beginContactManager.handleEnemyPlayerContact(contact)){return;}

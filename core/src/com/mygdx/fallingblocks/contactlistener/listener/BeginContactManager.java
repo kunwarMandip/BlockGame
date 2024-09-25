@@ -1,4 +1,4 @@
-package com.mygdx.fallingblocks.contactlistener;
+package com.mygdx.fallingblocks.contactlistener.listener;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;

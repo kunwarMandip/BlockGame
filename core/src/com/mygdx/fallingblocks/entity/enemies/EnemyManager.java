@@ -24,7 +24,6 @@ public class EnemyManager {
     public GameStateVariables gameStateVariables;
     private EnemyIncomingDirection enemySpawnDirection;
 
-
     public EnemyManager(World world, TiledMap tiledMap, GameStateVariables gameStateVariables, SolidTextureCreator solidColorCreator){
         this.gameStateVariables=gameStateVariables;
 //        this.enemyGenerator= new EnemyGenerator(world, tiledMap, gameStateVariables, this, solidColorCreator);
@@ -36,14 +35,10 @@ public class EnemyManager {
     }
 
 
-    public void update(int numEnemiesToSpawn, Vector2 playerPosition){
-
+    public void update(int numEnemiesToSpawn, Vector2 playerPosition, Vector2 enemySpeed){
+        enemyGenerator.spawnEnemy(currentEnemies, numEnemiesToSpawn, playerPosition, enemySpeed);
     }
 
-
-    public void update(int numEnemiesToSpawn, Vector2 player, Vector2 enemySize){
-
-    }
 
     /**
      * Removes Enemies. Updates Enemies. Increases Difficulty
@@ -57,7 +52,7 @@ public class EnemyManager {
         updateEnemies(delta);
 
         //Check if new enemies can be created
-        enemyGenerator.spawnEnemies(playerPosition);
+//        enemyGenerator.spawnEnemies(playerPosition);
         gameStateVariables.increaseGameDifficulty();
     }
 

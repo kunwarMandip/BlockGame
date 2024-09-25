@@ -6,10 +6,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.fallingblocks.game.EndlessGameScreen;
-import com.mygdx.fallingblocks.game.GameVariables;
-import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
-import com.mygdx.fallingblocks.contactlistener.GameContactListener;
+import com.mygdx.fallingblocks.contactlistener.listener.GameContactListener;
 import com.mygdx.fallingblocks.entity.enemies.EnemyManager;
 import com.mygdx.fallingblocks.entity.player.Player;
 import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
@@ -24,8 +22,6 @@ public class EntityManager {
     private EnemyManager enemyManager;
     public SolidTextureCreator solidColorCreator;
 
-    private AssetManagerWrapper assetManagerWrapper;
-
     public EntityManager(EndlessGameScreen endlessGameScreen){
         World world= endlessGameScreen.getWorld();
         TiledMap tiledMap= endlessGameScreen.getTiledMap();
@@ -33,7 +29,6 @@ public class EntityManager {
         RayHandler rayHandler= endlessGameScreen.getRayHandler();
 
         this.solidColorCreator= new SolidTextureCreator();
-        this.assetManagerWrapper= endlessGameScreen.getAssetManagerWrapper();
         this.player= new Player(endlessGameScreen.getWorld(), gameStateVariables, solidColorCreator, rayHandler, endlessGameScreen.getInputListenersManager());
         this.enemyManager= new EnemyManager(world, tiledMap, gameStateVariables, solidColorCreator);
 
@@ -56,8 +51,8 @@ public class EntityManager {
         this.enemyManager= new EnemyManager(world, solidColorCreator);
     }
 
-    public void update(flaot delta, int numEnemiesToSpawn){
-        enemyManager.update();
+    public void update(int numEnemiesToSpawn, Vector2 enemyMovementSpeed){
+        enemyManager.update(numEnemiesToSpawn,  player.getPlayerLocation(), enemyMovementSpeed);
     }
 
     public void update(float delta){

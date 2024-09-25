@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
 import com.mygdx.fallingblocks.entity.player.GesturePlayerController;
-import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
