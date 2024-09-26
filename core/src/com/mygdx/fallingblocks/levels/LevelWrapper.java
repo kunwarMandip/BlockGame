@@ -1,4 +1,4 @@
-package com.mygdx.fallingblocks.game;
+package com.mygdx.fallingblocks.levels;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

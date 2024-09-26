@@ -74,6 +74,7 @@ public class NewPlayer extends Entity {
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        System.out.println("Running Animation");
         playerAnimation.draw(body.getPosition(), spriteBatch);
     }
 

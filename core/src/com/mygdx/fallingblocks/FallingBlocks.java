@@ -2,8 +2,8 @@ package com.mygdx.fallingblocks;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.fallingblocks.game.EndlessGameScreen;
-import com.mygdx.fallingblocks.game.LevelWrapper;
+import com.mygdx.fallingblocks.levels.EndlessGameScreen;
+import com.mygdx.fallingblocks.levels.LevelWrapper;
 import com.mygdx.fallingblocks.screens.*;
 import com.mygdx.fallingblocks.utilities.AssetManagerWrapper;
 import com.mygdx.fallingblocks.input.InputListenersManager;

@@ -1,4 +1,4 @@
-package com.mygdx.fallingblocks.game;
+package com.mygdx.fallingblocks.levels;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector4;
@@ -19,6 +19,7 @@ public class GameVariables {
     private final Vector2 enemyBaseSpeed, enemySpeedIncrease;
     private final Vector2 playerBaseSpeed, playerSpeedIncrease;
 
+
     /**
      * Set Values to be default as inscribed in the code
      */
@@ -32,6 +33,7 @@ public class GameVariables {
         this.enemySpeedIncrease = new Vector2(0.5f, 0.5f);
         this.playerSpeedIncrease = new Vector2(0.5f, 0.5f);
     }
+
 
     /**
      * Initializes and controls enemy and player speeds.

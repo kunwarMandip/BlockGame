@@ -12,7 +12,7 @@ import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 public class NewEntityManager {
 
-    private final NewPlayer player;
+    private final NewPlayer newPlayer;
     private final NewEnemyManager newEnemyManager;
     private final SolidTextureCreator solidColorCreator;
 
@@ -20,7 +20,7 @@ public class NewEntityManager {
                             PlayerEnemyCollisionInterface playerEnemyCollisionHandler,
                             EnemyOuterBoundCollisionInterface enemyOuterBoundCollisionInterface){
         this.solidColorCreator= new SolidTextureCreator();
-        this.player= new NewPlayer(world, solidColorCreator);
+        this.newPlayer = new NewPlayer(world, solidColorCreator);
         this.newEnemyManager= new NewEnemyManager(world, solidColorCreator);
 
         GameContactListener gameContactListener= new GameContactListener(playerEnemyCollisionHandler, enemyOuterBoundCollisionInterface);
@@ -29,13 +29,13 @@ public class NewEntityManager {
 
 
     public void update(int numEnemiesToSpawn, Vector2 enemyMovementSpeed){
-        newEnemyManager.update(numEnemiesToSpawn,player.getPosition(), enemyMovementSpeed);
+        newEnemyManager.update(numEnemiesToSpawn, newPlayer.getPosition(), enemyMovementSpeed);
     }
 
     public void draw(SpriteBatch spriteBatch){
-        player.draw(spriteBatch);
+        newPlayer.draw(spriteBatch);
         newEnemyManager.draw(spriteBatch);
     }
 
-    public NewPlayer getPlayer(){return player;}
+    public NewPlayer getNewPlayer(){return newPlayer;}
 }

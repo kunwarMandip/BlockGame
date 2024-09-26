@@ -1,10 +1,12 @@
-package com.mygdx.fallingblocks.game.levels;
+package com.mygdx.fallingblocks.levels.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.fallingblocks.FallingBlocks;
 import com.mygdx.fallingblocks.contactlistener.handler.EnemyOuterBoundCollisionInterface;
 import com.mygdx.fallingblocks.contactlistener.handler.PlayerEnemyCollisionInterface;
 import com.mygdx.fallingblocks.entity.NewEntityManager;
+import com.mygdx.fallingblocks.levels.LevelProtoType;
 
 public class Level3 extends LevelProtoType implements Screen {
 
@@ -22,10 +24,12 @@ public class Level3 extends LevelProtoType implements Screen {
         PlayerEnemyCollisionInterface playerEnemyCollisionInterface= new PlayerEnemyCollisionInterface() {};
         EnemyOuterBoundCollisionInterface enemyOuterBoundCollisionInterface= new EnemyOuterBoundCollisionInterface(){};
         newEntityManager= new NewEntityManager(world, playerEnemyCollisionInterface, enemyOuterBoundCollisionInterface);
+
+        newEntityManager.getNewPlayer().setController(fallingBlocks.getInputListenersManager());
     }
 
     private void update(float delta){
-//        newEntityManager.update();
+        newEntityManager.update(1, new Vector2(10f, 10f));
         world.step(1/60f, 6, 2);
     }
 
@@ -41,6 +45,7 @@ public class Level3 extends LevelProtoType implements Screen {
 
         spriteBatch.setProjectionMatrix(orthographicCamera.combined);
         spriteBatch.begin();
+        newEntityManager.draw(spriteBatch);
         spriteBatch.end();
 
         orthogonalTiledMapRenderer.render( new int[]{1});

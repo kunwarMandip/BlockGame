@@ -1,4 +1,4 @@
-package com.mygdx.fallingblocks.game;
+package com.mygdx.fallingblocks.levels;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;

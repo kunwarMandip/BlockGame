@@ -1,4 +1,4 @@
-package com.mygdx.fallingblocks.game.levels;
+package com.mygdx.fallingblocks.levels.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -6,8 +6,8 @@ import com.mygdx.fallingblocks.FallingBlocks;
 import com.mygdx.fallingblocks.contactlistener.handler.EnemyOuterBoundCollisionInterface;
 import com.mygdx.fallingblocks.contactlistener.handler.PlayerEnemyCollisionInterface;
 import com.mygdx.fallingblocks.entity.NewEntityManager;
-import com.mygdx.fallingblocks.game.GameVariables;
-import com.mygdx.fallingblocks.game.LevelWrapper;
+import com.mygdx.fallingblocks.levels.GameVariables;
+import com.mygdx.fallingblocks.levels.LevelWrapper;
 import com.mygdx.fallingblocks.map.TiledMapManager;
 
 public class Level2 implements Screen {
@@ -39,7 +39,7 @@ public class Level2 implements Screen {
         PlayerEnemyCollisionInterface playerEnemyCollisionInterface= new PlayerEnemyCollisionInterface() {};
         EnemyOuterBoundCollisionInterface enemyOuterBoundCollisionInterface= new EnemyOuterBoundCollisionInterface(){};
         newEntityManager = new NewEntityManager(levelWrapper.world, playerEnemyCollisionInterface, enemyOuterBoundCollisionInterface);
-        newEntityManager.getPlayer().setController(fallingBlocks.getInputListenersManager());
+        newEntityManager.getNewPlayer().setController(fallingBlocks.getInputListenersManager());
     }
 
 

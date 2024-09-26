@@ -1,11 +1,11 @@
-package com.mygdx.fallingblocks.game.levels;
+package com.mygdx.fallingblocks.levels.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.fallingblocks.FallingBlocks;
 import com.mygdx.fallingblocks.entity.EntityManager;
-import com.mygdx.fallingblocks.game.GameVariables;
-import com.mygdx.fallingblocks.game.LevelWrapper;
+import com.mygdx.fallingblocks.levels.GameVariables;
+import com.mygdx.fallingblocks.levels.LevelWrapper;
 import com.mygdx.fallingblocks.map.TiledMapManager;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 

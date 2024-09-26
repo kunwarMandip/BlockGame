@@ -35,13 +35,12 @@ public class GameContactListener  implements ContactListener{
         if (a == null || b == null){return;}
         if (a.getUserData() == null|| b.getUserData() == null){return;}
 
-
         if(newBeginContactManager.handleEnemyPlayerContact(contact)){return;};
         if(newBeginContactManager.handleEnemyOuterBoundContact(contact)){return;}
-
-        //JUST KEEP ADDING ELSE IF
-        if(beginContactManager.handleEnemyPlayerContact(contact)){return;}
-        if(beginContactManager.handleEnemyOuterBoundContact(contact)){return;}
+//
+//        //JUST KEEP ADDING ELSE IF
+//        if(beginContactManager.handleEnemyPlayerContact(contact)){return;}
+//        if(beginContactManager.handleEnemyOuterBoundContact(contact)){return;}
 
     }
 
@@ -59,7 +58,7 @@ public class GameContactListener  implements ContactListener{
         if (a == null || b == null){return;}
         if (a.getUserData() == null|| b.getUserData() == null){return;}
 
-        if(preSolveContactManager.sameColorEnemyPlayer(contact)){return;}
+//        if(preSolveContactManager.sameColorEnemyPlayer(contact)){return;}
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector4;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.fallingblocks.game.GameVariables;
+import com.mygdx.fallingblocks.levels.GameVariables;
 import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.map.objects.EnemySpawnArea;
 import com.mygdx.fallingblocks.utilities.EntityTextureChooser;

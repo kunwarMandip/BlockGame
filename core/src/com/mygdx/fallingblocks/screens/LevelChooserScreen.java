@@ -13,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.fallingblocks.FallingBlocks;
-import com.mygdx.fallingblocks.game.levels.Level1;
-import com.mygdx.fallingblocks.game.levels.Level2;
-import com.mygdx.fallingblocks.game.levels.Level3;
+import com.mygdx.fallingblocks.levels.screens.Level1;
+import com.mygdx.fallingblocks.levels.screens.Level2;
+import com.mygdx.fallingblocks.levels.screens.Level3;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_HEIGHT;
 import static com.mygdx.fallingblocks.GlobalStaticVariables.VIRTUAL_WIDTH;
