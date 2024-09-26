@@ -8,6 +8,7 @@ import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
 public class NewEnemyManager {
 
+
     private final Array<Enemy> currentEnemies= new Array<>();
 
     private final EnemyGenerator enemyGenerator;

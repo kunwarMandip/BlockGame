@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector4;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.fallingblocks.entity.player.NewPlayer;
+import com.mygdx.fallingblocks.entity.player.Player;
 import com.mygdx.fallingblocks.map.objects.EnemySpawnArea;
 import com.mygdx.fallingblocks.utilities.EntityTextureChooser;
 import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
@@ -13,6 +15,7 @@ public class NewEnemyGenerator {
 
 
     private final World world;
+    private final NewPlayer player;
     private final SolidTextureCreator solidColorCreator;
 
     private final EnemySpawner enemySpawner;
@@ -22,6 +25,7 @@ public class NewEnemyGenerator {
         this.world=world;
         this.solidColorCreator=solidTextureCreator;
 
+        this.player= new NewPlayer(world, solidTextureCreator);
         this.enemySpawner= new EnemySpawner(world, new TmxMapLoader().load("map/tiledMap.tmx"));
         this.enemyTextureChooser = new EntityTextureChooser(solidColorCreator.getSize());
     }

@@ -15,6 +15,7 @@ public class Level3 extends LevelProtoType implements Screen {
 
     @Override
     public void show() {
+        System.out.println("Level3");
         String tiledMapPath= "map/tiledMap.tmx";
         setWorld(tiledMapPath);
 

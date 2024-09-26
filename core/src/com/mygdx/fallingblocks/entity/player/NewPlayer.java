@@ -1,5 +1,6 @@
 package com.mygdx.fallingblocks.entity.player;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -15,7 +16,7 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.CATEGORY_PLAYER;
 
 public class NewPlayer extends Entity {
 
-    private PlayerAnimation playerAnimation;
+    private final PlayerAnimation playerAnimation;
 
     public NewPlayer(World world, SolidTextureCreator solidTextureCreator){
         Vector2 bodyLocation= new Vector2(14, 27);
