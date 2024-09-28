@@ -1,5 +1,11 @@
 Android SDK path=C:/Users/mandi/AppData/Local/Android/Sdk
 
+
+To sanskar: 
+Run this:
+keytool -genkey -v -keystore C:\Users\mandi\.android\debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000
+
+"C:\Users\mandi\.android\debug.keystore" where it says mandi, change that to what it says for
 # BlockGame
 Game idea
 ->  Player is a block of color
