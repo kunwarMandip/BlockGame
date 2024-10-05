@@ -1,30 +1,37 @@
-package com.mygdx.fallingblocks.entity.enemies;
+package com.mygdx.fallingblocks.enemy;
 
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector4;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.fallingblocks.entity.player.NewPlayer;
-import com.mygdx.fallingblocks.entity.player.Player;
+import com.mygdx.fallingblocks.entity.enemies.Enemy;
+import com.mygdx.fallingblocks.entity.enemies.EnemyManager;
+import com.mygdx.fallingblocks.entity.enemies.EnemySpawner;
+import com.mygdx.fallingblocks.levels.GameVariables;
 import com.mygdx.fallingblocks.map.objects.EnemySpawnArea;
 import com.mygdx.fallingblocks.utilities.EntityTextureChooser;
+import com.mygdx.fallingblocks.utilities.GameStateVariables;
 import com.mygdx.fallingblocks.utilities.SolidTextureCreator;
 
-public class NewEnemyGenerator {
+public class EnemyCreator {
+
+
+    private EnemyManager enemyManager;
+    private GameStateVariables gameStateVariables;
 
     private final World world;
-    private final NewPlayer player;
+    private GameVariables gameVariables;
     private final SolidTextureCreator solidColorCreator;
 
     private final EnemySpawner enemySpawner;
     private final EntityTextureChooser enemyTextureChooser;
 
-    public NewEnemyGenerator(World world, SolidTextureCreator solidTextureCreator){
+
+    public EnemyCreator(World world, SolidTextureCreator solidTextureCreator){
         this.world=world;
         this.solidColorCreator=solidTextureCreator;
 
-        this.player= new NewPlayer(world, solidTextureCreator);
         this.enemySpawner= new EnemySpawner(world, new TmxMapLoader().load("map/tiledMap.tmx"));
         this.enemyTextureChooser = new EntityTextureChooser(solidColorCreator.getSize());
     }
@@ -37,8 +44,8 @@ public class NewEnemyGenerator {
         }
     }
 
-
     private Vector4 getEnemySpawnAndSpeedInfo(Vector2 playerLocation, Vector2 enemyCurrentSpeed){
+
         EnemySpawnArea spawnArea= enemySpawner.getRandomSpawnArea();
         Vector2 enemyMovementSpeed, enemySpawnLocation;
 

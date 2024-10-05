@@ -33,7 +33,7 @@ public class EnemyAnimation {
 
 //    private String chooseEnemyTexture(String playerColor){
 //        //Enemy and Player match color
-//        if(enemyTextureChooser.update()){
+//        if(enemyTextureChooser.Updateable()){
 //           return playerColor;
 //        }
 //

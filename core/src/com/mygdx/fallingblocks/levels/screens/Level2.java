@@ -48,7 +48,7 @@ public class Level2 implements Screen {
 //            fallingBlocks.setScreen(fallingBlocks.getMainMenuScreen());
 //        }
 
-//        entityManager.update(1, gameVariables.getEnemyBaseSpeed());
+//        entityManager.Updateable(1, gameVariables.getEnemyBaseSpeed());
         levelWrapper.world.step(1/60f, 6, 2);
     }
 

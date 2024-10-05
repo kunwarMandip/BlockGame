@@ -2,12 +2,14 @@ package com.mygdx.fallingblocks.entity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
+
+import static com.mygdx.fallingblocks.GlobalStaticVariables.CATEGORY_ENEMY;
+import static com.mygdx.fallingblocks.GlobalStaticVariables.CATEGORY_WALL;
 
 public abstract class Entity{
-    public Body body;
 
+    public Body body;
 
     /**
      * Create a Default box2D body in given world, location and size

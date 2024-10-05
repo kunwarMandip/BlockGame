@@ -11,7 +11,8 @@ import static com.mygdx.fallingblocks.GlobalStaticVariables.CATEGORY_WALL;
 public class NewEnemy {
 
     private Body body;
-    private final EnemyAnimation enemyAnimation;
+
+    private EnemyAnimation enemyAnimation;
 
     public NewEnemy(World world, Texture texture, Vector2 spawnLocation, Vector2 movementSpeed){
         Vector2 bodyDimension= new Vector2(3, 3);
@@ -28,7 +29,9 @@ public class NewEnemy {
         body.setLinearVelocity(movementSpeed);
     }
 
+    public NewEnemy(World world, Texture texture){
 
+    }
 
     public void defaultBody(World world, Vector2 spawnLocation, Vector2 bodyDimensions) {
         BodyDef bodyDef = new BodyDef();

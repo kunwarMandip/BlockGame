@@ -11,6 +11,7 @@ import com.mygdx.fallingblocks.levels.LevelProtoType;
 public class Level3 extends LevelProtoType implements Screen {
 
     private NewEntityManager newEntityManager;
+
     public Level3(FallingBlocks fallingBlocks) {
         super(fallingBlocks);
     }
@@ -29,7 +30,7 @@ public class Level3 extends LevelProtoType implements Screen {
     }
 
     private void update(float delta){
-        newEntityManager.update(1, new Vector2(10f, 10f));
+//        newEntityManager.Updateable(1, new Vector2(10f, 10f));
         world.step(1/60f, 6, 2);
     }
 
@@ -49,7 +50,6 @@ public class Level3 extends LevelProtoType implements Screen {
         spriteBatch.end();
 
         orthogonalTiledMapRenderer.render( new int[]{1});
-
     }
 
     @Override
