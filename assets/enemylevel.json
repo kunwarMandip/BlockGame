@@ -1,0 +1,32 @@
+{
+
+  "1": {
+    "enemies": [
+      {
+        "type" : "normal",
+        "speed": [10, 10],
+        "size": "default",
+        "amount": 5
+      },
+      {
+        "type": "boss",
+        "speed": [10, 10],
+        "size": 10
+      },
+      {
+          "type": "normal",
+          "speed": [10, 10],
+          "size": "default",
+          "amount": 5
+      }
+    ]
+  },
+
+  "2" :{
+
+  }
+
+
+}
+
+
