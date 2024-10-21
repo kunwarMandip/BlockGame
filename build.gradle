@@ -1,5 +1,4 @@
 buildscript {
-    
 
     repositories {
         mavenLocal()
@@ -11,8 +10,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:8.1.2'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.21'
-        
-
     }
 }
 
@@ -124,6 +121,12 @@ project(":core") {
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-        
+
+
+        implementation 'com.google.code.gson:gson:2.11.0'
+        implementation 'com.fasterxml.jackson.core:jackson-core:2.15.0'  // Core library for JSON streaming
+        implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'  // Full data-binding library
+        implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.0'  // Annotation support
+
     }
 }

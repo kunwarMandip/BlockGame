@@ -1,32 +1,132 @@
 {
-
   "1": {
-    "enemies": [
+    "levelInfo": {
+      "levelName": "Beginner Level",
+      "difficulty": "Easy",
+      "backgroundMusic": "level1_theme.mp3",
+      "maxTime": 120.0,
+      "completionBonus": 500
+    },
+    "player": {
+      "startingHealth": 100,
+      "speed": 3.0,
+      "attackPower": 20,
+      "startingColor": "#0000FF",
+      "abilities": ["DASH", "SHIELD"]
+    },
+    "powerUps": [
       {
-        "type" : "normal",
-        "speed": [10, 10],
-        "size": "default",
-        "amount": 5
+        "type": "HEALTH",
+        "effectDuration": 10.0,
+        "spawnTime": 15.0
       },
       {
-        "type": "boss",
-        "speed": [10, 10],
-        "size": 10
+        "type": "SPEED_BOOST",
+        "effectDuration": 5.0,
+        "spawnTime": 20.0
+      }
+    ],
+    "traps": [
+      {
+        "type": "SPIKE_TRAP",
+        "location": [150, 250],
+        "damage": 10,
+        "activationTime": 10.0,
+        "duration": 5.0
       },
       {
-          "type": "normal",
-          "speed": [10, 10],
-          "size": "default",
-          "amount": 5
+        "type": "FIRE_TRAP",
+        "location": [300, 350],
+        "damage": 20,
+        "activationTime": 30.0,
+        "duration": 8.0
+      }
+    ],
+    "environmentalEvents": [
+      {
+        "eventType": "EARTHQUAKE",
+        "startTime": 25.0,
+        "duration": 10.0,
+        "intensity": "HIGH"
+      },
+      {
+        "eventType": "FOG",
+        "startTime": 40.0,
+        "duration": 20.0,
+        "visibilityReduction": "MEDIUM"
+      }
+    ],
+    "waves": [
+      {
+        "waveNumber": 1,
+        "startDelay": 0.0,
+        "duration": 30.0,
+        "spawnPattern": "SIMULTANEOUS",
+        "enemies": [
+          {
+            "enemyType": "NORMAL",
+            "amount": 5,
+            "spawnInterval": 1.0,
+            "behavior": "AGGRESSIVE",
+            "health": 50,
+            "speed": 2.0,
+            "attackPower": 10,
+            "rewardPoints": 100
+          },
+          {
+            "enemyType": "FLYING",
+            "amount": 2,
+            "spawnInterval": 2.0,
+            "behavior": "PASSIVE",
+            "health": 30,
+            "speed": 3.5,
+            "attackPower": 5,
+            "rewardPoints": 50
+          },
+          {
+            "enemyType": "BOSS",
+            "amount": 1,
+            "spawnPosition": [300, 400],
+            "spawnInterval": 0.0,
+            "behavior": "BOSS_BEHAVIOR",
+            "health": 500,
+            "speed": 1.0,
+            "attackPower": 50,
+            "rewardPoints": 1000,
+            "color": "#FF0000"
+          }
+        ]
+      },
+      {
+        "waveNumber": 2,
+        "startDelay": 5.0,
+        "duration": 45.0,
+        "spawnPattern": "SEQUENTIAL",
+        "enemies": [
+          {
+            "enemyType": "COMMON",
+            "amount": 10,
+            "spawnInterval": 0.5,
+            "behavior": "SWARM",
+            "health": 20,
+            "speed": 2.5,
+            "attackPower": 3,
+            "rewardPoints": 20
+          },
+          {
+            "enemyType": "BOSS",
+            "amount": 1,
+            "spawnPosition": [100, 200],
+            "spawnInterval": 0.0,
+            "behavior": "BOSS_BEHAVIOR",
+            "health": 600,
+            "speed": 1.5,
+            "attackPower": 60,
+            "rewardPoints": 1500,
+            "color": "#00FF00"
+          }
+        ]
       }
     ]
-  },
-
-  "2" :{
-
   }
-
-
 }
-
-

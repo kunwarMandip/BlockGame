@@ -1,0 +1,46 @@
+{
+  "1": {
+    "waves": [
+      {
+        "waveNumber": 1,
+        "startDelay": 0.0,
+        "duration": 30.0,
+        "spawnPattern": "SIMULTANEOUS",
+        "enemies": [
+          {
+            "enemyType": "NORMAL",
+            "amount": 5,
+            "spawnInterval": 1.0,
+            "behavior": "AGGRESSIVE",
+            "health": 50,
+            "speed": 2.0,
+            "attackPower": 10,
+            "rewardPoints": 100
+          }
+        ]
+      }
+    ]
+  },
+  "2": {
+    "waves": [
+      {
+        "waveNumber": 1,
+        "startDelay": 5.0,
+        "duration": 45.0,
+        "spawnPattern": "SEQUENTIAL",
+        "enemies": [
+          {
+            "enemyType": "FLYING",
+            "amount": 3,
+            "spawnInterval": 2.0,
+            "behavior": "PASSIVE",
+            "health": 30,
+            "speed": 3.5,
+            "attackPower": 5,
+            "rewardPoints": 50
+          }
+        ]
+      }
+    ]
+  }
+}

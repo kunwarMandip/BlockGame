@@ -1,0 +1,20 @@
+{
+  "1": {
+    "player": {
+      "startingHealth": 100,
+      "speed": 3.0,
+      "attackPower": 20,
+      "startingColor": "#0000FF",
+      "abilities": ["DASH", "SHIELD"]
+    }
+  },
+  "2": {
+    "player": {
+      "startingHealth": 120,
+      "speed": 3.5,
+      "attackPower": 25,
+      "startingColor": "#FF0000",
+      "abilities": ["DASH", "SHIELD", "DOUBLE_JUMP"]
+    }
+  }
+}
