@@ -6,6 +6,37 @@
         "startDelay": 0.0,
         "duration": 30.0,
         "spawnPattern": "SIMULTANEOUS",
+        "enemies":
+        [
+          {
+            "enemyType": "NORMAL",
+            "amount": 5,
+            "spawnInterval": 1.0,
+            "behavior": "AGGRESSIVE",
+            "health": 50,
+            "speed": 2.0,
+            "attackPower": 10,
+            "rewardPoints": 100
+          },
+
+          {
+            "enemyType": "boss",
+            "amount": 5,
+            "spawnInterval": 1.0,
+            "behavior": "AGGRESSIVE",
+            "health": 50,
+            "speed": 2.0,
+            "attackPower": 10,
+            "rewardPoints": 100
+          }
+        ]
+      },
+
+      {
+        "waveNumber": 2,
+        "startDelay": 0.0,
+        "duration": 30.0,
+        "spawnPattern": "SIMULTANEOUS",
         "enemies": [
           {
             "enemyType": "NORMAL",

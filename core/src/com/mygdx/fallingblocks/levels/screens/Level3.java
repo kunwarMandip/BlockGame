@@ -6,6 +6,7 @@ import com.mygdx.fallingblocks.FallingBlocks;
 import com.mygdx.fallingblocks.contactlistener.handler.EnemyOuterBoundCollisionInterface;
 import com.mygdx.fallingblocks.contactlistener.handler.PlayerEnemyCollisionInterface;
 import com.mygdx.fallingblocks.entity.NewEntityManager;
+import com.mygdx.fallingblocks.level.LevelManager;
 import com.mygdx.fallingblocks.levels.LevelProtoType;
 
 public class Level3 extends LevelProtoType implements Screen {
@@ -27,6 +28,9 @@ public class Level3 extends LevelProtoType implements Screen {
         newEntityManager= new NewEntityManager(world, playerEnemyCollisionInterface, enemyOuterBoundCollisionInterface);
 
         newEntityManager.getNewPlayer().setController(fallingBlocks.getInputListenersManager());
+
+        LevelManager levelManager= new LevelManager();
+        levelManager.testThree("1");
     }
 
     private void update(float delta){
@@ -46,7 +50,7 @@ public class Level3 extends LevelProtoType implements Screen {
 
         spriteBatch.setProjectionMatrix(orthographicCamera.combined);
         spriteBatch.begin();
-        newEntityManager.draw(spriteBatch);
+//        newEntityManager.draw(spriteBatch);
         spriteBatch.end();
 
         orthogonalTiledMapRenderer.render( new int[]{1});
