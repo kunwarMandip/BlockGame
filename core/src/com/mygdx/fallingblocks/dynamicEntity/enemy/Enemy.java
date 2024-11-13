@@ -3,8 +3,9 @@ package com.mygdx.fallingblocks.dynamicEntity.enemy;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.mygdx.fallingblocks.dynamicEntity.SpawnEnemy;
 
-public abstract class Enemy{
+public abstract class Enemy implements SpawnEnemy {
 
     protected Body body;
 
@@ -13,12 +14,10 @@ public abstract class Enemy{
     protected String behaviour;
     protected float spawnTime;
 
-    private boolean isEnemySpawned=false;
+    public boolean isEnemySpawned=false;
 
     public abstract void draw(SpriteBatch spriteBatch);
 
-    public boolean isEnemySpawned(){
-        return isEnemySpawned;
-    }
-    
+    public abstract void update();
+
 }

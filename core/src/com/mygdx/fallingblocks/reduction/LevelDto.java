@@ -1,13 +1,24 @@
 package com.mygdx.fallingblocks.reduction;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class LevelDto {
 
     private int levelNumber;
-    private final List<WavesDto> wavesDtoList= new ArrayList<>();
+    private final Stack<WavesDto> wavesDtoStack= new Stack<>();
 
+    /**
+     * Get wavesDto and the remove it from the stack
+     * @return Top wavesDto if exists, else null
+     */
+    public WavesDto getWavesDto(){
+        if(wavesDtoStack.isEmpty()){
+            return null;
+        }
+
+        return wavesDtoStack.pop();
+    }
 
     public int getLevelNumber() {
         return levelNumber;
@@ -18,11 +29,11 @@ public class LevelDto {
     }
 
     public List<WavesDto> getWavesDtoList() {
-        return wavesDtoList;
+        return wavesDtoStack;
     }
 
     public void addWave(WavesDto wavesDto){
-        this.wavesDtoList.add(wavesDto);
+        this.wavesDtoStack.add(wavesDto);
     }
 
 

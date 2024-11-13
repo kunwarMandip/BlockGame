@@ -1,7 +1,10 @@
 package com.mygdx.fallingblocks.reduction;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -10,32 +13,40 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.fallingblocks.dynamicEntity.WaveManager;
+import com.mygdx.fallingblocks.dynamicEntity.enemy.EntityManager;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
 import static com.mygdx.fallingblocks.GlobalStaticVariables.PPM;
 
 public class LevelCreator implements Screen {
 
-    public Viewport gameViewport;
-    public OrthographicCamera orthographicCamera;
-    public Box2DDebugRenderer box2DDebugRenderer;
-    public OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+    private final int levelToLoad;
+    private final SpriteBatch spriteBatch;
 
-    public World world;
-    public TiledMap tiledMap;
+    private Viewport gameViewport;
+    private OrthographicCamera orthographicGameCamera;
 
-    private LevelDto levelDto;
-    public LevelCreator(LevelDto levelDto){
-        this.levelDto= levelDto;
+    private World world;
+    private TiledMap tiledMap;
+    private Box2DDebugRenderer box2DDebugRenderer;
+    private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
+
+    private WaveManager waveManager;
+    private EntityManager entityManager;
+
+    public LevelCreator(int levelToLoad, SpriteBatch spriteBatch){
+        this.levelToLoad=levelToLoad;
+        this.spriteBatch=spriteBatch;
     }
 
     @Override
     public void show() {
-        orthographicCamera= new OrthographicCamera();
-        gameViewport = new FitViewport(VIRTUAL_WIDTH/ PPM, VIRTUAL_HEIGHT/PPM, orthographicCamera);
+        orthographicGameCamera = new OrthographicCamera();
+        gameViewport = new FitViewport(VIRTUAL_WIDTH/ PPM, VIRTUAL_HEIGHT/PPM, orthographicGameCamera);
         gameViewport.apply();
-        orthographicCamera.position.set(gameViewport.getWorldWidth() / 2f, gameViewport.getWorldHeight() / 2f, 0);
-        orthographicCamera.update();
+        orthographicGameCamera.position.set(gameViewport.getWorldWidth() / 2f, gameViewport.getWorldHeight() / 2f, 0);
+        orthographicGameCamera.update();
 
         world= new World(new Vector2(0, 0), true);
         box2DDebugRenderer= new Box2DDebugRenderer();
@@ -44,12 +55,40 @@ public class LevelCreator implements Screen {
 
         tiledMap= new TmxMapLoader().load("tiledMap.txt");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
+
+        LevelDto levelDto= new LevelDto();
+        waveManager= new WaveManager(levelDto.getWavesDto());
+    }
+
+
+    private void update(float delta){
+        world.step(1/60f, 6, 2);
+        waveManager.update();
+    }
+
+    private void clearScreen(){
+        Gdx.gl.glClearColor(0,0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
+    private void renderSpriteBatch(){
+        spriteBatch.setProjectionMatrix(orthographicGameCamera.combined);
+        spriteBatch.begin();
+        waveManager.draw(spriteBatch);
+        spriteBatch.end();
     }
 
     @Override
     public void render(float delta) {
+        update(delta);
+        clearScreen();
 
+        orthogonalTiledMapRenderer.setView(orthographicGameCamera);
+        box2DDebugRenderer.render(world, orthographicGameCamera.combined);
+
+        renderSpriteBatch();
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -59,21 +98,21 @@ public class LevelCreator implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
+    }
 
+    public TiledMap getTiledMap(){
+        return tiledMap;
     }
 }

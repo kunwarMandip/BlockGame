@@ -1,39 +1,52 @@
 package com.mygdx.fallingblocks.dynamicEntity;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import com.mygdx.fallingblocks.dynamicEntity.enemy.Enemy;
+import com.mygdx.fallingblocks.level.Enemy;
 import com.mygdx.fallingblocks.reduction.WavesDto;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class WaveManager {
 
-    private final WavesDto wavesDto;
-    private final List<Enemy> currentEnemies= new ArrayList<>();
+    private WavesDto wavesDto;
+    private final ArrayList<Enemy> activeEnemies= new ArrayList<>();
 
-    private int currentWaveCounter;
     private float waveStartDelayCounter= 0f;
     private float waveDurationCounter= 0f;
-
 
     public WaveManager(WavesDto wavesDto){
         this.wavesDto=wavesDto;
     }
 
-
+    public void setWavesDto(WavesDto wavesDto){
+        this.wavesDto=wavesDto;
+    }
 
     public void update(float delta){
     }
 
+    public void spawnNextEnemy(){
+        Enemy enemy= wavesDto.getNextEnemy();
+        activeEnemies.add(enemy);
+    }
+
+    public void draw(SpriteBatch spriteBatch){
+        for(Enemy enemy: activeEnemies){
+            enemy.draw(spriteBatch);
+        }
+    }
+
+    /**
+     * S
+     */
+    private void getNextWave(){
+    }
 
     private boolean isWaveStartDelayCompleted(float delta){
-        if(wavesDto.getStartDelay() > waveStartDelayCounter){
+        if(wavesDto.getWaveStartDelay() > waveStartDelayCounter){
             waveStartDelayCounter+=delta;
             return false;
         }
-
         return true;
     }
 
@@ -46,7 +59,5 @@ public class WaveManager {
 
         return true;
     }
-
-
 
 }

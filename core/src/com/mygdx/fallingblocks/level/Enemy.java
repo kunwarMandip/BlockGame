@@ -1,15 +1,11 @@
 package com.mygdx.fallingblocks.level;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 
-public abstract class Enemy {
-
-    protected Body body;
+public abstract class Enemy extends Entity{
 
     protected Vector2 spawnPosition, speed;
-    protected int attackPower, healthPoints;
+    protected int attackPower;
     protected String behaviour;
     protected float spawnTime;
 
@@ -17,19 +13,4 @@ public abstract class Enemy {
     int amount, health, rewardPoints;
     double spawnInterval;
 
-    public Enemy(){}
-
-    public abstract void setBody();
-
-    public void destroyBody(World world){
-        if(body==null) {
-            return;
-        }
-
-        world.destroyBody(body);
-    }
-
-    public Vector2 getBodyPosition(){
-        return body.getPosition();
-    }
 }

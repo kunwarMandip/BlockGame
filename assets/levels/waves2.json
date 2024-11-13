@@ -1,0 +1,78 @@
+{
+  "level": 1,
+  "waves": [
+    {
+      "waveNumber": 1,
+      "startDelay": 0.0,
+      "duration": 30.0,
+      "spawnMode": "SEQUENTIAL",
+      "enemies": [
+        {
+          "enemyType": "NORMAL",
+          "amount": 3,
+          "spawnDelay": 0.5,
+          "health": 50,
+          "speed": 2.0,
+          "behavior": "AGGRESSIVE",
+          "attackPower": 10,
+          "rewardPoints": 100
+        },
+        {
+          "enemyType": "FLYING",
+          "amount": 2,
+          "spawnDelay": 1.0,
+          "health": 40,
+          "speed": 3.5,
+          "behavior": "PASSIVE",
+          "attackPower": 8,
+          "rewardPoints": 90
+        }
+      ]
+    },
+    {
+      "waveNumber": 2,
+      "startDelay": 5.0,
+      "duration": 20.0,
+      "spawnMode": "SIMULTANEOUS",
+      "spawnInterval": 1.5,
+      "enemies": [
+        {
+          "enemyType": "NORMAL",
+          "amount": 5,
+          "health": 60,
+          "speed": 2.2,
+          "behavior": "DEFENSIVE",
+          "attackPower": 12,
+          "rewardPoints": 80
+        },
+        {
+          "enemyType": "FLYING",
+          "amount": 3,
+          "health": 35,
+          "speed": 3.2,
+          "behavior": "AGGRESSIVE",
+          "attackPower": 6,
+          "rewardPoints": 60
+        }
+      ]
+    },
+    {
+      "waveNumber": 3,
+      "startDelay": 10.0,
+      "duration": 40.0,
+      "spawnMode": "SEQUENTIAL",
+      "enemies": [
+        {
+          "enemyType": "BOSS",
+          "amount": 1,
+          "spawnDelay": 0.0,
+          "health": 300,
+          "speed": 1.0,
+          "behavior": "AGGRESSIVE",
+          "attackPower": 50,
+          "rewardPoints": 500
+        }
+      ]
+    }
+  ]
+}
