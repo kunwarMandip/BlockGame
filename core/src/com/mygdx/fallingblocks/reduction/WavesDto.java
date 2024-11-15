@@ -1,6 +1,6 @@
 package com.mygdx.fallingblocks.reduction;
 
-import com.mygdx.fallingblocks.level.Enemy;
+import com.mygdx.fallingblocks.level.enemy.Enemy;
 
 import java.util.Stack;
 
@@ -11,12 +11,23 @@ public class WavesDto {
     private final String spawnPattern;
     private final Stack<Enemy> enemies;
 
+    private float deltaTime=0f;
     public WavesDto(Stack<Enemy> enemies, boolean isWaveTimed, double duration, double waveStartDelay, String spawnPattern) {
         this.enemies = enemies;
         this.isWaveTimed=isWaveTimed;
         this.waveDuration = duration;
         this.spawnPattern = spawnPattern;
         this.waveStartDelay = waveStartDelay;
+    }
+
+    public Enemy isEnemySpawnAble(float deltaTime){
+        this.deltaTime+=deltaTime;
+
+        if(this.deltaTime!=waveDuration){
+            return null;
+        }
+        this.deltaTime=0f;
+        return enemies.pop();
     }
 
     public double getWaveStartDelay() {

@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mygdx.fallingblocks.dynamicEntity.WaveManager;
+import com.mygdx.fallingblocks.dynamicEntity.GameLevelManager;
 import com.mygdx.fallingblocks.dynamicEntity.enemy.EntityManager;
 
 import static com.mygdx.fallingblocks.GlobalStaticVariables.*;
@@ -32,7 +32,7 @@ public class LevelCreator implements Screen {
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
 
-    private WaveManager waveManager;
+    private GameLevelManager gameLevelManager;
     private EntityManager entityManager;
 
     public LevelCreator(int levelToLoad, SpriteBatch spriteBatch){
@@ -56,14 +56,13 @@ public class LevelCreator implements Screen {
         tiledMap= new TmxMapLoader().load("tiledMap.txt");
         orthogonalTiledMapRenderer= new OrthogonalTiledMapRenderer(tiledMap, 1/PPM);
 
-        LevelDto levelDto= new LevelDto();
-        waveManager= new WaveManager(levelDto.getWavesDto());
+        gameLevelManager = new GameLevelManager();
     }
 
 
     private void update(float delta){
         world.step(1/60f, 6, 2);
-        waveManager.update();
+        gameLevelManager.update(delta);
     }
 
     private void clearScreen(){
@@ -74,7 +73,7 @@ public class LevelCreator implements Screen {
     private void renderSpriteBatch(){
         spriteBatch.setProjectionMatrix(orthographicGameCamera.combined);
         spriteBatch.begin();
-        waveManager.draw(spriteBatch);
+        gameLevelManager.draw(spriteBatch);
         spriteBatch.end();
     }
 
